@@ -5,6 +5,8 @@ GHDLRUNFLAGS=
 # Default target
 all: run
 
+master: master.c
+	gcc -Wall -pedantic -o master master.c
 
 # Elaboration target
 slave: slave.o
@@ -19,9 +21,10 @@ check:
 	$(GHDL) -s $(GHDLFLAGS) */*.vhdl
 
 # Run target
-run: slave
+run: slave master
 	./launch.py
 
 # Clean target
 clean:
 	-ghdl --remove
+	-rm -Rf master

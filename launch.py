@@ -13,7 +13,7 @@ def main():
         os.dup2(s2m[0], 0)
         os.dup2(m2s[1], 1)
         sys.stderr.write('master starting\n')
-        os.execl('./master.py')
+        os.execl('./master')
     else:
         time.sleep(2)
         os.dup2(m2s[0], 0)
