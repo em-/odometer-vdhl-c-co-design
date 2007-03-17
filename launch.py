@@ -2,7 +2,6 @@
 
 import os, sys, time
 from subprocess import Popen, PIPE
-import binary
 
 def main():
     m2s = os.pipe()
