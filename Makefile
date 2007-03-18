@@ -5,11 +5,11 @@ GHDLRUNFLAGS=
 # Default target
 all: run
 
-master: master.c
-	gcc -Wall -pedantic -o master master.c
+software: software.c
+	gcc -Wall -pedantic -o software software.c
 
 # Elaboration target
-slave: slave.o
+hardware: hwsw_interface.o hardware.o
 	$(GHDL) -e $(GHDLFLAGS) $@
 
 # Targets to analyze files
@@ -21,10 +21,10 @@ check:
 	$(GHDL) -s $(GHDLFLAGS) */*.vhdl
 
 # Run target
-run: slave master
+run: hardware software
 	./launch.py
 
 # Clean target
 clean:
 	-ghdl --remove
-	-rm -Rf master
+	-rm -Rf software

@@ -69,16 +69,16 @@ int bus(int RnW, void *addr, int data)
         write(1, "\n", 1);
     }
 
-    msg = "master: written\n";
+    msg = "software: written\n";
     write(2, msg, strlen(msg));
 
     if (read(0, data_in, DATA_SIZE*8+1) < DATA_SIZE*8+1)
     {
-        msg = "master: short read\n";
+        msg = "software: short read\n";
         write(2, msg, strlen(msg));
     }
 
-    msg = "master: read\n";
+    msg = "software: read\n";
     write(2, msg, strlen(msg));
     return (int)from_binary(data_in, DATA_SIZE);
 }

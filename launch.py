@@ -11,14 +11,14 @@ def main():
     if pid != 0:
         os.dup2(s2m[0], 0)
         os.dup2(m2s[1], 1)
-        sys.stderr.write('master starting\n')
-        os.execl('./master')
+        sys.stderr.write('software starting\n')
+        os.execl('./software')
     else:
         time.sleep(2)
         os.dup2(m2s[0], 0)
         os.dup2(s2m[1], 1)
-        sys.stderr.write('slave starting\n')
-        os.execl('./slave')
+        sys.stderr.write('hardware starting\n')
+        os.execl('./hardware')
 
 if __name__ == '__main__':
     main()
