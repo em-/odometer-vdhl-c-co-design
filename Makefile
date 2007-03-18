@@ -2,11 +2,13 @@ GHDL=ghdl
 GHDLFLAGS= --ieee=synopsys
 GHDLRUNFLAGS=
 
+SOFTWARE_SOURCES=swhw_interface.h swhw_interface.c
+
 # Default target
 all: run
 
-software: software.c
-	gcc -Wall -pedantic -o software software.c
+software: software.c ${SOFTWARE_SOURCES}
+	gcc -Wall -pedantic -o software $^
 
 # Elaboration target
 hardware: hwsw_interface.o hardware.o
