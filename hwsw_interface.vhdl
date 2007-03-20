@@ -1,3 +1,9 @@
+-- File: hwsw_interface.vhdl
+-- Classe:
+-- Autore: Emanuele Aina <em@nerd.ocracy.org>
+-- Licenza: LGPL
+-- Note: Software <-> Hardware Interface communicating through stdin/stdout
+
 library std;
 library ieee;
 

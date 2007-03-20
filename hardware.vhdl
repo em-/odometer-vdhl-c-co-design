@@ -1,3 +1,8 @@
+-- File: hardware.vhdl
+-- Classe:
+-- Autore: Emanuele Aina <em@nerd.ocracy.org>
+-- Licenza: LGPL
+
 library std;
 library ieee;
 

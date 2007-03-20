@@ -1,4 +1,11 @@
 #!/usr/bin/python
+# launch.py
+#
+# Launch two processes communicating with each other on their 
+# respective stdin/stdout
+#
+# Copyright Emanuele Aina <em@nerd.ocracy.org>, 2007.
+# Released under the terms of the LGPL
 
 import os, sys, time
 from subprocess import Popen, PIPE

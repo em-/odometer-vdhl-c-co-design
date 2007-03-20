@@ -4,6 +4,14 @@
 #define DATA_SIZE 2
 #define ADDR_SIZE 2
 
+/*
+ * File: swhw_interface.c
+ * Classe:
+ * Autore: Emanuele Aina <em@nerd.ocracy.org>
+ * Licenza: LGPL
+ * Note: Software <-> Hardware Interface communicating through stdin/stdout
+ */
+
 static void to_binary(long data, char dest[], int size)
 {
     int i;
