@@ -10,22 +10,25 @@
 import os, sys, time
 from subprocess import Popen, PIPE
 
+a = './software'
+b = './hardware'
+
 def main():
-    m2s = os.pipe()
-    s2m = os.pipe()
+    a2b = os.pipe()
+    b2a = os.pipe()
 
     pid = os.fork()
     if pid != 0:
-        os.dup2(s2m[0], 0)
-        os.dup2(m2s[1], 1)
-        sys.stderr.write('software starting\n')
-        os.execl('./software')
+        os.dup2(b2a[0], 0)
+        os.dup2(a2b[1], 1)
+        sys.stderr.write(a + ' starting\n')
+        os.execl(a)
     else:
         time.sleep(2)
-        os.dup2(m2s[0], 0)
-        os.dup2(s2m[1], 1)
-        sys.stderr.write('hardware starting\n')
-        os.execl('./hardware')
+        os.dup2(a2b[0], 0)
+        os.dup2(b2a[1], 1)
+        sys.stderr.write(b + ' starting\n')
+        os.execl(b)
 
 if __name__ == '__main__':
     main()
