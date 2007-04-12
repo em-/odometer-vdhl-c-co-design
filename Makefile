@@ -11,7 +11,7 @@ software: software.c ${SOFTWARE_SOURCES}
 	gcc -Wall -pedantic -o software $^
 
 # Elaboration target
-hardware: hwsw_interface.o hardware.o
+hardware: hwsw_interface.o hardware.o odometer.o
 	$(GHDL) -e $(GHDLFLAGS) $@
 
 # Targets to analyze files

@@ -25,6 +25,17 @@ architecture behavioral of hardware is
             );
     end component;
 
+    component odometer
+        port (
+            CLK, RST:     in  std_logic;
+            BUS_STROBE:   in  std_logic;
+            BUS_RnW:      in  std_logic;
+            BUS_ADDR:     in  std_logic_vector(15 downto 0);
+            BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
+            BUS_DATA_OUT: out std_logic_vector(15 downto 0)
+            );
+    end component;
+
     signal CLK: std_logic := '0';
     signal RST: std_logic;
     signal BUS_STROBE:   std_logic;
@@ -42,5 +53,8 @@ end process;
 
 hwsw: hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN);
+
+odo: odometer
+    port map(CLK, RST, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_IN);
 
 end behavioral;
