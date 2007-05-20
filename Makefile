@@ -23,7 +23,7 @@ ${DOC_FIGURES_PDF}: ${DOC_FIGURES}
 	inkscape -z $< -A=$@
 
 # Generate PDF from LaTeX files
-${DOC}: ${DOC_SOURCES} ${DOC_FIGURES_PDF} *.vhdl
+${DOC}: ${DOC_SOURCES} ${DOC_FIGURES_PDF} */*.vhdl */*.c
 	rubber -d $<
 
 # Build the documentation
