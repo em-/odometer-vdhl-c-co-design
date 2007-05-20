@@ -1,0 +1,102 @@
+\documentclass [11pt,a4paper,oneside]{article}
+
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{listings}
+
+% Informations
+\title{Odometro incrementale}
+\author{Emanuele Aina (matr. 129548)}
+\date{}
+
+% Margins
+\geometry{bindingoffset=0.5cm}
+
+% Caption
+\newcommand{\mc}[1]{{\small\ #1}}
+\newcommand{\makecaption}[1]{\caption{\mc\ #1}}
+
+% URL
+\newcommand{\url}[2]{#1\footnote{#2}}
+
+% References
+\newcommand{\refemph}[1]{\emph{#1}}
+\newcommand{\imgref}[1]{\refemph{\ref{img:#1}}}
+\newcommand{\imgrefx}[1]{\refemph{figura}~\imgref{#1}}
+
+% Images
+\newcommand{\im}[3]{
+    \begin{figure}[!htb]
+        \begin{center}
+            \includegraphics{img/#1}
+            \makecaption{#2}
+            \label{img:#3}
+        \end{center}
+    \end{figure}
+}
+
+% Collegamenti.
+\definecolor{links}{rgb}{0.7,0.2,0}
+\usepackage{ifpdf}
+\ifpdf
+    \usepackage{hyperref}
+    \hypersetup{colorlinks=true,bookmarks=true,hypertexnames=false,urlcolor=links}
+\else
+    \newcommand{\href}[2]{#2}
+\fi
+\newcommand{\link}[1]{\href{#1}{#1}}
+
+% Ignore the argument
+\newcommand{\noop}[1]{}
+
+% Foreign words
+\newcommand{\foreign}[1]{\emph{#1}}
+
+\newcommand{\component}[1]{\texttt{#1}}
+\newcommand{\identifier}[1]{\texttt{#1}}
+
+% Justify even if it has to leave a lot of blank space
+\setlength{\emergencystretch}{3em}
+
+\definecolor{comment}{rgb}{0,0,0.8}
+\definecolor{keyword}{rgb}{0.9,0.5,0}
+\definecolor{string}{rgb}{0.95,0,0}
+
+\lstset{
+    language=VHDL,
+    basicstyle=\ttfamily,
+    % this sets the letter spacing as it is with the verbatim package
+    basewidth=0.5em,
+    keywordstyle=\color{keyword},
+    commentstyle=\color{comment},
+    stringstyle=\color{string},
+    showstringspaces=false,
+}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\small{01XXX - Metodi e strumenti di coprogettazione di sistemi digitali }
+\end{center}
+
+\section{Specifiche di progetto}
+
+
+\section{Implementazione}
+
+
+\section{Ulteriori informazioni}
+L'intero progetto è disponibile presso \link{http://techn.ocracy.org/odometer}, da cui
+è inoltre possibile visionare tutte le revisioni realizzate durante lo sviluppo.
+Il repository contiene inoltre i sorgenti di questo documento e il Makefile
+per GNU~make usato per automatizzare il processo di compilazione e test.
+
+\end{document}

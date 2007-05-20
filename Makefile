@@ -2,6 +2,10 @@ GHDL=ghdl
 GHDLFLAGS= --ieee=synopsys
 GHDLRUNFLAGS=
 
+DOC_SOURCES=odometro.tex
+DOC_FIGURES=
+DOC=odometro.pdf
+
 SOFTWARE_SOURCES=swhw_interface.h swhw_interface.c
 
 # Default target
@@ -30,3 +34,17 @@ run: hardware software
 clean:
 	-ghdl --remove
 	-rm -Rf software
+
+# Documentation rules
+DOC_FIGURES_PDF=$(DOC_FIGURES:.svg=.pdf)
+${DOC_FIGURES_PDF}: ${DOC_FIGURES}
+
+%.pdf: %.svg
+	inkscape -z $< -A=$@
+
+# Generate PDF from LaTeX files
+${DOC}: ${DOC_SOURCES} ${DOC_FIGURES_PDF} *.vhdl
+	rubber -d $<
+
+# Build the documentation
+doc: ${DOC}
