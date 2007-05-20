@@ -2,13 +2,13 @@ DOC_SOURCES=odometro.tex
 DOC_FIGURES=
 DOC=odometro.pdf
 
-SUBDIRS=hardware software
+SUBDIRS=hardware software uml
 
 # Default target
-all: subdirs run
+all: run
 
 # Run target
-run: hardware/hardware software/software
+run: hardware software hardware/hardware software/software
 	./launch.py
 
 # Clean target
