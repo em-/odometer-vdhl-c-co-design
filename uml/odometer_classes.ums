@@ -1,0 +1,69 @@
+/*
+ * File: odometer_classes.ums
+ * Autore: Emanuele Aina <em@nerd.ocracy.org>
+ * Licenza: LGPL
+ */
+
+class Odometer {
+    fields {
+        #angle: int;
+        #revolutions: int;
+        #K: int;
+        #K1: int;
+        #K2: int;
+        #coeff: int;
+    }
+	operations {
+		+setCoeff(value: int): void;
+		+setK(value: int): void;
+		+setK1(value: int): void;
+		+setK2(value: int): void;
+        +rotationClockWise(): void;
+        +rotationCounterClockWise(): void;
+        +getAngle(): int;
+        +getRevolutions(): int;
+        +reset(): void;
+	}
+}
+
+class EncoderInterface {
+    operations {
+        +A(): void;
+        +B(): void;
+        +Z(): void;
+        +A(): void;
+        +reset(): void;
+    }
+}
+
+class SerialInterface {
+    operations {
+        +receivedData(): void;
+        +transmittedData(): void;
+        +reset(): void;
+    }
+}
+
+class Uart {
+    fields {
+        #byteRx: byte;
+        #byteTx: byte;
+    }
+    operations {
+        +input(value: boolean): void;
+        +getByteRx(): byte;
+        +setByteTx(): byte;
+        +reset(): void;
+    }
+}
+
+classdiagram odometer_classes {
+	comment = "Diagrammi delle classi";
+	layout = satellite (Odometer);
+	entities {
+		Odometer depends EncoderInterface;
+        Odometer depends SerialInterface;
+        SerialInterface depends Uart;
+	}
+}
+
