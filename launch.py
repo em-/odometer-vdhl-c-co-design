@@ -10,8 +10,8 @@
 import os, sys, time
 from subprocess import Popen, PIPE
 
-a = './software'
-b = './hardware'
+a = './software/software'
+b = './hardware/hardware'
 
 def main():
     a2b = os.pipe()
