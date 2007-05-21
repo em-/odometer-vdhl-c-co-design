@@ -61,9 +61,9 @@ classdiagram odometer_classes {
 	comment = "Diagrammi delle classi";
 	layout = satellite (Odometer);
 	entities {
-		Odometer depends EncoderInterface;
         Odometer depends SerialInterface;
         SerialInterface depends Uart;
+		Odometer depends EncoderInterface;
 	}
 }
 

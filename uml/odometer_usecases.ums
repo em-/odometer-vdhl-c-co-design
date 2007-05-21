@@ -22,7 +22,17 @@ usecase decodeRotation = "Decodifica rotazione";
 
 usecasediagram odometer_usecases {
 	comment = "Casi d'uso";
-	layout = usecase;
+	layout = grid(4, 
+        *,       readAngle,       *, *,
+        *,       readRevolutions, *, *,
+        rs232,   setCoeff,        *, *,
+        *,       setK,  readCommand, readRS232,
+        *,       setK1,           *, *,
+        *,       setK1,           *, *,
+
+        encoder, rotate,          *, *,
+        *,       fullRevolution,  *, decodeRotation
+        );
 	entities {
 		rs232 uses readAngle;
 		rs232 uses readRevolutions;
