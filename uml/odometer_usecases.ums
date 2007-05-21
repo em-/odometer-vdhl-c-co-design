@@ -21,8 +21,8 @@ usecase fullRevolution = "Compie giro completo";
 usecase decodeRotation = "Decodifica rotazione";
 
 usecasediagram odometer_usecases {
-	comment = "Casi d'uso";
-	layout = grid(4, 
+    comment = "Casi d'uso";
+    layout = grid(4, 
         *,       readAngle,       *, *,
         *,       readRevolutions, *, *,
         rs232,   setCoeff,        *, *,
@@ -33,20 +33,20 @@ usecasediagram odometer_usecases {
         encoder, rotate,          *, *,
         *,       fullRevolution,  *, decodeRotation
         );
-	entities {
-		rs232 uses readAngle;
-		rs232 uses readRevolutions;
-		rs232 uses setCoeff;
-		rs232 uses setK;
-		rs232 uses setK1;
-		rs232 uses setK2;
+    entities {
+        rs232 uses readAngle;
+        rs232 uses readRevolutions;
+        rs232 uses setCoeff;
+        rs232 uses setK;
+        rs232 uses setK1;
+        rs232 uses setK2;
 
-		readAngle includes readCommand;
-		readRevolutions includes readCommand;
-		setCoeff includes readCommand;
-		setK includes readCommand;
-		setK1 includes readCommand;
-		setK2 includes readCommand;
+        readAngle includes readCommand;
+        readRevolutions includes readCommand;
+        setCoeff includes readCommand;
+        setK includes readCommand;
+        setK1 includes readCommand;
+        setK2 includes readCommand;
 
         readCommand includes readRS232;
 
@@ -54,5 +54,5 @@ usecasediagram odometer_usecases {
         encoder uses fullRevolution;
         rotate includes decodeRotation;
         fullRevolution includes decodeRotation;
-	}
+    }
 }

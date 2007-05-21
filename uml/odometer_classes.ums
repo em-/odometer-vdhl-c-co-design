@@ -13,17 +13,17 @@ class Odometer {
         #K2: int;
         #coeff: int;
     }
-	operations {
-		+setCoeff(value: int): void;
-		+setK(value: int): void;
-		+setK1(value: int): void;
-		+setK2(value: int): void;
+    operations {
+        +setCoeff(value: int): void;
+        +setK(value: int): void;
+        +setK1(value: int): void;
+        +setK2(value: int): void;
         +rotationClockWise(): void;
         +rotationCounterClockWise(): void;
         +getAngle(): int;
         +getRevolutions(): int;
         +reset(): void;
-	}
+    }
 }
 
 class EncoderInterface {
@@ -58,12 +58,12 @@ class Uart {
 }
 
 classdiagram odometer_classes {
-	comment = "Diagrammi delle classi";
-	layout = satellite (Odometer);
-	entities {
+    comment = "Diagrammi delle classi";
+    layout = satellite (Odometer);
+    entities {
         Odometer depends SerialInterface;
         SerialInterface depends Uart;
-		Odometer depends EncoderInterface;
-	}
+        Odometer depends EncoderInterface;
+    }
 }
 
