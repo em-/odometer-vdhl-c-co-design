@@ -28,7 +28,7 @@ usecasediagram odometer_usecases {
         rs232,   setCoeff,        *, *,
         *,       setK,  readCommand, readRS232,
         *,       setK1,           *, *,
-        *,       setK1,           *, *,
+        *,       setK2,           *, *,
 
         encoder, rotate,          *, *,
         *,       fullRevolution,  *, decodeRotation
