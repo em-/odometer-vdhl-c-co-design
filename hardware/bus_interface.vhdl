@@ -23,4 +23,17 @@ end bus_interface;
 
 architecture behavioral of bus_interface is
 begin
+process(CLK)
+begin
+    if rising_edge(CLK) and BUS_STROBE = '1' then
+        case BUS_ADDR is
+            when "0000000000000000" =>
+                if BUS_RnW = '1' then
+                    BUS_DATA_OUT <= "0100001100100001";
+                else
+                    -- read BUS_DATA_IN and do something
+                end if;
+        end case;
+    end if;
+end process;
 end behavioral;
