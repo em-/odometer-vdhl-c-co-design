@@ -27,9 +27,9 @@ process(CLK)
 begin
     if rising_edge(CLK) and BUS_STROBE = '1' then
         case BUS_ADDR is
-            when "0000000000000000" =>
+            when X"0000" =>
                 if BUS_RnW = '1' then
-                    BUS_DATA_OUT <= "0100001100100001";
+                    BUS_DATA_OUT <= X"1234";
                 else
                     -- read BUS_DATA_IN and do something
                 end if;
