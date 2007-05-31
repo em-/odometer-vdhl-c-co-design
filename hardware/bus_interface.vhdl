@@ -1,4 +1,4 @@
--- File: odometer.vhdl
+-- File: bus_interface.vhdl
 -- Classe:
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
@@ -10,7 +10,7 @@ use std.textio.all;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 
-entity odometer is
+entity bus_interface is
     port (
         CLK, RST:     in  std_logic;
         BUS_STROBE:   in  std_logic;
@@ -19,8 +19,8 @@ entity odometer is
         BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
         BUS_DATA_OUT: out std_logic_vector(15 downto 0)
         );
-end odometer;
+end bus_interface;
 
-architecture behavioral of odometer is
+architecture behavioral of bus_interface is
 begin
 end behavioral;
