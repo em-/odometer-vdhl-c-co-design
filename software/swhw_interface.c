@@ -47,7 +47,7 @@ static long from_binary(char src[], int size)
     return ret;
 }
 
-static int bus(int RnW, void *addr, int data)
+static int bus(int strobe, int RnW, void *addr, int data)
 {
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
     char data_out[DATA_SIZE*8+1] = {'\0'};
@@ -57,9 +57,19 @@ static int bus(int RnW, void *addr, int data)
 
     to_binary((long)addr, addr_out, ADDR_SIZE);
 
-    if (RnW)
+    if (!strobe)
     {
-        write(1, "1 ", 2);
+        write(1, "0 1 ", 4);
+        for (i=0; i<ADDR_SIZE; i++)
+            write(1, "ZZZZZZZZ", 8);
+        write(1, " ", 1);
+        for (i=0; i<DATA_SIZE; i++)
+            write(1, "ZZZZZZZZ", 8);
+        write(1, "\n", 1);
+    }
+    else if (RnW)
+    {
+        write(1, "1 1 ", 4);
         write(1, addr_out, ADDR_SIZE*8);
         write(1, " ", 1);
         for (i=0; i<DATA_SIZE; i++)
@@ -70,7 +80,7 @@ static int bus(int RnW, void *addr, int data)
     {
         to_binary(data, data_out, DATA_SIZE);
 
-        write(1, "0 ", 2);
+        write(1, "1 0 ", 4);
         write(1, addr_out, ADDR_SIZE*8);
         write(1, " ", 1);
         write(1, data_out, DATA_SIZE*8);
@@ -93,10 +103,15 @@ static int bus(int RnW, void *addr, int data)
 
 int bus_read(void *address)
 {
-    return (int)bus(1, address, 0);
+    return (int)bus(1, 1, address, 0);
 }
 
 void bus_write(void *address, int data)
 {
-    bus(0, address, data);
+    bus(1, 0, address, data);
+}
+
+void bus_noop()
+{
+    bus(0, 0, NULL, 0);
 }

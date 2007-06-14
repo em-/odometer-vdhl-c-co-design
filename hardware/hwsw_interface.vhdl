@@ -35,6 +35,7 @@ begin
 end process;
 
 pipe_interface: process
+    variable t_STROBE:  std_logic;
     variable t_RnW:     std_logic;
     variable t_ADDR:    std_logic_vector(15 downto 0);
     variable t_DATA_IN: std_logic_vector(15 downto 0);
@@ -50,17 +51,19 @@ begin
         readline(input, l_in);
         report "slave read";
 
+        read(l_in, t_STROBE);
+        read(l_in, space);
         read(l_in, t_RnW);
         read(l_in, space);
 
         read(l_in, t_ADDR);
         read(l_in, t_DATA_IN);
 
+        STROBE  <= t_STROBE;
         Rnw     <= t_RnW;
         ADDR    <= t_ADDR;
         DATA_IN <= t_DATA_IN;
 
-        STROBE <= '1';
         while counter /= 0 loop
             wait on counter;
             STROBE <= '0';

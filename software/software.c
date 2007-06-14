@@ -15,5 +15,7 @@ int main(void)
 
     bus_write(addr, 0x1111);
     bus_read(addr);
+    bus_noop();
+    bus_noop();
     return 0;
 }
