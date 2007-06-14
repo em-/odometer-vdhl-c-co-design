@@ -18,7 +18,8 @@ entity hwsw_interface is
         STROBE:   out std_logic;
         RnW:      out std_logic;
         ADDR:     out std_logic_vector(15 downto 0);
-        DATA_IN:  out std_logic_vector(15 downto 0)
+        DATA_IN:  out std_logic_vector(15 downto 0);
+        FINISH:   out boolean
         );
 end hwsw_interface;
 
@@ -40,7 +41,12 @@ pipe_interface: process
     variable l_in, l_out: line;
     variable space: character;
 begin
+    FINISH <= false;
     while true loop
+        if endfile(input) then
+            FINISH <= true;
+            wait;
+        end if;
         readline(input, l_in);
         report "slave read";
 
@@ -62,6 +68,8 @@ begin
 
         write(l_out, DATA_OUT);
         writeline(output, l_out);
+
+        wait on counter;
     end loop;
     wait;
 end process;

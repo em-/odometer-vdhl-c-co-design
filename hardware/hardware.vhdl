@@ -21,7 +21,8 @@ architecture behavioral of hardware is
             STROBE:   out std_logic;
             RnW:      out std_logic;
             ADDR:     out std_logic_vector(15 downto 0);
-            DATA_IN:  out std_logic_vector(15 downto 0)
+            DATA_IN:  out std_logic_vector(15 downto 0);
+            FINISH:   out boolean
             );
     end component;
 
@@ -36,6 +37,7 @@ architecture behavioral of hardware is
             );
     end component;
 
+    signal FINISH: boolean := false;
     signal CLK: std_logic := '0';
     signal RST: std_logic;
     signal BUS_STROBE:   std_logic;
@@ -48,11 +50,14 @@ begin
 clock: process
 begin
     CLK <= not CLK;
+    if FINISH then
+        wait;
+    end if;
     wait for 0.5 ns;
 end process;
 
 hwsw: hwsw_interface
-    port map(CLK, RST, BUS_DATA_OUT, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN);
+    port map(CLK, RST, BUS_DATA_OUT, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
 bus_iface: bus_interface
     port map(CLK, RST, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_IN);
