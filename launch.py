@@ -7,28 +7,21 @@
 # Copyright Emanuele Aina <em@nerd.ocracy.org>, 2007.
 # Released under the terms of the LGPL
 
-import os, sys, time
 from subprocess import Popen, PIPE
 
-a = './software/software'
-b = './hardware/hardware'
+A = './software/software'
+B = './hardware/hardware'
 
 def main():
-    a2b = os.pipe()
-    b2a = os.pipe()
+    a = Popen([A], stdin=PIPE, stdout=PIPE)
+    print "Started %s" % A
+    b = Popen([B], stdin=a.stdout, stdout=a.stdin)
+    print "Started %s" % B
 
-    pid = os.fork()
-    if pid != 0:
-        os.dup2(b2a[0], 0)
-        os.dup2(a2b[1], 1)
-        sys.stderr.write(a + ' starting\n')
-        os.execl(a)
-    else:
-        time.sleep(2)
-        os.dup2(a2b[0], 0)
-        os.dup2(b2a[1], 1)
-        sys.stderr.write(b + ' starting\n')
-        os.execl(b)
+    print "Waiting %s" % A
+    a.wait()
+    print "Waiting %s" % B
+    b.wait()
 
 if __name__ == '__main__':
     main()
