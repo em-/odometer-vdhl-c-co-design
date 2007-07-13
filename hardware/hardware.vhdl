@@ -41,6 +41,16 @@ architecture behavioral of hardware is
         port (A, B, Z: out std_logic);
     end component;
 
+    component encoder_interface
+        port (CLK, RST: in std_logic;
+              A, B, Z:  in std_logic;
+              STROBE:   in std_logic;
+              RnW:      in std_logic;
+              ADDR:     in std_logic_vector(15 downto 0);
+              BUS_DATA_OUT: out std_logic_vector(15 downto 0));
+    end component;
+
+
     signal FINISH: boolean := false;
     signal CLK: std_logic := '0';
     signal RST: std_logic;
@@ -69,5 +79,8 @@ bus_iface: bus_interface
 
 enc: encoder
     port map(A, B, Z);
+
+enc_iface: encoder_interface
+    port map(CLK, RST, A, B, Z, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_OUT);
 
 end behavioral;
