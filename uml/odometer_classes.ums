@@ -28,10 +28,8 @@ class Odometer {
 
 class EncoderInterface {
     operations {
-        +A(): void;
-        +B(): void;
-        +Z(): void;
         +reset(): void;
+        +getStatus(): int;
     }
 }
 
