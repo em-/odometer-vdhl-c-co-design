@@ -20,12 +20,22 @@ entity encoder_interface is
 end encoder_interface;
 
 architecture behavioral of encoder_interface is
+    signal STATUS: std_logic_vector (15 downto 0);
 begin
 process (CLK, RST)
 begin
     if RST = '0' then
-        BUS_DATA_OUT <= (others => 'Z');
+        STATUS <= (others => '0');
     elsif rising_edge(CLK) then
+        STATUS(0) <= A;
+        STATUS(1) <= B;
+        STATUS(2) <= Z;
+    end if;
+end process;
+
+process (CLK, RST)
+begin
+    if rising_edge(CLK) then
         BUS_DATA_OUT <= (others => 'Z');
     end if;
 end process;
