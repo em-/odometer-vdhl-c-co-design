@@ -3,7 +3,15 @@ GHDLFLAGS= --ieee=synopsys
 GHDLRUNFLAGS=
 
 # Elaboration target
-hardware: hwsw_interface.o hardware.o bus_interface.o encoder.o encoder_interface.o serial_interface.o uart.o
+COMPONENTS=hwsw_interface.o	\
+           hardware.o		\
+	   bus_interface.o	\
+	   encoder.o		\
+	   encoder_interface.o	\
+	   serial_interface.o	\
+	   uart.o
+
+hardware: $(COMPONENTS)
 	$(GHDL) -e $(GHDLFLAGS) $@
 
 # Targets to analyze files
