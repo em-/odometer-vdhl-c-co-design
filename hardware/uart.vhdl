@@ -26,11 +26,34 @@ architecture behavioral of uart is
     signal Data: std_logic_vector(7 downto 0);
   begin
 
-  process
+  load: process
+    variable loadedData: std_logic_vector(7 downto 0);
+    file test_file: text is in "hardware/serial.input";
+
+    variable l: line;
+    variable t: time;
+    variable i: integer;
+    variable good: boolean;
+    variable space: character;
   begin
-    Data <= (others => '0');
-    wait for 10 ns;
-    Data <= "00000001";
+    while not endfile(test_file) loop
+        readline(test_file, l);
+
+        -- read the time from the beginning of the line
+        -- skip the line if it doesn't start with an integer
+        read(l, i, good => good);
+        next when not good;
+
+        read(l, space);
+        read(l, loadedData);
+
+        t := i * 1 ns;  -- convert an integer to time
+        if (now < t) then
+            wait for t - now + 1 us; -- desynchronize a bit the transitions
+        end if;
+
+        Data <= loadedData;
+    end loop;
     wait;
   end process;
 
