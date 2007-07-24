@@ -17,9 +17,7 @@ entity uart is
           RxAv:         out std_logic;
           TxBusy:       out std_logic;
           ReadA:        in  std_logic;
-          LoadA:        in  std_logic;
-          Rx:           in  std_logic;
-          Tx:           out std_logic);
+          LoadA:        in  std_logic);
 end uart;
 
 architecture behavioral of uart is
