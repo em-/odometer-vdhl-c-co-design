@@ -1,0 +1,3 @@
+syntax: glob
+hardware/work-obj93.cf
+hardware/*.o
