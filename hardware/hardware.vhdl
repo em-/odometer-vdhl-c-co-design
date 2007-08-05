@@ -31,6 +31,7 @@ architecture behavioral of hardware is
     end component;
 
     component encoder_interface
+        generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST: in std_logic;
               A, B, Z:  in std_logic;
               STROBE:   in std_logic;
@@ -50,6 +51,7 @@ architecture behavioral of hardware is
     end component;
 
     component serial_interface
+        generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST:     in  std_logic;
               RxData:       in std_logic_vector(7 downto 0);
               TxData:       out  std_logic_vector(7 downto 0);
@@ -94,12 +96,14 @@ enc: encoder
     port map(A, B, Z);
 
 enc_iface: encoder_interface
+    generic map (BASE_ADDR => X"0000")
     port map(CLK, RST, A, B, Z, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_OUT);
 
 u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
 serial_iface: serial_interface
+    generic map (BASE_ADDR => X"0001")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 

@@ -9,8 +9,10 @@ library ieee;
 use std.textio.all;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
+use ieee.numeric_std.all;
 
 entity serial_interface is
+    generic (BASE_ADDR: std_logic_vector(15 downto 0));
     port (CLK, RST:     in  std_logic;
           RxData:       in std_logic_vector(7 downto 0);
           TxData:       out  std_logic_vector(7 downto 0);
@@ -26,6 +28,9 @@ entity serial_interface is
 end serial_interface;
 
 architecture behavioral of serial_interface is
+    constant DATA_ADDR:   std_logic_vector(15 downto 0) := BASE_ADDR;
+    constant STATUS_ADDR: std_logic_vector(15 downto 0) := 
+                                    std_logic_vector(unsigned(BASE_ADDR)+1);
   begin
 
   process(CLK)
@@ -37,14 +42,14 @@ architecture behavioral of serial_interface is
   	else
            BUS_DATA_OUT <= (others => 'Z');
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = "00") then -- write byte to Tx
+	   if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = DATA_ADDR) then -- write byte to Tx
               TxData <= BUS_DATA_IN(7 downto 0);
 	      LoadA <= '1';   -- Load signal
            else
               LoadA <= '0';
            end if;
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = "00") then -- Read byte from Rx
+	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = DATA_ADDR) then -- Read byte from Rx
 	       ReadA <= '1';   -- Read signal
                BUS_DATA_OUT <= (others => '0');
                BUS_DATA_OUT(7 downto 0) <= RxData;
@@ -52,7 +57,7 @@ architecture behavioral of serial_interface is
                ReadA <= '0';
            end if;
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = "01") then -- Read status
+	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = STATUS_ADDR) then -- Read status
                BUS_DATA_OUT <= (others => '0');
                BUS_DATA_OUT(1 downto 0) <= TxBusy & RxAv;
            end if;
