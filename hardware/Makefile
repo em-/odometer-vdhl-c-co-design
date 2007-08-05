@@ -5,7 +5,6 @@ GHDLRUNFLAGS=
 # Elaboration target
 COMPONENTS=hwsw_interface.o	\
            hardware.o		\
-	   bus_interface.o	\
 	   encoder.o		\
 	   encoder_interface.o	\
 	   serial_interface.o	\

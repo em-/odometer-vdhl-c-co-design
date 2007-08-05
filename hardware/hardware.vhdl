@@ -26,17 +26,6 @@ architecture behavioral of hardware is
             );
     end component;
 
-    component bus_interface
-        port (
-            CLK, RST:     in  std_logic;
-            BUS_STROBE:   in  std_logic;
-            BUS_RnW:      in  std_logic;
-            BUS_ADDR:     in  std_logic_vector(15 downto 0);
-            BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
-            BUS_DATA_OUT: out std_logic_vector(15 downto 0)
-            );
-    end component;
-
     component encoder
         port (A, B, Z: out std_logic);
     end component;
@@ -100,9 +89,6 @@ end process;
 
 hwsw: hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
-
-bus_iface: bus_interface
-    port map(CLK, RST, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
 enc: encoder
     port map(A, B, Z);
