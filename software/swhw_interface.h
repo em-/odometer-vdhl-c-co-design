@@ -6,6 +6,9 @@
  * Note: Software <-> Hardware Interface communicating through stdin/stdout
  */
 
+typedef void (*irq_handler)(void);
+
+void set_irq_handles(int line, irq_handler handler);
 int bus_read(void *address);
 void bus_write(void *address, int data);
 void bus_noop();

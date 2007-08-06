@@ -1,8 +1,10 @@
 #include <unistd.h>
 #include <string.h>
+#include "swhw_interface.h"
 
 #define DATA_SIZE 2
 #define ADDR_SIZE 2
+#define IRQ_SIZE 1
 
 /*
  * File: swhw_interface.c
@@ -11,6 +13,8 @@
  * Licenza: LGPL
  * Note: Software <-> Hardware Interface communicating through stdin/stdout
  */
+
+static irq_handler handlers[IRQ_SIZE*8] = {NULL, };
 
 static void to_binary(long data, char dest[], int size)
 {
@@ -47,11 +51,38 @@ static long from_binary(char src[], int size)
     return ret;
 }
 
+void set_irq_handles(int line, irq_handler handler)
+{
+  handlers[line] = handler;
+}
+
+static void serve_irq(unsigned char irq)
+{
+    int line = 0;
+    unsigned char masq=1;
+    char *msg;
+
+    if (irq == 0)
+      return;
+
+    while (masq && !(line & masq))
+    {
+        line++;
+        masq = masq << 1;
+    }
+
+    msg = "software: serving irq\n";
+    write(2, msg, strlen(msg));
+
+    handlers[line]();
+}
+
 static int bus(int strobe, int RnW, void *addr, int data)
 {
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
     char data_out[DATA_SIZE*8+1] = {'\0'};
-    char data_in[DATA_SIZE*8+1] = {'\0'};
+    char data_in[DATA_SIZE*8] = {'\0'};
+    char irq_in[IRQ_SIZE*8+1] = {'\0'};
     int i;
     char *msg;
 
@@ -90,14 +121,23 @@ static int bus(int strobe, int RnW, void *addr, int data)
     msg = "software: written\n";
     write(2, msg, strlen(msg));
 
-    if (read(0, data_in, DATA_SIZE*8+1) < DATA_SIZE*8+1)
+    if (read(0, data_in, DATA_SIZE*8) < DATA_SIZE*8)
     {
-        msg = "software: short read\n";
+        msg = "software: short read (data)\n";
+        write(2, msg, strlen(msg));
+    }
+
+    if (read(0, irq_in, IRQ_SIZE*8+1) < IRQ_SIZE*8+1)
+    {
+        msg = "software: short read (irq)\n";
         write(2, msg, strlen(msg));
     }
 
     msg = "software: read\n";
     write(2, msg, strlen(msg));
+
+    serve_irq((unsigned char)from_binary(irq_in, IRQ_SIZE));
+
     return (int)from_binary(data_in, DATA_SIZE);
 }
 

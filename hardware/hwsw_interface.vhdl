@@ -15,6 +15,7 @@ entity hwsw_interface is
     port(
         CLK, RST: in  std_logic;
         DATA_OUT: in  std_logic_vector(15 downto 0);
+        IRQ:      in  std_logic_vector(7 downto 0);
         STROBE:   out std_logic;
         RnW:      out std_logic;
         ADDR:     out std_logic_vector(15 downto 0);
@@ -70,6 +71,7 @@ begin
         end loop;
 
         write(l_out, DATA_OUT);
+        write(l_out, IRQ);
         writeline(output, l_out);
 
         wait on counter;

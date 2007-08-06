@@ -18,6 +18,7 @@ architecture behavioral of hardware is
         port(
             CLK, RST: in  std_logic;
             DATA_OUT: in  std_logic_vector(15 downto 0);
+            IRQ:      in  std_logic_vector(7 downto 0);
             STROBE:   out std_logic;
             RnW:      out std_logic;
             ADDR:     out std_logic_vector(15 downto 0);
@@ -74,6 +75,7 @@ architecture behavioral of hardware is
     signal BUS_ADDR:     std_logic_vector(15 downto 0);
     signal BUS_DATA_IN:  std_logic_vector(15 downto 0);
     signal BUS_DATA_OUT: std_logic_vector(15 downto 0);
+    signal IRQ:          std_logic_vector(7 downto 0) := "00000000";
     signal A, B, Z:      std_logic;
     signal RxData, TxData: std_logic_vector(7 downto 0);
     signal RxAv, TxBusy: std_logic;
@@ -90,7 +92,7 @@ begin
 end process;
 
 hwsw: hwsw_interface
-    port map(CLK, RST, BUS_DATA_OUT, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
+    port map(CLK, RST, BUS_DATA_OUT, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
 enc: encoder
     port map(A, B, Z);
