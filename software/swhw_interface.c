@@ -51,7 +51,7 @@ static long from_binary(char src[], int size)
     return ret;
 }
 
-void set_irq_handles(int line, irq_handler handler)
+void set_irq_handler(int line, irq_handler handler)
 {
   handlers[line] = handler;
 }
