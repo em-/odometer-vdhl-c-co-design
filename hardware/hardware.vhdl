@@ -35,10 +35,7 @@ architecture behavioral of hardware is
         generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST: in std_logic;
               A, B, Z:  in std_logic;
-              STROBE:   in std_logic;
-              RnW:      in std_logic;
-              ADDR:     in std_logic_vector(15 downto 0);
-              BUS_DATA_OUT: out std_logic_vector(15 downto 0));
+              LEFT, RIGHT, REVOLUTION: out std_logic);
     end component;
 
     component uart
@@ -99,7 +96,7 @@ enc: encoder
 
 enc_iface: encoder_interface
     generic map (BASE_ADDR => X"0000")
-    port map(CLK, RST, A, B, Z, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_OUT);
+    port map(CLK, RST, A, B, Z, IRQ(0), IRQ(1), IRQ(2));
 
 u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
