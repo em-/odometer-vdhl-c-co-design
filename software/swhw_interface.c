@@ -79,43 +79,37 @@ static void serve_irq(unsigned char irq)
 
 static int bus(int strobe, int RnW, void *addr, int data)
 {
+    char *control;
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
     char data_out[DATA_SIZE*8+1] = {'\0'};
     char data_in[DATA_SIZE*8] = {'\0'};
     char irq_in[IRQ_SIZE*8+1] = {'\0'};
     char *msg;
 
-    to_binary((long)addr, addr_out, ADDR_SIZE);
-
     if (!strobe)
     {
+        control = "0 1 ";
         memset(addr_out, 'Z', ADDR_SIZE*8);
         memset(data_out, 'Z', DATA_SIZE*8);
-        write(1, "0 1 ", 4);
-        write(1, addr_out, ADDR_SIZE*8);
-        write(1, " ", 1);
-        write(1, data_out, DATA_SIZE*8);
-        write(1, "\n", 1);
     }
     else if (RnW)
     {
+        control = "1 1 ";
+        to_binary((long)addr, addr_out, ADDR_SIZE);
         memset(data_out, 'Z', DATA_SIZE*8);
-        write(1, "1 1 ", 4);
-        write(1, addr_out, ADDR_SIZE*8);
-        write(1, " ", 1);
-        write(1, data_out, DATA_SIZE*8);
-        write(1, "\n", 1);
     }
     else
     {
+        control = "1 0 ";
+        to_binary((long)addr, addr_out, ADDR_SIZE);
         to_binary(data, data_out, DATA_SIZE);
-
-        write(1, "1 0 ", 4);
-        write(1, addr_out, ADDR_SIZE*8);
-        write(1, " ", 1);
-        write(1, data_out, DATA_SIZE*8);
-        write(1, "\n", 1);
     }
+
+    write(1, control, strlen(control));
+    write(1, addr_out, ADDR_SIZE*8);
+    write(1, " ", 1);
+    write(1, data_out, DATA_SIZE*8);
+    write(1, "\n", 1);
 
     msg = "software: written\n";
     write(2, msg, strlen(msg));
