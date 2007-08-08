@@ -83,28 +83,27 @@ static int bus(int strobe, int RnW, void *addr, int data)
     char data_out[DATA_SIZE*8+1] = {'\0'};
     char data_in[DATA_SIZE*8] = {'\0'};
     char irq_in[IRQ_SIZE*8+1] = {'\0'};
-    int i;
     char *msg;
 
     to_binary((long)addr, addr_out, ADDR_SIZE);
 
     if (!strobe)
     {
+        memset(addr_out, 'Z', ADDR_SIZE*8);
+        memset(data_out, 'Z', DATA_SIZE*8);
         write(1, "0 1 ", 4);
-        for (i=0; i<ADDR_SIZE; i++)
-            write(1, "ZZZZZZZZ", 8);
+        write(1, addr_out, ADDR_SIZE*8);
         write(1, " ", 1);
-        for (i=0; i<DATA_SIZE; i++)
-            write(1, "ZZZZZZZZ", 8);
+        write(1, data_out, DATA_SIZE*8);
         write(1, "\n", 1);
     }
     else if (RnW)
     {
+        memset(data_out, 'Z', DATA_SIZE*8);
         write(1, "1 1 ", 4);
         write(1, addr_out, ADDR_SIZE*8);
         write(1, " ", 1);
-        for (i=0; i<DATA_SIZE; i++)
-            write(1, "ZZZZZZZZ", 8);
+        write(1, data_out, DATA_SIZE*8);
         write(1, "\n", 1);
     }
     else
