@@ -111,8 +111,12 @@ static int bus(int strobe, int RnW, void *addr, int data)
     write(1, data_out, DATA_SIZE*8);
     write(1, "\n", 1);
 
-    msg = "software: written\n";
-    write(2, msg, strlen(msg));
+    write(2, "software: -> ", 13);
+    write(2, control, strlen(control));
+    write(2, addr_out, ADDR_SIZE*8);
+    write(2, " ", 1);
+    write(2, data_out, DATA_SIZE*8);
+    write(2, "\n", 1);
 
     if (read(0, data_in, DATA_SIZE*8) < DATA_SIZE*8)
     {
@@ -126,8 +130,11 @@ static int bus(int strobe, int RnW, void *addr, int data)
         write(2, msg, strlen(msg));
     }
 
-    msg = "software: read\n";
-    write(2, msg, strlen(msg));
+    write(2, "software: <-  ", 13);
+    write(2, data_in, DATA_SIZE*8);
+    write(2, " ", 1);
+    write(2, irq_in, IRQ_SIZE*8);
+    write(2, "\n", 1);
 
     serve_irq((unsigned char)from_binary(irq_in, IRQ_SIZE));
 
