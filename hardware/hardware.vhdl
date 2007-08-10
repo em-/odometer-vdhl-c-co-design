@@ -88,6 +88,19 @@ begin
     wait for 0.5 ns;
 end process;
 
+reset: process(CLK)
+    variable resetted: boolean := false;
+begin
+    if rising_edge(CLK) then
+        if resetted = false then
+            RST <= '1';
+            resetted := true;
+        else
+            RST <='0';
+        end if;
+    end if;
+end process;
+
 hwsw: hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 

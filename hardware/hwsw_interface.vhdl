@@ -25,13 +25,15 @@ entity hwsw_interface is
 end hwsw_interface;
 
 architecture behavioral of hwsw_interface is
-    signal counter: integer := 0;
+    signal counter: integer := 2;
 begin
 
 count: process(CLK)
 begin
     if rising_edge(CLK) then
-        counter <= (counter + 1) mod 10;
+        if RST = '0' then
+            counter <= (counter + 1) mod 10;
+        end if;
     end if;
 end process;
 
