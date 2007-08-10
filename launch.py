@@ -9,13 +9,13 @@
 
 from subprocess import Popen, PIPE
 
-A = './software/software'
-B = './hardware/hardware'
+A = ['./software/software']
+B = ['./hardware/hardware']
 
 def main():
-    a = Popen([A], stdin=PIPE, stdout=PIPE)
+    a = Popen(A, stdin=PIPE, stdout=PIPE)
     print "Started %s" % A
-    b = Popen([B], stdin=a.stdout, stdout=a.stdin)
+    b = Popen(B, stdin=a.stdout, stdout=a.stdin)
     print "Started %s" % B
 
     print "Waiting %s" % A
