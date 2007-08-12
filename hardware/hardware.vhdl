@@ -18,13 +18,26 @@ architecture behavioral of hardware is
         port(
             CLK, RST: in  std_logic;
             DATA_OUT: in  std_logic_vector(15 downto 0);
-            IRQ:      in  std_logic_vector(7 downto 0);
+            IRQ:      in  std_logic;
             STROBE:   out std_logic;
             RnW:      out std_logic;
             ADDR:     out std_logic_vector(15 downto 0);
             DATA_IN:  out std_logic_vector(15 downto 0);
             FINISH:   out boolean
             );
+    end component;
+
+    component interrupt_controller
+        generic (BASE_ADDR: std_logic_vector(15 downto 0));
+        port(
+            CLK, RST:     in  std_logic;
+            REQUESTS:     in  std_logic_vector(15 downto 0);
+            IRQ:          out std_logic;
+            BUS_STROBE:   in  std_logic;
+            BUS_RnW:      in  std_logic;
+            BUS_ADDR:     in  std_logic_vector(15 downto 0);
+            BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
+            BUS_DATA_OUT: out std_logic_vector(15 downto 0));
     end component;
 
     component encoder
@@ -72,7 +85,8 @@ architecture behavioral of hardware is
     signal BUS_ADDR:     std_logic_vector(15 downto 0);
     signal BUS_DATA_IN:  std_logic_vector(15 downto 0);
     signal BUS_DATA_OUT: std_logic_vector(15 downto 0);
-    signal IRQ:          std_logic_vector(7 downto 0) := "00000000";
+    signal REQUESTS:     std_logic_vector(15 downto 0) := (others => '0');
+    signal IRQ:          std_logic;
     signal A, B, Z:      std_logic;
     signal RxData, TxData: std_logic_vector(7 downto 0);
     signal RxAv, TxBusy: std_logic;
@@ -104,18 +118,22 @@ end process;
 hwsw: hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
+irq_ctrl: interrupt_controller
+    generic map (BASE_ADDR => X"0000")
+    port map(CLK, RST, REQUESTS, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
+
 enc: encoder
     port map(A, B, Z);
 
 enc_iface: encoder_interface
-    generic map (BASE_ADDR => X"0000")
-    port map(CLK, RST, A, B, Z, IRQ(0), IRQ(1), IRQ(2));
+    generic map (BASE_ADDR => X"0001")
+    port map(CLK, RST, A, B, Z, REQUESTS(0), REQUESTS(1), REQUESTS(2));
 
 u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
 serial_iface: serial_interface
-    generic map (BASE_ADDR => X"0001")
+    generic map (BASE_ADDR => X"0002")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 

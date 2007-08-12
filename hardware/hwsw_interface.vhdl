@@ -15,7 +15,7 @@ entity hwsw_interface is
     port(
         CLK, RST: in  std_logic;
         DATA_OUT: in  std_logic_vector(15 downto 0);
-        IRQ:      in  std_logic_vector(7 downto 0);
+        IRQ:      in  std_logic;
         STROBE:   out std_logic;
         RnW:      out std_logic;
         ADDR:     out std_logic_vector(15 downto 0);
@@ -31,9 +31,7 @@ begin
 count: process(CLK)
 begin
     if rising_edge(CLK) then
-        if RST = '0' then
-            counter <= (counter + 1) mod 10;
-        end if;
+        counter <= (counter + 1) mod 10;
     end if;
 end process;
 

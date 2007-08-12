@@ -77,7 +77,7 @@ static void serve_irq(unsigned char irq)
     handlers[line]();
 }
 
-static int bus(int strobe, int RnW, void *addr, int data)
+static int bus(int strobe, int RnW, void *addr, int data, int *dest)
 {
     char *control;
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
@@ -124,7 +124,7 @@ static int bus(int strobe, int RnW, void *addr, int data)
         write(2, msg, strlen(msg));
     }
 
-    if (read(0, irq_in, IRQ_SIZE*8+1) < IRQ_SIZE*8+1)
+    if (read(0, irq_in, 1+1) < 1+1)
     {
         msg = "software: short read (irq)\n";
         write(2, msg, strlen(msg));
@@ -133,25 +133,38 @@ static int bus(int strobe, int RnW, void *addr, int data)
     write(2, "software: <-  ", 13);
     write(2, data_in, DATA_SIZE*8);
     write(2, " ", 1);
-    write(2, irq_in, IRQ_SIZE*8);
+    write(2, irq_in, 1);
     write(2, "\n", 1);
 
-    serve_irq((unsigned char)from_binary(irq_in, IRQ_SIZE));
+    if (dest != NULL)
+    {
+        *dest = (int)from_binary(data_in, DATA_SIZE);
+    }
 
-    return (int)from_binary(data_in, DATA_SIZE);
+    return from_binary(irq_in, IRQ_SIZE);
 }
 
 int bus_read(void *address)
 {
-    return (int)bus(1, 1, address, 0);
+    int data, irq;
+    irq =bus(1, 1, address, 0, &data);
+    if (irq != 0)
+        serve_irq(irq);
+    return data;
 }
 
 void bus_write(void *address, int data)
 {
-    bus(1, 0, address, data);
+    int irq;
+    irq = bus(1, 0, address, data, NULL);
+    if (irq != 0)
+        serve_irq(irq);
 }
 
 void bus_noop()
 {
-    bus(0, 0, NULL, 0);
+    int irq;
+    irq = bus(0, 0, NULL, 0, NULL);
+    if (irq != 0)
+        serve_irq(irq);
 }
