@@ -20,14 +20,21 @@ process
 begin
     A <= '0';
     B <= '0';
-    wait for 1 ns;
-    report "foo";
+    wait for 1 us;
     A <= '1';
-    wait for 5 ns;
+    wait for 5 us;
     B <= '1';
-    report "bar";
-    wait for 2 ns;
-    report "baz";
+    wait for 2 us;
+    A <= '0';
+    wait for 5 us;
+    B <= '0';
+    report "foo";
+    wait for 2 us;
+    A <= '1';
+    wait for 5 us;
+    B <= '1';
+    wait for 2 us;
+    A <= '0';
     wait;
 end process;
 end behavioral;
