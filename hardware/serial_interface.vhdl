@@ -33,34 +33,32 @@ architecture behavioral of serial_interface is
                                     std_logic_vector(unsigned(BASE_ADDR)+1);
   begin
 
-  process(CLK)
+  process(CLK, RST)
   begin
-     if rising_edge(CLK) then
-        if (RST = '1') then
-  	   ReadA <= '0';
-  	   LoadA <= '0';
-  	else
-           BUS_DATA_OUT <= (others => 'Z');
+     if RST = '1' then
+        ReadA <= '0';
+        LoadA <= '0';
+     elsif rising_edge(CLK) then
+        BUS_DATA_OUT <= (others => 'Z');
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = DATA_ADDR) then -- write byte to Tx
-              TxData <= BUS_DATA_IN(7 downto 0);
-	      LoadA <= '1';   -- Load signal
-           else
-              LoadA <= '0';
-           end if;
+	if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = DATA_ADDR) then -- write byte to Tx
+           TxData <= BUS_DATA_IN(7 downto 0);
+	   LoadA <= '1';   -- Load signal
+        else
+           LoadA <= '0';
+        end if;
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = DATA_ADDR) then -- Read byte from Rx
-	       ReadA <= '1';   -- Read signal
-               BUS_DATA_OUT <= (others => '0');
-               BUS_DATA_OUT(7 downto 0) <= RxData;
-           else
-               ReadA <= '0';
-           end if;
+	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = DATA_ADDR) then -- Read byte from Rx
+	    ReadA <= '1';   -- Read signal
+            BUS_DATA_OUT <= (others => '0');
+            BUS_DATA_OUT(7 downto 0) <= RxData;
+        else
+            ReadA <= '0';
+        end if;
 
-	   if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = STATUS_ADDR) then -- Read status
-               BUS_DATA_OUT <= (others => '0');
-               BUS_DATA_OUT(1 downto 0) <= TxBusy & RxAv;
-           end if;
+	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = STATUS_ADDR) then -- Read status
+            BUS_DATA_OUT <= (others => '0');
+            BUS_DATA_OUT(1 downto 0) <= TxBusy & RxAv;
         end if;
      end if;
   end process;

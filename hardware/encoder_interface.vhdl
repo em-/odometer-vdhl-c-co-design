@@ -28,7 +28,7 @@ begin
 process (CLK, RST)
     variable OLD_Z: std_logic;
 begin
-    if RST = '0' then
+    if RST = '1' then
         OLD_Z := '0';
         REVOLUTION <= '0';
     elsif rising_edge(CLK) then
@@ -43,8 +43,10 @@ end process;
 
 process (CLK, RST)
 begin
-    if RST = '0' then
+    if RST = '1' then
         current_state <= START_00;
+        LEFT  <= '0';
+        RIGHT <= '0';
     elsif rising_edge(CLK) then
         Quad <= A & B;
 
