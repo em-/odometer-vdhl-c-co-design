@@ -22,9 +22,11 @@ architecture behavioral of interrupt_controller is
 begin
    outstanding_logic:
    for i in REQUESTS'range generate
-      process (REQUESTS(i), clear(i))
+      process (RST, REQUESTS(i), clear(i))
       begin
-         if clear(i) = '1' then
+         if RST = '1' then
+            outstanding(i) <= '0';
+         elsif clear(i) = '1' then
             outstanding(i) <= '0';
          elsif rising_edge(REQUESTS(i)) then
             outstanding(i) <= '1';
