@@ -1,6 +1,11 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+-- File: interrupt_controller.vhdl
+-- Classe:
+-- Autore: Emanuele Aina <em@nerd.ocracy.org>
+-- Licenza: LGPL
+-- Note: Simple interrupt controller
+
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity interrupt_controller is
     generic (BASE_ADDR: std_logic_vector(15 downto 0));
