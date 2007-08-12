@@ -44,12 +44,12 @@ static long from_binary(char src[], int size)
 
     for (i=0; i<size*8; i++)
     {
+        ret = ret << 1;
+
         if (src[i] == '1')
         {
             ret = ret | 1;
         }
-
-        ret = ret << 1;
     }
     return ret;
 }
