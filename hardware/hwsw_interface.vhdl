@@ -25,7 +25,7 @@ entity hwsw_interface is
 end hwsw_interface;
 
 architecture behavioral of hwsw_interface is
-    signal counter: integer := 2;
+    signal counter: integer := 0;
 begin
 
 count: process(CLK)
@@ -65,14 +65,16 @@ begin
         ADDR    <= t_ADDR;
         DATA_IN <= t_DATA_IN;
 
-        while counter /= 0 loop
-            wait on counter;
-            STROBE <= '0';
-        end loop;
+        wait on counter;
+        STROBE <= '0';
 
         write(l_out, DATA_OUT);
         write(l_out, IRQ);
         writeline(output, l_out);
+
+        while counter /= 0 loop
+            wait on counter;
+        end loop;
 
         wait on counter;
     end loop;
