@@ -81,7 +81,6 @@ static void serve_irq()
       handlers[line]();
    
     /* Clear the handled IRQ */
-    masq = 0x2;
     bus(1, 0, IRQ_ADDR, masq, NULL);
 }
 
