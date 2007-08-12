@@ -4,7 +4,8 @@
 
 #define DATA_SIZE 2
 #define ADDR_SIZE 2
-#define IRQ_SIZE 1
+
+#define IRQ_ADDR 0x0000
 
 /*
  * File: swhw_interface.c
@@ -14,7 +15,9 @@
  * Note: Software <-> Hardware Interface communicating through stdin/stdout
  */
 
-static irq_handler handlers[IRQ_SIZE*8] = {NULL, };
+static irq_handler handlers[DATA_SIZE*8] = {NULL, };
+
+static int bus(int strobe, int RnW, void *addr, int data, int *dest);
 
 static void to_binary(long data, char dest[], int size)
 {
@@ -56,16 +59,16 @@ void set_irq_handler(int line, irq_handler handler)
   handlers[line] = handler;
 }
 
-static void serve_irq(unsigned char irq)
+static void serve_irq()
 {
     int line = 0;
     unsigned char masq=1;
     char *msg;
+    int irq;
 
-    if (irq == 0)
-      return;
+    bus(1, 1, IRQ_ADDR, 0, &irq);
 
-    while (masq && !(line & masq))
+    while (masq && !(irq & masq))
     {
         line++;
         masq = masq << 1;
@@ -74,7 +77,12 @@ static void serve_irq(unsigned char irq)
     msg = "software: serving irq\n";
     write(2, msg, strlen(msg));
 
-    handlers[line]();
+    if (handlers[line] != NULL)
+      handlers[line]();
+   
+    /* Clear the handled IRQ */
+    masq = 0x2;
+    bus(1, 0, IRQ_ADDR, masq, NULL);
 }
 
 static int bus(int strobe, int RnW, void *addr, int data, int *dest)
@@ -83,7 +91,7 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
     char data_out[DATA_SIZE*8+1] = {'\0'};
     char data_in[DATA_SIZE*8] = {'\0'};
-    char irq_in[IRQ_SIZE*8+1] = {'\0'};
+    char irq_in[1+1] = {'\0'};
     char *msg;
 
     if (!strobe)
@@ -141,30 +149,31 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
         *dest = (int)from_binary(data_in, DATA_SIZE);
     }
 
-    return from_binary(irq_in, IRQ_SIZE);
+    return irq_in[0] == '1';
 }
 
 int bus_read(void *address)
 {
-    int data, irq;
-    irq =bus(1, 1, address, 0, &data);
-    if (irq != 0)
-        serve_irq(irq);
+    int data;
+    if (bus(1, 1, address, 0, &data))
+    {
+        serve_irq();
+    }
     return data;
 }
 
 void bus_write(void *address, int data)
 {
-    int irq;
-    irq = bus(1, 0, address, data, NULL);
-    if (irq != 0)
-        serve_irq(irq);
+    if (bus(1, 0, address, data, NULL))
+    {
+        serve_irq();
+    }
 }
 
 void bus_noop()
 {
-    int irq;
-    irq = bus(0, 0, NULL, 0, NULL);
-    if (irq != 0)
-        serve_irq(irq);
+    if (bus(0, 0, NULL, 0, NULL))
+    {
+        serve_irq();
+    }
 }
