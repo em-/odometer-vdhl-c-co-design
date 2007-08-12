@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 #include "swhw_interface.h"
 
 #define DATA_SIZE 2
@@ -63,7 +64,6 @@ static void serve_irq()
 {
     int line = 0;
     unsigned char masq=1;
-    char *msg;
     int irq;
 
     bus(1, 1, IRQ_ADDR, 0, &irq);
@@ -74,8 +74,7 @@ static void serve_irq()
         masq = masq << 1;
     }
 
-    msg = "software: serving irq\n";
-    write(2, msg, strlen(msg));
+    fprintf(stderr, "software: serving irq %d\n", line);
 
     if (handlers[line] != NULL)
       handlers[line]();
@@ -91,7 +90,6 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
     char data_out[DATA_SIZE*8+1] = {'\0'};
     char data_in[DATA_SIZE*8] = {'\0'};
     char irq_in[1+1] = {'\0'};
-    char *msg;
 
     if (!strobe)
     {
@@ -118,30 +116,21 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
     write(1, data_out, DATA_SIZE*8);
     write(1, "\n", 1);
 
-    write(2, "software: -> ", 13);
-    write(2, control, strlen(control));
-    write(2, addr_out, ADDR_SIZE*8);
-    write(2, " ", 1);
-    write(2, data_out, DATA_SIZE*8);
-    write(2, "\n", 1);
+    fprintf(stderr, "software: -> %s%.*s %.*s\n", 
+            control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
 
     if (read(0, data_in, DATA_SIZE*8) < DATA_SIZE*8)
     {
-        msg = "software: short read (data)\n";
-        write(2, msg, strlen(msg));
+        fprintf(stderr, "software: short read (data)\n");
     }
 
     if (read(0, irq_in, 1+1) < 1+1)
     {
-        msg = "software: short read (irq)\n";
-        write(2, msg, strlen(msg));
+        fprintf(stderr, "software: short read (irq)\n");
     }
 
-    write(2, "software: <-  ", 13);
-    write(2, data_in, DATA_SIZE*8);
-    write(2, " ", 1);
-    write(2, irq_in, 1);
-    write(2, "\n", 1);
+    fprintf(stderr, "software: <- %.*s %.1s\n", 
+            DATA_SIZE*8, data_in, irq_in);
 
     if (dest != NULL)
     {
