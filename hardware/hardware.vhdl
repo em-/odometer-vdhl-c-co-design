@@ -74,7 +74,8 @@ architecture behavioral of hardware is
               BUS_RnW:      in  std_logic;
               BUS_ADDR:     in  std_logic_vector(15 downto 0);
               BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
-              BUS_DATA_OUT: out std_logic_vector(15 downto 0));
+              BUS_DATA_OUT: out std_logic_vector(15 downto 0);
+              IRQ_OUT:      out std_logic);
     end component;
 
     signal FINISH: boolean := false;
@@ -135,6 +136,7 @@ u: uart
 serial_iface: serial_interface
     generic map (BASE_ADDR => X"0002")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
-             BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
+             BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,
+             REQUESTS(3));
 
 end behavioral;

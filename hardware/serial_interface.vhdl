@@ -24,7 +24,8 @@ entity serial_interface is
           BUS_RnW:      in  std_logic;
           BUS_ADDR:     in  std_logic_vector(15 downto 0);
           BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
-          BUS_DATA_OUT: out std_logic_vector(15 downto 0));
+          BUS_DATA_OUT: out std_logic_vector(15 downto 0);
+          IRQ_OUT:      out std_logic);
 end serial_interface;
 
 architecture behavioral of serial_interface is
@@ -32,6 +33,22 @@ architecture behavioral of serial_interface is
     constant STATUS_ADDR: std_logic_vector(15 downto 0) := 
                                     std_logic_vector(unsigned(BASE_ADDR)+1);
   begin
+
+  process(CLK, RST)
+     variable old_rxav, old_txbusy: std_logic;
+  begin
+     if RST = '1' then
+        IRQ_OUT <= '0';
+        old_rxav   := '0';
+        old_txbusy := '0';
+     elsif RxAv /= old_rxav or TxBusy /= old_txbusy then
+        if RxAv = '1' or TxBusy = '0' then
+            IRQ_OUT <= '1';
+        end if;
+        old_rxav   := RxAv;
+        old_txbusy := TxBusy;
+     end if;
+  end process;
 
   process(CLK, RST)
   begin
