@@ -116,15 +116,13 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
         to_binary(data, data_out, DATA_SIZE);
     }
 
-    sprintf(output, "%s%.*s %.*s", 
-            control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
+    sprintf(output, "%s%s %s", control, addr_out, data_out);
     printf("%s\n", output);
     fprintf(stderr, "software: -> %s\n", output);
 
     scanf("%s %s", data_in, irq_in);
 
-    fprintf(stderr, "software: <- %.*s %.1s\n", 
-            DATA_SIZE*8, data_in, irq_in);
+    fprintf(stderr, "software: <- %s %s\n", data_in, irq_in);
 
     if (dest != NULL)
     {
