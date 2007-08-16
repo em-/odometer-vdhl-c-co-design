@@ -93,6 +93,8 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
     char data_in[DATA_SIZE*8] = {'\0'};
     char irq_in[1+1] = {'\0'};
 
+    char output[256];
+
     setlinebuf(stdout);
 
     if (!strobe)
@@ -114,12 +116,12 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
         to_binary(data, data_out, DATA_SIZE);
     }
 
-    fprintf(stdout, "%s%.*s %.*s\n", 
+    sprintf(output, "%s%.*s %.*s", 
             control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
-    fprintf(stderr, "software: -> %s%.*s %.*s\n", 
-            control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
+    printf("%s\n", output);
+    fprintf(stderr, "software: -> %s\n", output);
 
-    fscanf(stdin, "%s %s", data_in, irq_in);
+    scanf("%s %s", data_in, irq_in);
 
     fprintf(stderr, "software: <- %.*s %.1s\n", 
             DATA_SIZE*8, data_in, irq_in);
