@@ -20,6 +20,17 @@ void right(void)
     fprintf(stderr, "tick right\n"); 
 }
 
+void revolution(void)
+{
+    fprintf(stderr, "full revolution\n"); 
+}
+
+void command(void)
+{
+    fprintf(stderr, "command\n");
+}
+
+
 int main(void)
 {
     int i;
@@ -27,6 +38,8 @@ int main(void)
 
     set_irq_handler(0, left);
     set_irq_handler(1, right);
+    set_irq_handler(2, revolution);
+    set_irq_handler(3, command);
 
     bus_write(addr, 0x1111);
     bus_read(addr);
