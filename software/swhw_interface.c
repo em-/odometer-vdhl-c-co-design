@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 #include "swhw_interface.h"
@@ -94,6 +93,8 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
     char data_in[DATA_SIZE*8] = {'\0'};
     char irq_in[1+1] = {'\0'};
 
+    setlinebuf(stdout);
+
     if (!strobe)
     {
         control = "0 1 ";
@@ -113,24 +114,12 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
         to_binary(data, data_out, DATA_SIZE);
     }
 
-    write(1, control, strlen(control));
-    write(1, addr_out, ADDR_SIZE*8);
-    write(1, " ", 1);
-    write(1, data_out, DATA_SIZE*8);
-    write(1, "\n", 1);
-
+    fprintf(stdout, "%s%.*s %.*s\n", 
+            control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
     fprintf(stderr, "software: -> %s%.*s %.*s\n", 
             control, ADDR_SIZE*8, addr_out, DATA_SIZE*8, data_out);
 
-    if (read(0, data_in, DATA_SIZE*8) < DATA_SIZE*8)
-    {
-        fprintf(stderr, "software: short read (data)\n");
-    }
-
-    if (read(0, irq_in, 1+1) < 1+1)
-    {
-        fprintf(stderr, "software: short read (irq)\n");
-    }
+    fscanf(stdin, "%s %s", data_in, irq_in);
 
     fprintf(stderr, "software: <- %.*s %.1s\n", 
             DATA_SIZE*8, data_in, irq_in);

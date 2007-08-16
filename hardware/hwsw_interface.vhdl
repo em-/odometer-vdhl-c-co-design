@@ -69,6 +69,7 @@ begin
         STROBE <= '0';
 
         write(l_out, DATA_OUT);
+        write(l_out, space);
         write(l_out, IRQ);
         writeline(output, l_out);
 
