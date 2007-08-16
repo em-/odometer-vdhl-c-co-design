@@ -22,6 +22,7 @@ end uart;
 
 architecture behavioral of uart is
     signal Data: std_logic_vector(7 downto 0);
+    signal busy: boolean;
   begin
 
   load: process
@@ -45,7 +46,7 @@ architecture behavioral of uart is
         read(l, space);
         read(l, loadedData);
 
-        t := i * 1 ns;  -- convert an integer to time
+        t := i * 1 us;  -- convert an integer to time
         if (now < t) then
             wait for t - now + 1 us; -- desynchronize a bit the transitions
         end if;
@@ -57,21 +58,39 @@ architecture behavioral of uart is
 
   process
   begin
+    busy <= false;
     wait on LoadA;
     if rising_edge(LoadA) then
-        TxBusy <= '1';
+        busy <= true;
         wait for 125 us;
-        TxBusy <= '0';
+        busy <= false;
     end if;
   end process;
 
-  process(Data, ReadA)
+  process(RST, CLK)
+    variable unread_data: boolean;
   begin
-    if Data'event then
-        RxAv <= '1';
-        RxData <= Data;
-    elsif rising_edge(ReadA) then
+    if RST = '1' then
         RxAv <= '0';
+        RxData <= (others => '0');
+        TxBusy <= '0';
+        unread_data := false;
+    elsif rising_edge(CLK) then
+        if ReadA = '1' then
+            unread_data := false;
+            RxAv <= '0';
+        end if;
+        if not unread_data then
+            RxData <= Data;
+            RxAv <= '1';
+            unread_data := true;
+        end if;
+
+        if busy then
+            TxBusy <= '1';
+        else
+            TxBusy <= '0';
+        end if;
     end if;
   end process;
 end behavioral;
