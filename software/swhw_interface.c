@@ -87,11 +87,10 @@ static void serve_irq()
 
 static int bus(int strobe, int RnW, void *addr, int data, int *dest)
 {
-    char *control;
     char addr_out[ADDR_SIZE*8+1] = {'\0'};
     char data_out[DATA_SIZE*8+1] = {'\0'};
     char data_in[DATA_SIZE*8] = {'\0'};
-    char irq_in[1+1] = {'\0'};
+    int irq_in;
 
     char output[256];
 
@@ -99,37 +98,34 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
 
     if (!strobe)
     {
-        control = "0 1 ";
         memset(addr_out, 'Z', ADDR_SIZE*8);
         memset(data_out, 'Z', DATA_SIZE*8);
     }
     else if (RnW)
     {
-        control = "1 1 ";
         to_binary((long)addr, addr_out, ADDR_SIZE);
         memset(data_out, 'Z', DATA_SIZE*8);
     }
     else
     {
-        control = "1 0 ";
         to_binary((long)addr, addr_out, ADDR_SIZE);
         to_binary(data, data_out, DATA_SIZE);
     }
 
-    sprintf(output, "%s%s %s", control, addr_out, data_out);
+    sprintf(output, "%d %d %s %s", strobe, RnW, addr_out, data_out);
     printf("%s\n", output);
     fprintf(stderr, "software: -> %s\n", output);
 
-    scanf("%s %s", data_in, irq_in);
+    scanf("%s %d", data_in, &irq_in);
 
-    fprintf(stderr, "software: <- %s %s\n", data_in, irq_in);
+    fprintf(stderr, "software: <- %s %d\n", data_in, irq_in);
 
     if (dest != NULL)
     {
         *dest = (int)from_binary(data_in, DATA_SIZE);
     }
 
-    return irq_in[0] == '1';
+    return irq_in;
 }
 
 int bus_read(void *address)
