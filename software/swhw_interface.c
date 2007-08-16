@@ -17,6 +17,7 @@
  */
 
 static irq_handler handlers[DATA_SIZE*8] = {NULL, };
+static int irq_enabled = 1;
 
 static int bus(int strobe, int RnW, void *addr, int data, int *dest);
 
@@ -76,8 +77,10 @@ static void serve_irq()
 
     fprintf(stderr, "software: serving irq %d\n", line);
 
+    irq_enabled = 0;
     if (handlers[line] != NULL)
       handlers[line]();
+    irq_enabled = 1;
    
     /* Clear the handled IRQ */
     bus(1, 0, IRQ_ADDR, masq, NULL);
@@ -143,7 +146,7 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
 int bus_read(void *address)
 {
     int data;
-    if (bus(1, 1, address, 0, &data))
+    if (bus(1, 1, address, 0, &data) && irq_enabled)
     {
         serve_irq();
     }
@@ -152,7 +155,7 @@ int bus_read(void *address)
 
 void bus_write(void *address, int data)
 {
-    if (bus(1, 0, address, data, NULL))
+    if (bus(1, 0, address, data, NULL) && irq_enabled)
     {
         serve_irq();
     }
@@ -160,7 +163,7 @@ void bus_write(void *address, int data)
 
 void bus_noop()
 {
-    if (bus(0, 0, NULL, 0, NULL))
+    if (bus(0, 0, NULL, 0, NULL) && irq_enabled)
     {
         serve_irq();
     }
