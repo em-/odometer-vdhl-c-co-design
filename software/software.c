@@ -10,6 +10,11 @@
  * Licenza: LGPL
  */
 
+#define SERIAL_DATA_ADDR   (void*)0x0002
+#define SERIAL_STATUS_ADDR (void*)0x0003
+#define SERIAL_STATUS_RXAV   0x1
+#define SERIAL_STATUS_TXBUSY 0x2
+
 void left(void)
 {
     fprintf(stderr, "tick left\n"); 
@@ -27,7 +32,21 @@ void revolution(void)
 
 void command(void)
 {
-    fprintf(stderr, "command\n");
+    int status, data;
+
+    status = bus_read(SERIAL_STATUS_ADDR);
+    fprintf(stderr, "serial status %d\n", status);
+
+    if (status & SERIAL_STATUS_RXAV)
+    {
+      data = bus_read(SERIAL_DATA_ADDR);
+      fprintf(stderr, "received command %d\n", data);
+    }
+
+    if (!(status & SERIAL_STATUS_TXBUSY))
+    {
+      fprintf(stderr, "serial line free\n");
+    }
 }
 
 
