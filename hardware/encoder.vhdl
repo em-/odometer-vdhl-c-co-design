@@ -18,29 +18,41 @@ architecture behavioral of encoder is
    type STATE is (S_00, S_10, S_11, S_01);
    signal current_state: STATE;
    signal left, right: boolean;
-   signal tick: boolean; -- used only to generate events
+   signal tick: boolean := true; -- used only to generate events
+   signal delay: time:= 1 us;
+   signal finish: boolean := false;
 begin
 
 process
 begin
     left <= true;
-    tick <= true;
-    wait for 1 us;
-    tick <= not tick;
+    delay <= 1 us;
+    wait for 0.99 us;
+    delay <= 5 us;
     wait for 5 us;
-    tick <= not tick;
+    delay <= 2 us;
     wait for 2 us;
-    tick <= not tick;
+    delay <= 5 us;
     wait for 5 us;
-    tick <= not tick;
+    delay <= 2 us;
     report "foo";
     wait for 2 us;
-    tick <= not tick;
+    delay <= 5 us;
     wait for 5 us;
-    tick <= not tick;
+    delay <= 2 us;
     wait for 2 us;
-    tick <= not tick;
+    finish <= true;
     wait;
+end process;
+
+process
+begin
+   if finish then
+      wait;
+   else
+      wait for delay;
+      tick <= not tick;
+   end if;
 end process;
 
 process(tick)
