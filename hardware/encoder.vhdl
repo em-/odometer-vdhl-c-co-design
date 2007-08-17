@@ -16,8 +16,9 @@ end encoder;
 
 architecture behavioral of encoder is
    type STATE is (S_00, S_10, S_11, S_01);
+   type MOVEMENT is (NONE, LEFT, RIGHT);
    signal current_state: STATE;
-   signal left, right: boolean;
+   signal direction: MOVEMENT;
    signal tick: boolean := true; -- used only to generate events
    signal delay: time:= 1 us;
    signal finish: boolean := false;
@@ -25,11 +26,10 @@ begin
 
 process
 begin
-    left <= true;
+    direction <= LEFT;
     delay <= 1 us;
     wait for 4 us;
-    left <= false;
-    right <= true;
+    direction <= RIGHT;
     delay <= 2 us;
     wait for 16 us;
     finish <= true;
@@ -50,23 +50,23 @@ process(tick)
 begin
    case current_state is
    when S_00 =>
-      if    left  then current_state <= S_10;
-      elsif right then current_state <= S_01;
+      if    direction = LEFT  then current_state <= S_10;
+      elsif direction = RIGHT then current_state <= S_01;
       end if;
 
    when S_10 =>
-      if    left  then current_state <= S_11;
-      elsif right then current_state <= S_00;
+      if    direction = LEFT  then current_state <= S_11;
+      elsif direction = RIGHT then current_state <= S_00;
       end if;
 
    when S_11 =>
-      if    left  then current_state <= S_01;
-      elsif right then current_state <= S_10;
+      if    direction = LEFT  then current_state <= S_01;
+      elsif direction = RIGHT then current_state <= S_10;
       end if;
 
    when S_01 =>
-      if    left  then current_state <= S_00;
-      elsif right then current_state <= S_11;
+      if    direction = LEFT  then current_state <= S_00;
+      elsif direction = RIGHT then current_state <= S_11;
       end if;
 
    when others =>
