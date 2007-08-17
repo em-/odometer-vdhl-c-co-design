@@ -22,7 +22,7 @@ end uart;
 
 architecture behavioral of uart is
     signal Data: std_logic_vector(7 downto 0);
-    signal busy: boolean;
+    signal new_data, busy: boolean;
   begin
 
   load: process
@@ -58,6 +58,17 @@ architecture behavioral of uart is
 
   process
   begin
+    new_data <= false;
+    wait on Data;
+    new_data <= true;
+    wait on CLK;
+    while not rising_edge(CLK) loop
+        wait on CLK;
+    end loop;
+  end process;
+
+  process
+  begin
     busy <= false;
     wait on LoadA;
     if rising_edge(LoadA) then
@@ -80,7 +91,8 @@ architecture behavioral of uart is
             unread_data := false;
             RxAv <= '0';
         end if;
-        if not unread_data then
+
+        if not unread_data and new_data then
             RxData <= Data;
             RxAv <= '1';
             unread_data := true;
