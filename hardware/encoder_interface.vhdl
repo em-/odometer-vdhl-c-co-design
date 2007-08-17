@@ -56,7 +56,7 @@ begin
         case current_state is
         when START_00 =>
             case Quad is
-                when "01" => current_state <= LR_01;
+                when "01" => current_state <= RL_01;
                 when "10" => current_state <= LR_10;
                 when others => current_state <= START_00;
             end case;
