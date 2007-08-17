@@ -27,20 +27,11 @@ process
 begin
     left <= true;
     delay <= 1 us;
-    wait for 0.99 us;
-    delay <= 5 us;
-    wait for 5 us;
+    wait for 4 us;
+    left <= false;
+    right <= true;
     delay <= 2 us;
-    wait for 2 us;
-    delay <= 5 us;
-    wait for 5 us;
-    delay <= 2 us;
-    report "foo";
-    wait for 2 us;
-    delay <= 5 us;
-    wait for 5 us;
-    delay <= 2 us;
-    wait for 2 us;
+    wait for 16 us;
     finish <= true;
     wait;
 end process;
