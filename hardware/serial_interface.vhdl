@@ -41,9 +41,12 @@ architecture behavioral of serial_interface is
         IRQ_OUT <= '0';
         old_rxav   := '0';
         old_txbusy := '0';
-     elsif RxAv /= old_rxav or TxBusy /= old_txbusy then
-        if RxAv = '1' or TxBusy = '0' then
-            IRQ_OUT <= '1';
+     elsif rising_edge(CLK) then
+        IRQ_OUT <= '0';
+        if RxAv /= old_rxav or TxBusy /= old_txbusy then
+           if RxAv = '1' or TxBusy = '0' then
+              IRQ_OUT <= '1';
+           end if; 
         end if;
         old_rxav   := RxAv;
         old_txbusy := TxBusy;
