@@ -11,7 +11,8 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 
 entity encoder is
-    port (A, B, Z: out std_logic);
+    port (A, B, Z: out std_logic;
+          FINISH: in boolean);
 end encoder;
 
 architecture behavioral of encoder is
@@ -21,7 +22,6 @@ architecture behavioral of encoder is
    signal direction: MOVEMENT;
    signal tick: boolean := true; -- used only to generate events
    signal delay: time:= 1 us;
-   signal finish: boolean := false;
 begin
 
 process
@@ -31,14 +31,12 @@ begin
     wait for 4 us;
     direction <= RIGHT;
     delay <= 2 us;
-    wait for 16 us;
-    finish <= true;
     wait;
 end process;
 
 process
 begin
-   if finish then
+   if FINISH then
       wait;
    else
       wait for delay;

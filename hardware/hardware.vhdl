@@ -41,7 +41,8 @@ architecture behavioral of hardware is
     end component;
 
     component encoder
-        port (A, B, Z: out std_logic);
+        port (A, B, Z: out std_logic;
+              FINISH: in boolean);
     end component;
 
     component encoder_interface
@@ -124,7 +125,7 @@ irq_ctrl: interrupt_controller
     port map(CLK, RST, REQUESTS, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
 enc: encoder
-    port map(A, B, Z);
+    port map(A, B, Z, FINISH);
 
 enc_iface: encoder_interface
     generic map (BASE_ADDR => X"0001")
