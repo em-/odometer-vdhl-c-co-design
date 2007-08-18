@@ -6,6 +6,7 @@
 #define ADDR_SIZE 2
 
 #define IRQ_ADDR 0x0000
+#define DEBUG 0
 
 /*
  * File: swhw_interface.c
@@ -114,11 +115,14 @@ static int bus(int strobe, int RnW, void *addr, int data, int *dest)
 
     sprintf(output, "%d %d %s %s", strobe, RnW, addr_out, data_out);
     printf("%s\n", output);
-    fprintf(stderr, "software: -> %s\n", output);
+
+    if(DEBUG)
+        fprintf(stderr, "software: -> %s\n", output);
 
     scanf("%s %d", data_in, &irq_in);
 
-    fprintf(stderr, "software: <- %s %d\n", data_in, irq_in);
+    if(DEBUG)
+        fprintf(stderr, "software: <- %s %d\n", data_in, irq_in);
 
     if (dest != NULL)
     {

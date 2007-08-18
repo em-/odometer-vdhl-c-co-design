@@ -26,6 +26,7 @@ end hwsw_interface;
 
 architecture behavioral of hwsw_interface is
     signal counter: integer := 0;
+    constant DEBUG: boolean := false;
 begin
 
 count: process(CLK)
@@ -50,7 +51,10 @@ begin
             wait;
         end if;
         readline(input, l_in);
-        report "slave read";
+
+        if DEBUG then
+            report "slave read";
+        end if;
 
         read(l_in, t_STROBE);
         read(l_in, space);
