@@ -22,6 +22,16 @@ enum _serial_wait {
 };
 typedef enum _serial_wait serial_wait;
 
+enum _command {
+    COMMAND_SET_COEFF       = 0,
+    COMMAND_SET_K           = 1,
+    COMMAND_SET_K1          = 2,
+    COMMAND_SET_K2          = 3,
+    COMMAND_GET_ANGLE       = 4,
+    COMMAND_GET_REVOLUTIONS = 5
+};
+typedef enum _command command;
+
 void command_received(int command, int data) {
     fprintf(stderr, "received command %d: %d\n", command, data);
 }
@@ -50,7 +60,17 @@ void serial_received_data(unsigned char data)
     switch(wait) {
         case SERIAL_WAIT_COMMAND:
             command = data;
-            wait = SERIAL_WAIT_DATA_1;
+            switch(command) {
+                case COMMAND_SET_COEFF:
+                case COMMAND_SET_K:
+                case COMMAND_SET_K1:
+                case COMMAND_SET_K2:
+                    wait = SERIAL_WAIT_DATA_1;
+                    break;
+                default:
+                    wait = SERIAL_WAIT_COMMAND;
+                    command_received(command, 0);
+            }
             break;
         case SERIAL_WAIT_DATA_1:
             data_1 = data;
