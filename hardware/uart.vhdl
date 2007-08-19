@@ -73,7 +73,7 @@ architecture behavioral of uart is
     wait on LoadA;
     if rising_edge(LoadA) then
         busy <= true;
-        wait for 125 us;
+        wait for 8 us;
         busy <= false;
     end if;
   end process;
