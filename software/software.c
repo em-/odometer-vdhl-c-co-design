@@ -15,17 +15,17 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-void left(void)
+void encoder_left(void)
 {
     fprintf(stderr, "tick left\n"); 
 }
 
-void right(void)
+void encoder_right(void)
 {
     fprintf(stderr, "tick right\n"); 
 }
 
-void revolution(void)
+void encoder_revolution(void)
 {
     fprintf(stderr, "full revolution\n"); 
 }
@@ -65,9 +65,9 @@ int main(void)
     int i;
     void *addr = (void *)0x1111;
 
-    set_irq_handler(0, left);
-    set_irq_handler(1, right);
-    set_irq_handler(2, revolution);
+    set_irq_handler(0, encoder_left);
+    set_irq_handler(1, encoder_right);
+    set_irq_handler(2, encoder_revolution);
     set_irq_handler(3, serial_interrupt);
 
     bus_write(addr, 0x1111);
