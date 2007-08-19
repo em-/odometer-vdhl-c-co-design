@@ -33,6 +33,18 @@ void set_K2(int data) {
     fprintf(stderr, "setting K2: %d\n", K2);
 }
 
+void get_angle(int data) {
+    angle = 3590;
+    serial_send(angle);
+    fprintf(stderr, "getting angle: %d\n", angle);
+}
+
+void get_revolutions(int data) {
+    revolutions = 1000;
+    serial_send(revolutions);
+    fprintf(stderr, "getting revolutions: %d\n", revolutions);
+}
+
 void encoder_left(void)
 {
     fprintf(stderr, "tick left\n"); 
@@ -57,6 +69,8 @@ int main(void)
         {2, set_K},
         {2, set_K1},
         {2, set_K2},
+        {0, get_angle},
+        {0, get_revolutions}
     };
 
     command_nr = sizeof(command_handlers)/sizeof(serial_handler);

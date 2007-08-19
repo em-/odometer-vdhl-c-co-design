@@ -18,6 +18,7 @@
 
 int handlers_size = 0;
 serial_handler *handlers = NULL;
+int outstanding_data = -1;
 
 static void serial_received_data(unsigned char data)
 {
@@ -43,13 +44,24 @@ static void serial_received_data(unsigned char data)
 
 static void serial_line_free()
 {
-    fprintf(stderr, "serial line free\n");
+    if (outstanding_data >= 0) {
+        bus_write(SERIAL_DATA_ADDR, outstanding_data);
+        outstanding_data = -1;
+    }
 }
 
 void serial_set_command_handlers(serial_handler *array, int size)
 {
     handlers = array;
     handlers_size = size;
+}
+
+void serial_send(int data)
+{
+    /* send the high byte first and store the lower one */
+    outstanding_data = data & 0xFF;
+    data = (data >> 1) & 0xFF;
+    bus_write(SERIAL_DATA_ADDR, data);
 }
 
 void serial_interrupt(void)
@@ -59,14 +71,14 @@ void serial_interrupt(void)
     status = bus_read(SERIAL_STATUS_ADDR);
     fprintf(stderr, "serial status %d\n", status);
 
+    if (!(status & SERIAL_STATUS_TXBUSY))
+    {
+      serial_line_free();
+    }
+
     if (status & SERIAL_STATUS_RXAV)
     {
       data = bus_read(SERIAL_DATA_ADDR);
       serial_received_data(data);
-    }
-
-    if (!(status & SERIAL_STATUS_TXBUSY))
-    {
-      serial_line_free();
     }
 }

@@ -11,4 +11,5 @@ typedef struct {
 } serial_handler;
 
 void serial_set_command_handlers(serial_handler *array, int size);
+void serial_send(int data);
 void serial_interrupt(void);
