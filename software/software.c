@@ -37,10 +37,10 @@ void encoder_revolution(void)
     fprintf(stderr, "full revolution\n"); 
 }
 
-void serial_received_data(data)
+void serial_received_data(unsigned char data)
 {
     static serial_wait wait = SERIAL_WAIT_COMMAND;
-    static int command, data_1, data_2;
+    static unsigned char command, data_1, data_2;
 
     switch(wait) {
         case SERIAL_WAIT_COMMAND:
