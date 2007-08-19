@@ -94,16 +94,11 @@ void serial_interrupt(void)
 int main(void)
 {
     int i;
-    void *addr = (void *)0x1111;
 
     set_irq_handler(0, encoder_left);
     set_irq_handler(1, encoder_right);
     set_irq_handler(2, encoder_revolution);
     set_irq_handler(3, serial_interrupt);
-
-    bus_write(addr, 0x1111);
-    bus_read(addr);
-    bus_noop();
 
     for(i=0; i<1500; i++)
       bus_noop();
