@@ -30,7 +30,17 @@ void revolution(void)
     fprintf(stderr, "full revolution\n"); 
 }
 
-void command(void)
+void serial_received_data(data)
+{
+    fprintf(stderr, "received command %d\n", data);
+}
+
+void serial_line_free()
+{
+    fprintf(stderr, "serial line free\n");
+}
+
+void serial_interrupt(void)
 {
     int status, data;
 
@@ -40,12 +50,12 @@ void command(void)
     if (status & SERIAL_STATUS_RXAV)
     {
       data = bus_read(SERIAL_DATA_ADDR);
-      fprintf(stderr, "received command %d\n", data);
+      serial_received_data(data);
     }
 
     if (!(status & SERIAL_STATUS_TXBUSY))
     {
-      fprintf(stderr, "serial line free\n");
+      serial_line_free();
     }
 }
 
@@ -58,7 +68,7 @@ int main(void)
     set_irq_handler(0, left);
     set_irq_handler(1, right);
     set_irq_handler(2, revolution);
-    set_irq_handler(3, command);
+    set_irq_handler(3, serial_interrupt);
 
     bus_write(addr, 0x1111);
     bus_read(addr);
