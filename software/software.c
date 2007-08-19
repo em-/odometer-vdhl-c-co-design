@@ -22,6 +22,10 @@ enum _serial_wait {
 };
 typedef enum _serial_wait serial_wait;
 
+void command_received(int command, int data) {
+    fprintf(stderr, "received command %d: %d\n", command, data);
+}
+
 void encoder_left(void)
 {
     fprintf(stderr, "tick left\n"); 
@@ -40,7 +44,8 @@ void encoder_revolution(void)
 void serial_received_data(unsigned char data)
 {
     static serial_wait wait = SERIAL_WAIT_COMMAND;
-    static unsigned char command, data_1, data_2;
+    static unsigned char command, data_1;
+    int command_data;
 
     switch(wait) {
         case SERIAL_WAIT_COMMAND:
@@ -52,9 +57,11 @@ void serial_received_data(unsigned char data)
             wait = SERIAL_WAIT_DATA_2;
             break;
         case SERIAL_WAIT_DATA_2:
-            data_2 = data;
+            command_data = data_1;
+            command_data = command_data << 8;
+            command_data = command_data | data;
             wait = SERIAL_WAIT_COMMAND;
-            fprintf(stderr, "received command %d: %d %d\n", command, data_1, data_2);
+            command_received(command, command_data);
             break;
     }
 }
