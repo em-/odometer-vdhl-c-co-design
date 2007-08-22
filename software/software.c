@@ -13,6 +13,13 @@
 
 int coeff, K, K1, K2, angle, revolutions;
 
+int started = 0;
+enum Direction {
+  DIRECTION_NONE,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT
+} direction = DIRECTION_NONE;
+
 void set_coeff(int data) {
     coeff = data;
     fprintf(stderr, "setting coeff: %d\n", coeff);
@@ -34,30 +41,44 @@ void set_K2(int data) {
 }
 
 void get_angle(int data) {
-    angle = 3590;
     serial_send(angle);
     fprintf(stderr, "getting angle: %d\n", angle);
 }
 
 void get_revolutions(int data) {
-    revolutions = 1000;
     serial_send(revolutions);
     fprintf(stderr, "getting revolutions: %d\n", revolutions);
 }
 
 void encoder_left(void)
 {
-    fprintf(stderr, "tick left\n"); 
+    fprintf(stderr, "tick left %d-%d\n", angle, coeff);
+    if (started) {
+        angle -= coeff;
+        direction = DIRECTION_LEFT;
+    }
 }
 
 void encoder_right(void)
 {
-    fprintf(stderr, "tick right\n"); 
+    fprintf(stderr, "tick right %d+%d\n", angle, coeff);
+    if (started) {
+        angle += coeff;
+        direction = DIRECTION_RIGHT;
+    }
 }
 
 void encoder_revolution(void)
 {
-    fprintf(stderr, "full revolution\n"); 
+    started = 1;
+    angle = 0;
+    if (direction == DIRECTION_LEFT) {
+        fprintf(stderr, "full revolution %d-1\n", revolutions);
+        revolutions--;
+    } else if (direction == DIRECTION_RIGHT) {
+        fprintf(stderr, "full revolution %d+1\n", revolutions);
+        revolutions++;
+    }
 }
 
 
@@ -72,6 +93,11 @@ int main(void)
         {0, get_angle},
         {0, get_revolutions}
     };
+
+    coeff=900;
+    K=1800;
+    K1=900;
+    K2=2700;
 
     command_nr = sizeof(command_handlers)/sizeof(serial_handler);
     serial_set_command_handlers(command_handlers, command_nr);
