@@ -46,7 +46,7 @@ architecture behavioral of uart is
         read(l, space);
         read(l, loadedData);
 
-        t := i * 10 ns;  -- convert an integer to time
+        t := i * 1 us;  -- convert an integer to time
         if (now < t) then
             wait for t - now + 1 ns; -- desynchronize a bit the transitions
         end if;

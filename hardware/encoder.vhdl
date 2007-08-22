@@ -29,7 +29,7 @@ process
 begin
     direction <= LEFT;
     delay <= 100 ns;
-    wait for 2410 ns;
+    wait for 69120 ns;
     direction <= RIGHT;
     wait;
 end process;
