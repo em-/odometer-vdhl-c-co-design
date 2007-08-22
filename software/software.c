@@ -70,7 +70,8 @@ void encoder_right(void)
 
 void encoder_revolution(void)
 {
-    started = 1;
+    if (coeff != 0)
+        started = 1;
     angle = 0;
     if (direction == DIRECTION_LEFT) {
         fprintf(stderr, "full revolution %d-1\n", revolutions);
