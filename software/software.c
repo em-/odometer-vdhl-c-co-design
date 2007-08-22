@@ -20,6 +20,15 @@ enum Direction {
   DIRECTION_RIGHT
 } direction = DIRECTION_NONE;
 
+void check_angle(void)
+{
+    if ((angle > K1) 
+        && (angle < K2)
+        && ((angle % K) == 0)) {
+        fprintf(stderr, "signal\n");
+    }
+}
+
 void set_coeff(int data) {
     coeff = data;
     fprintf(stderr, "setting coeff: %d\n", coeff);
@@ -56,6 +65,7 @@ void encoder_left(void)
     if (started) {
         angle -= coeff;
         direction = DIRECTION_LEFT;
+        check_angle();
     }
 }
 
@@ -65,6 +75,7 @@ void encoder_right(void)
     if (started) {
         angle += coeff;
         direction = DIRECTION_RIGHT;
+        check_angle();
     }
 }
 
