@@ -94,10 +94,7 @@ int main(void)
         {0, get_revolutions}
     };
 
-    coeff=900;
-    K=1800;
-    K1=900;
-    K2=2700;
+    coeff = K = K1 = K2 =0; 
 
     command_nr = sizeof(command_handlers)/sizeof(serial_handler);
     serial_set_command_handlers(command_handlers, command_nr);
