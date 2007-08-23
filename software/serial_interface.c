@@ -16,9 +16,9 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-int handlers_size = 0;
-serial_handler *handlers = NULL;
-int outstanding_data = -1;
+int handlers_size;
+serial_handler *handlers;
+int outstanding_data;
 
 static void serial_received_data(unsigned char data)
 {
@@ -48,6 +48,13 @@ static void serial_line_free()
         bus_write(SERIAL_DATA_ADDR, outstanding_data);
         outstanding_data = -1;
     }
+}
+
+void serial_init(void)
+{
+    handlers_size = 0;
+    handlers = NULL;
+    outstanding_data = -1;
 }
 
 void serial_set_command_handlers(serial_handler *array, int size)

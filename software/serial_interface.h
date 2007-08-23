@@ -10,6 +10,7 @@ typedef struct {
     void (*handler)(int data);
 } serial_handler;
 
+void serial_init(void);
 void serial_set_command_handlers(serial_handler *array, int size);
 void serial_send(int data);
 void serial_notify(void);

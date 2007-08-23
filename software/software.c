@@ -107,6 +107,8 @@ int main(void)
         {0, get_revolutions}
     };
 
+    serial_init();
+
     coeff = K = K1 = K2 =0; 
 
     command_nr = sizeof(command_handlers)/sizeof(serial_handler);
