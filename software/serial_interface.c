@@ -16,9 +16,7 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-int handlers_size;
-serial_handler *handlers;
-int outstanding_data;
+SerialInterface serial_interface;
 
 static void serial_received_data(unsigned char data)
 {
@@ -28,8 +26,8 @@ static void serial_received_data(unsigned char data)
     if (bytes_left == 0) {
         command = data;
         command_data = 0;
-        if (command < handlers_size) {
-            bytes_left = handlers[command].data_size;
+        if (command < serial_interface.handlers_size) {
+            bytes_left = serial_interface.handlers[command].data_size;
         }
     } else {
         command_data = command_data << 8;
@@ -37,36 +35,36 @@ static void serial_received_data(unsigned char data)
         bytes_left--;
     }
 
-    if (bytes_left == 0 && command < handlers_size) {
-        handlers[command].handler(command_data);
+    if (bytes_left == 0 && command < serial_interface.handlers_size) {
+        serial_interface.handlers[command].handler(command_data);
     }
 }
 
 static void serial_line_free()
 {
-    if (outstanding_data >= 0) {
-        bus_write(SERIAL_DATA_ADDR, outstanding_data);
-        outstanding_data = -1;
+    if (serial_interface.outstanding_data >= 0) {
+        bus_write(SERIAL_DATA_ADDR, serial_interface.outstanding_data);
+        serial_interface.outstanding_data = -1;
     }
 }
 
 void serial_init(void)
 {
-    handlers_size = 0;
-    handlers = NULL;
-    outstanding_data = -1;
+    serial_interface.handlers_size = 0;
+    serial_interface.handlers = NULL;
+    serial_interface.outstanding_data = -1;
 }
 
 void serial_set_command_handlers(serial_handler *array, int size)
 {
-    handlers = array;
-    handlers_size = size;
+    serial_interface.handlers = array;
+    serial_interface.handlers_size = size;
 }
 
 void serial_send(int data)
 {
     /* send the high byte first and store the lower one */
-    outstanding_data = data & 0xFF;
+    serial_interface.outstanding_data = data & 0xFF;
     data = (data >> 1) & 0xFF;
     bus_write(SERIAL_DATA_ADDR, data);
 }
