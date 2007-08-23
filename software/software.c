@@ -115,7 +115,7 @@ int main(void)
     set_irq_handler(0, encoder_counterclockwise);
     set_irq_handler(1, encoder_clockwise);
     set_irq_handler(2, encoder_revolution);
-    set_irq_handler(3, serial_interrupt);
+    set_irq_handler(3, serial_notify);
 
     for(i=0; i<10000; i++)
       bus_noop();

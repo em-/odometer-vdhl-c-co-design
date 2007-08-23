@@ -12,4 +12,4 @@ typedef struct {
 
 void serial_set_command_handlers(serial_handler *array, int size);
 void serial_send(int data);
-void serial_interrupt(void);
+void serial_notify(void);

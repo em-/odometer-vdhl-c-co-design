@@ -64,7 +64,7 @@ void serial_send(int data)
     bus_write(SERIAL_DATA_ADDR, data);
 }
 
-void serial_interrupt(void)
+void serial_notify(void)
 {
     int status, data;
 
