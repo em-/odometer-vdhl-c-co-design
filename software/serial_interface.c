@@ -55,7 +55,7 @@ void serial_init(void)
     serial_interface.outstanding_data = -1;
 }
 
-void serial_set_command_handlers(serial_handler *array, int size)
+void serial_set_command_handlers(SerialHandler *array, int size)
 {
     serial_interface.handlers = array;
     serial_interface.handlers_size = size;

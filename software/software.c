@@ -98,7 +98,7 @@ void encoder_revolution(void)
 int main(void)
 {
     int i, command_nr;
-    serial_handler command_handlers[] = {
+    SerialHandler command_handlers[] = {
         {2, set_coeff},
         {2, set_K},
         {2, set_K1},
@@ -111,7 +111,7 @@ int main(void)
 
     coeff = K = K1 = K2 =0; 
 
-    command_nr = sizeof(command_handlers)/sizeof(serial_handler);
+    command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
     serial_set_command_handlers(command_handlers, command_nr);
 
     set_irq_handler(0, encoder_counterclockwise);
