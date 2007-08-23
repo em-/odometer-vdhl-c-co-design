@@ -14,7 +14,7 @@ entity encoder_interface is
     generic (BASE_ADDR: std_logic_vector(15 downto 0));
     port (CLK, RST: in std_logic;
           A, B, Z:  in std_logic;
-          LEFT, RIGHT, REVOLUTION: out std_logic);
+          COUNTERCLOCKWISE, CLOCKWISE, REVOLUTION: out std_logic);
 end encoder_interface;
 
 architecture behavioral of encoder_interface is
@@ -43,13 +43,13 @@ process (CLK, RST)
 begin
     if RST = '1' then
         current_state <= S_00;
-        LEFT  <= '0';
-        RIGHT <= '0';
+        COUNTERCLOCKWISE <= '0';
+        CLOCKWISE        <= '0';
     elsif rising_edge(CLK) then
         Quad <= A & B;
 
-        LEFT  <= '0';
-        RIGHT <= '0';
+        COUNTERCLOCKWISE <= '0';
+        CLOCKWISE        <= '0';
 
         case current_state is
         when S_00 =>
@@ -62,7 +62,7 @@ begin
         when S_10 =>
             case Quad is
                 when "00" => current_state <= S_00;
-                             RIGHT <= '1';
+                             CLOCKWISE <= '1';
                 when "11" => current_state <= S_11;
                 when others =>
             end case;
@@ -77,7 +77,7 @@ begin
         when S_01 =>
             case Quad is
                 when "00" => current_state <= S_00;
-                             LEFT <= '1';
+                             COUNTERCLOCKWISE <= '1';
                 when "11" => current_state <= S_11;
                 when others =>
             end case;

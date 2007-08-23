@@ -18,7 +18,7 @@ end encoder;
 
 architecture behavioral of encoder is
    type STATE is (S_00, S_10, S_11, S_01);
-   type MOVEMENT is (NONE, LEFT, RIGHT);
+   type MOVEMENT is (NONE, COUNTERCLOCKWISE, CLOCKWISE);
    signal current_state: STATE;
    signal direction: MOVEMENT;
    signal tick: boolean := true; -- used only to generate events
@@ -27,10 +27,10 @@ begin
 
 process
 begin
-    direction <= LEFT;
+    direction <= COUNTERCLOCKWISE;
     delay <= 100 ns;
     wait for 69120 ns;
-    direction <= RIGHT;
+    direction <= CLOCKWISE;
     wait;
 end process;
 
@@ -49,9 +49,9 @@ process(current_state)
     variable t: integer := 0;
 begin
     if (current_state = S_00) then
-        if direction = LEFT then
+        if direction = COUNTERCLOCKWISE then
             position := (position - tick_angle) mod 3600;
-        elsif direction = RIGHT then
+        elsif direction = CLOCKWISE then
             position := (position + tick_angle) mod 3600;
         end if;
 
@@ -67,23 +67,23 @@ process(tick)
 begin
    case current_state is
    when S_00 =>
-      if    direction = LEFT  then current_state <= S_10;
-      elsif direction = RIGHT then current_state <= S_01;
+      if    direction = COUNTERCLOCKWISE then current_state <= S_10;
+      elsif direction = CLOCKWISE        then current_state <= S_01;
       end if;
 
    when S_10 =>
-      if    direction = LEFT  then current_state <= S_11;
-      elsif direction = RIGHT then current_state <= S_00;
+      if    direction = COUNTERCLOCKWISE then current_state <= S_11;
+      elsif direction = CLOCKWISE        then current_state <= S_00;
       end if;
 
    when S_11 =>
-      if    direction = LEFT  then current_state <= S_01;
-      elsif direction = RIGHT then current_state <= S_10;
+      if    direction = COUNTERCLOCKWISE then current_state <= S_01;
+      elsif direction = CLOCKWISE        then current_state <= S_10;
       end if;
 
    when S_01 =>
-      if    direction = LEFT  then current_state <= S_00;
-      elsif direction = RIGHT then current_state <= S_11;
+      if    direction = COUNTERCLOCKWISE then current_state <= S_00;
+      elsif direction = CLOCKWISE        then current_state <= S_11;
       end if;
 
    when others =>

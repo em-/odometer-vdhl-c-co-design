@@ -49,7 +49,7 @@ architecture behavioral of hardware is
         generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST: in std_logic;
               A, B, Z:  in std_logic;
-              LEFT, RIGHT, REVOLUTION: out std_logic);
+              COUNTERCLOCKWISE, CLOCKWISE, REVOLUTION: out std_logic);
     end component;
 
     component output_interface

@@ -16,8 +16,8 @@ int coeff, K, K1, K2, angle, revolutions;
 int started = 0;
 enum Direction {
   DIRECTION_NONE,
-  DIRECTION_LEFT,
-  DIRECTION_RIGHT
+  DIRECTION_COUNTERCLOCKWISE,
+  DIRECTION_CLOCKWISE
 } direction = DIRECTION_NONE;
 
 void check_angle(void)
@@ -60,22 +60,22 @@ void get_revolutions(int data) {
     fprintf(stderr, "getting revolutions: %d\n", revolutions);
 }
 
-void encoder_left(void)
+void encoder_counterclockwise(void)
 {
-    fprintf(stderr, "tick left %d-%d\n", angle, coeff);
+    fprintf(stderr, "tick counter-clockwise %d-%d\n", angle, coeff);
     if (started) {
         angle -= coeff;
-        direction = DIRECTION_LEFT;
+        direction = DIRECTION_COUNTERCLOCKWISE;
         check_angle();
     }
 }
 
-void encoder_right(void)
+void encoder_clockwise(void)
 {
-    fprintf(stderr, "tick right %d+%d\n", angle, coeff);
+    fprintf(stderr, "tick clockwise %d+%d\n", angle, coeff);
     if (started) {
         angle += coeff;
-        direction = DIRECTION_RIGHT;
+        direction = DIRECTION_CLOCKWISE;
         check_angle();
     }
 }
@@ -85,10 +85,10 @@ void encoder_revolution(void)
     if (coeff != 0)
         started = 1;
     angle = 0;
-    if (direction == DIRECTION_LEFT) {
+    if (direction == DIRECTION_COUNTERCLOCKWISE) {
         fprintf(stderr, "full revolution %d-1\n", revolutions);
         revolutions--;
-    } else if (direction == DIRECTION_RIGHT) {
+    } else if (direction == DIRECTION_CLOCKWISE) {
         fprintf(stderr, "full revolution %d+1\n", revolutions);
         revolutions++;
     }
@@ -112,8 +112,8 @@ int main(void)
     command_nr = sizeof(command_handlers)/sizeof(serial_handler);
     serial_set_command_handlers(command_handlers, command_nr);
 
-    set_irq_handler(0, encoder_left);
-    set_irq_handler(1, encoder_right);
+    set_irq_handler(0, encoder_counterclockwise);
+    set_irq_handler(1, encoder_clockwise);
     set_irq_handler(2, encoder_revolution);
     set_irq_handler(3, serial_interrupt);
 
