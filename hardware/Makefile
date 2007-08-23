@@ -9,7 +9,7 @@ COMPONENTS=hwsw_interface.o	\
 	   encoder.o		\
 	   encoder_interface.o	\
 	   output_interface.o   \
-	   serial_interface.o	\
+	   serial_controller.o	\
 	   uart.o
 
 hardware: $(COMPONENTS)

@@ -72,7 +72,7 @@ architecture behavioral of hardware is
               LoadA:        in  std_logic);
     end component;
 
-    component serial_interface
+    component serial_controller
         generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST:     in  std_logic;
               RxData:       in std_logic_vector(7 downto 0);
@@ -145,7 +145,7 @@ enc_iface: encoder_interface
 u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
-serial_iface: serial_interface
+serial_iface: serial_controller
     generic map (BASE_ADDR => X"0002")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,
