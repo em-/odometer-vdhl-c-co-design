@@ -52,6 +52,16 @@ architecture behavioral of hardware is
               LEFT, RIGHT, REVOLUTION: out std_logic);
     end component;
 
+    component output_interface
+        generic (BASE_ADDR: std_logic_vector(15 downto 0));
+        port (CLK, RST:     in  std_logic;
+              TICK:         out std_logic;
+              BUS_STROBE:   in  std_logic;
+              BUS_RnW:      in  std_logic;
+              BUS_ADDR:     in  std_logic_vector(15 downto 0);
+              BUS_DATA_IN:  in  std_logic_vector(15 downto 0));
+    end component;
+
     component uart
         port (CLK, RST:     in  std_logic;
               RxData:       out std_logic_vector(7 downto 0);
@@ -93,6 +103,7 @@ architecture behavioral of hardware is
     signal RxData, TxData: std_logic_vector(7 downto 0);
     signal RxAv, TxBusy: std_logic;
     signal ReadA, LoadA: std_logic;
+    signal TICK:      std_logic;
 begin 
 
 clock: process
@@ -139,5 +150,9 @@ serial_iface: serial_interface
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,
              REQUESTS(3));
+
+output_iface: output_interface
+    generic map (BASE_ADDR => X"0004")
+    port map(CLK, RST, TICK, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN);
 
 end behavioral;

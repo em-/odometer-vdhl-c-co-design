@@ -26,6 +26,7 @@ void check_angle(void)
         && (angle < K2)
         && ((angle % K) == 0)) {
         fprintf(stderr, "signal\n");
+        bus_write((void*)0x4, 0);
     }
 }
 

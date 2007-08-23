@@ -8,6 +8,7 @@ COMPONENTS=hwsw_interface.o	\
            hardware.o		\
 	   encoder.o		\
 	   encoder_interface.o	\
+	   output_interface.o   \
 	   serial_interface.o	\
 	   uart.o
 
