@@ -60,7 +60,7 @@ void get_revolutions(int data) {
     fprintf(stderr, "getting revolutions: %d\n", revolutions);
 }
 
-void encoder_counterclockwise(void)
+void encoder_counterclockwise(void *data)
 {
     fprintf(stderr, "tick counter-clockwise %d-%d\n", angle, coeff);
     if (started) {
@@ -70,7 +70,7 @@ void encoder_counterclockwise(void)
     }
 }
 
-void encoder_clockwise(void)
+void encoder_clockwise(void *data)
 {
     fprintf(stderr, "tick clockwise %d+%d\n", angle, coeff);
     if (started) {
@@ -80,7 +80,7 @@ void encoder_clockwise(void)
     }
 }
 
-void encoder_revolution(void)
+void encoder_revolution(void *data)
 {
     if (coeff != 0)
         started = 1;
@@ -114,10 +114,10 @@ int main(void)
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
     serial_set_command_handlers(command_handlers, command_nr);
 
-    set_irq_handler(0, encoder_counterclockwise);
-    set_irq_handler(1, encoder_clockwise);
-    set_irq_handler(2, encoder_revolution);
-    set_irq_handler(3, serial_notify);
+    set_irq_handler(0, encoder_counterclockwise, NULL);
+    set_irq_handler(1, encoder_clockwise, NULL);
+    set_irq_handler(2, encoder_revolution, NULL);
+    set_irq_handler(3, serial_notify, NULL);
 
     for(i=0; i<10000; i++)
       bus_noop();

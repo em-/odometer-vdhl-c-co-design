@@ -69,9 +69,9 @@ void serial_send(int data)
     bus_write(SERIAL_DATA_ADDR, data);
 }
 
-void serial_notify(void)
+void serial_notify(void *data)
 {
-    int status, data;
+    int status, serial_data;
 
     status = bus_read(SERIAL_STATUS_ADDR);
     fprintf(stderr, "serial status %d\n", status);
@@ -83,7 +83,7 @@ void serial_notify(void)
 
     if (status & SERIAL_STATUS_RXAV)
     {
-      data = bus_read(SERIAL_DATA_ADDR);
-      serial_received_data(data);
+      serial_data = bus_read(SERIAL_DATA_ADDR);
+      serial_received_data(serial_data);
     }
 }

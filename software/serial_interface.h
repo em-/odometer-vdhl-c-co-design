@@ -19,4 +19,4 @@ typedef struct {
 void serial_init(void);
 void serial_set_command_handlers(SerialHandler *array, int size);
 void serial_send(int data);
-void serial_notify(void);
+void serial_notify(void *data);
