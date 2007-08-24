@@ -12,12 +12,14 @@
  * Licenza: LGPL
  */
 
-void odometer_init(Odometer *odometer)
+void odometer_init(Odometer *odometer, SerialInterface *serial_interface)
 {
     odometer->started = 0;
     odometer->direction = DIRECTION_NONE;
 
     odometer->coeff = odometer->K = odometer->K1 = odometer->K2 =0; 
+
+    odometer->serial_interface = serial_interface;
 }
 
 void odometer_check_angle(Odometer *odometer)
@@ -56,13 +58,13 @@ void odometer_set_K2(int command_data, void *data) {
 
 void odometer_get_angle(int command_data, void *data) {
     Odometer *odometer = data;
-    serial_send(&odometer->serial_interface, odometer->angle);
+    serial_send(odometer->serial_interface, odometer->angle);
     fprintf(stderr, "getting angle: %d\n", odometer->angle);
 }
 
 void odometer_get_revolutions(int command_data, void *data) {
     Odometer *odometer = data;
-    serial_send(&odometer->serial_interface, odometer->revolutions);
+    serial_send(odometer->serial_interface, odometer->revolutions);
     fprintf(stderr, "getting revolutions: %d\n", odometer->revolutions);
 }
 
