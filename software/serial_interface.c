@@ -16,20 +16,20 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-static void serial_received_data(SerialInterface *serial_interface, unsigned char data)
+static void serial_received_data(SerialInterface *serial_interface, unsigned char serial_data)
 {
     static int bytes_left = 0;
     static int command, command_data;
 
     if (bytes_left == 0) {
-        command = data;
+        command = serial_data;
         command_data = 0;
         if (command < serial_interface->handlers_size) {
-            bytes_left = serial_interface->handlers[command].data_size;
+            bytes_left = serial_interface->handlers[command].serial_data_size;
         }
     } else {
         command_data = command_data << 8;
-        command_data = command_data | data;
+        command_data = command_data | serial_data;
         bytes_left--;
     }
 
@@ -59,12 +59,12 @@ void serial_set_command_handlers(SerialInterface *serial_interface, SerialHandle
     serial_interface->handlers_size = size;
 }
 
-void serial_send(SerialInterface *serial_interface, int data)
+void serial_send(SerialInterface *serial_interface, int serial_data)
 {
     /* send the high byte first and store the lower one */
-    serial_interface->outstanding_data = data & 0xFF;
-    data = (data >> 1) & 0xFF;
-    bus_write(SERIAL_DATA_ADDR, data);
+    serial_interface->outstanding_data = serial_data & 0xFF;
+    serial_data = (serial_data >> 1) & 0xFF;
+    bus_write(SERIAL_DATA_ADDR, serial_data);
 }
 
 void serial_notify(void *data)

@@ -6,8 +6,8 @@
  */
 
 typedef struct {
-    int data_size;
-    void (*handler)(int data);
+    int serial_data_size;
+    void (*handler)(int serial_data);
 } SerialHandler;
 
 typedef struct {
@@ -18,5 +18,5 @@ typedef struct {
 
 void serial_init(SerialInterface *serial_interface);
 void serial_set_command_handlers(SerialInterface *serial_interface, SerialHandler *array, int size);
-void serial_send(SerialInterface *serial_interface, int data);
+void serial_send(SerialInterface *serial_interface, int serial_data);
 void serial_notify(void *data);
