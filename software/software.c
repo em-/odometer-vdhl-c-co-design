@@ -23,12 +23,13 @@ typedef struct {
     int angle;
     int revolutions;
     
+    SerialInterface serial_interface;
+
     int started;
     enum Direction direction;
 } Odometer;
 
 Odometer odometer;
-SerialInterface serial_interface;
 
 void odometer_init(Odometer *odometer)
 {
@@ -74,13 +75,13 @@ void odometer_set_K2(int command_data, void *data) {
 
 void odometer_get_angle(int command_data, void *data) {
     Odometer *odometer = data;
-    serial_send(&serial_interface, odometer->angle);
+    serial_send(&odometer->serial_interface, odometer->angle);
     fprintf(stderr, "getting angle: %d\n", odometer->angle);
 }
 
 void odometer_get_revolutions(int command_data, void *data) {
     Odometer *odometer = data;
-    serial_send(&serial_interface, odometer->revolutions);
+    serial_send(&odometer->serial_interface, odometer->revolutions);
     fprintf(stderr, "getting revolutions: %d\n", odometer->revolutions);
 }
 
@@ -134,16 +135,16 @@ int main(void)
         {0, odometer_get_revolutions, &odometer}
     };
 
-    serial_init(&serial_interface);
+    serial_init(&odometer.serial_interface);
     odometer_init(&odometer);
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
-    serial_set_command_handlers(&serial_interface, command_handlers, command_nr);
+    serial_set_command_handlers(&odometer.serial_interface, command_handlers, command_nr);
 
     set_irq_handler(0, odometer_encoder_counterclockwise, &odometer);
     set_irq_handler(1, odometer_encoder_clockwise, &odometer);
     set_irq_handler(2, odometer_encoder_revolution, &odometer);
-    set_irq_handler(3, serial_notify, &serial_interface);
+    set_irq_handler(3, serial_notify, &odometer.serial_interface);
 
     for(i=0; i<10000; i++)
       bus_noop();
