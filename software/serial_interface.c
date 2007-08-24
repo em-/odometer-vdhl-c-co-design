@@ -20,6 +20,7 @@ static void serial_received_data(SerialInterface *serial_interface, unsigned cha
 {
     static int bytes_left = 0;
     static int command, command_data;
+    void *data;
 
     if (bytes_left == 0) {
         command = serial_data;
@@ -34,7 +35,8 @@ static void serial_received_data(SerialInterface *serial_interface, unsigned cha
     }
 
     if (bytes_left == 0 && command < serial_interface->handlers_size) {
-        serial_interface->handlers[command].handler(command_data);
+        data = serial_interface->handlers[command].data;
+        serial_interface->handlers[command].handler(command_data, data);
     }
 }
 

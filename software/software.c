@@ -48,32 +48,32 @@ void odometer_check_angle(void)
     }
 }
 
-void odometer_set_coeff(int data) {
-    odometer.coeff = data;
+void odometer_set_coeff(int command_data, void *data) {
+    odometer.coeff = command_data;
     fprintf(stderr, "setting coeff: %d\n", odometer.coeff);
 }
 
-void odometer_set_K(int data) {
-    odometer.K = data;
+void odometer_set_K(int command_data, void *data) {
+    odometer.K = command_data;
     fprintf(stderr, "setting K: %d\n", odometer.K);
 }
 
-void odometer_set_K1(int data) {
-    odometer.K1 = data;
+void odometer_set_K1(int command_data, void *data) {
+    odometer.K1 = command_data;
     fprintf(stderr, "setting K1: %d\n", odometer.K1);
 }
 
-void odometer_set_K2(int data) {
-    odometer.K2 = data;
+void odometer_set_K2(int command_data, void *data) {
+    odometer.K2 = command_data;
     fprintf(stderr, "setting K2: %d\n", odometer.K2);
 }
 
-void odometer_get_angle(int data) {
+void odometer_get_angle(int command_data, void *data) {
     serial_send(&serial_interface, odometer.angle);
     fprintf(stderr, "getting angle: %d\n", odometer.angle);
 }
 
-void odometer_get_revolutions(int data) {
+void odometer_get_revolutions(int command_data, void *data) {
     serial_send(&serial_interface, odometer.revolutions);
     fprintf(stderr, "getting revolutions: %d\n", odometer.revolutions);
 }
@@ -117,12 +117,12 @@ int main(void)
 {
     int i, command_nr;
     SerialHandler command_handlers[] = {
-        {2, odometer_set_coeff},
-        {2, odometer_set_K},
-        {2, odometer_set_K1},
-        {2, odometer_set_K2},
-        {0, odometer_get_angle},
-        {0, odometer_get_revolutions}
+        {2, odometer_set_coeff, NULL},
+        {2, odometer_set_K, NULL},
+        {2, odometer_set_K1, NULL},
+        {2, odometer_set_K2, NULL},
+        {0, odometer_get_angle, NULL},
+        {0, odometer_get_revolutions, NULL}
     };
 
     serial_init(&serial_interface);
