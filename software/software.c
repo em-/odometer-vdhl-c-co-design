@@ -11,88 +11,96 @@
  * Licenza: LGPL
  */
 
-int coeff, K, K1, K2, angle, revolutions;
-
-int started = 0;
 enum Direction {
   DIRECTION_NONE,
   DIRECTION_COUNTERCLOCKWISE,
   DIRECTION_CLOCKWISE
-} direction = DIRECTION_NONE;
+};
 
+typedef struct {
+    int coeff;
+    int K, K1, K2;
+    int angle;
+    int revolutions;
+    
+    int started;
+    enum Direction direction;
+} Odometer;
+
+Odometer odometer;
 SerialInterface serial_interface;
 
 void check_angle(void)
 {
-    if ((angle > K1) 
-        && (angle < K2)
-        && ((angle % K) == 0)) {
+    if ((odometer.angle > odometer.K1) 
+        && (odometer.angle < odometer.K2)
+        && ((odometer.angle % odometer.K) == 0)) {
         fprintf(stderr, "signal\n");
         bus_write((void*)0x4, 0);
     }
 }
 
 void set_coeff(int data) {
-    coeff = data;
-    fprintf(stderr, "setting coeff: %d\n", coeff);
+    odometer.coeff = data;
+    fprintf(stderr, "setting coeff: %d\n", odometer.coeff);
 }
 
 void set_K(int data) {
-    K = data;
-    fprintf(stderr, "setting K: %d\n", K);
+    odometer.K = data;
+    fprintf(stderr, "setting K: %d\n", odometer.K);
 }
 
 void set_K1(int data) {
-    K1 = data;
-    fprintf(stderr, "setting K1: %d\n", K1);
+    odometer.K1 = data;
+    fprintf(stderr, "setting K1: %d\n", odometer.K1);
 }
 
 void set_K2(int data) {
-    K2 = data;
-    fprintf(stderr, "setting K2: %d\n", K2);
+    odometer.K2 = data;
+    fprintf(stderr, "setting K2: %d\n", odometer.K2);
 }
 
 void get_angle(int data) {
-    serial_send(&serial_interface, angle);
-    fprintf(stderr, "getting angle: %d\n", angle);
+    serial_send(&serial_interface, odometer.angle);
+    fprintf(stderr, "getting angle: %d\n", odometer.angle);
 }
 
 void get_revolutions(int data) {
-    serial_send(&serial_interface, revolutions);
-    fprintf(stderr, "getting revolutions: %d\n", revolutions);
+    serial_send(&serial_interface, odometer.revolutions);
+    fprintf(stderr, "getting revolutions: %d\n", odometer.revolutions);
 }
 
 void encoder_counterclockwise(void *data)
 {
-    fprintf(stderr, "tick counter-clockwise %d-%d\n", angle, coeff);
-    if (started) {
-        angle -= coeff;
-        direction = DIRECTION_COUNTERCLOCKWISE;
+    fprintf(stderr, "tick counter-clockwise %d-%d\n", odometer.angle, odometer.coeff);
+    if (odometer.started) {
+        odometer.angle -= odometer.coeff;
+        odometer.direction = DIRECTION_COUNTERCLOCKWISE;
         check_angle();
     }
 }
 
 void encoder_clockwise(void *data)
 {
-    fprintf(stderr, "tick clockwise %d+%d\n", angle, coeff);
-    if (started) {
-        angle += coeff;
-        direction = DIRECTION_CLOCKWISE;
+    fprintf(stderr, "tick clockwise %d+%d\n", odometer.angle, odometer.coeff);
+    if (odometer.started) {
+        odometer.angle += odometer.coeff;
+        odometer.direction = DIRECTION_CLOCKWISE;
         check_angle();
     }
 }
 
 void encoder_revolution(void *data)
 {
-    if (coeff != 0)
-        started = 1;
-    angle = 0;
-    if (direction == DIRECTION_COUNTERCLOCKWISE) {
-        fprintf(stderr, "full revolution %d-1\n", revolutions);
-        revolutions--;
-    } else if (direction == DIRECTION_CLOCKWISE) {
-        fprintf(stderr, "full revolution %d+1\n", revolutions);
-        revolutions++;
+    if (odometer.coeff != 0)
+        odometer.started = 1;
+    odometer.angle = 0;
+    if (odometer.direction == DIRECTION_COUNTERCLOCKWISE) {
+        fprintf(stderr, "full revolution %d-1\n", odometer.revolutions);
+        odometer.revolutions--;
+    } else if (odometer.direction == DIRECTION_CLOCKWISE) {
+        fprintf(stderr, "full revolution %d+1\n", odometer.revolutions);
+        odometer.revolutions++;
     }
 }
 
@@ -109,9 +117,12 @@ int main(void)
         {0, get_revolutions}
     };
 
+    odometer.started = 0;
+    odometer.direction = DIRECTION_NONE;
+
     serial_init(&serial_interface);
 
-    coeff = K = K1 = K2 =0; 
+    odometer.coeff = odometer.K = odometer.K1 = odometer.K2 =0; 
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
     serial_set_command_handlers(&serial_interface, command_handlers, command_nr);
