@@ -16,7 +16,7 @@ typedef struct {
     int outstanding_data;
 } SerialInterface;
 
-void serial_init(void);
-void serial_set_command_handlers(SerialHandler *array, int size);
-void serial_send(int data);
+void serial_init(SerialInterface *serial_interface);
+void serial_set_command_handlers(SerialInterface *serial_interface, SerialHandler *array, int size);
+void serial_send(SerialInterface *serial_interface, int data);
 void serial_notify(void *data);

@@ -20,6 +20,8 @@ enum Direction {
   DIRECTION_CLOCKWISE
 } direction = DIRECTION_NONE;
 
+SerialInterface serial_interface;
+
 void check_angle(void)
 {
     if ((angle > K1) 
@@ -51,12 +53,12 @@ void set_K2(int data) {
 }
 
 void get_angle(int data) {
-    serial_send(angle);
+    serial_send(&serial_interface, angle);
     fprintf(stderr, "getting angle: %d\n", angle);
 }
 
 void get_revolutions(int data) {
-    serial_send(revolutions);
+    serial_send(&serial_interface, revolutions);
     fprintf(stderr, "getting revolutions: %d\n", revolutions);
 }
 
@@ -107,17 +109,17 @@ int main(void)
         {0, get_revolutions}
     };
 
-    serial_init();
+    serial_init(&serial_interface);
 
     coeff = K = K1 = K2 =0; 
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
-    serial_set_command_handlers(command_handlers, command_nr);
+    serial_set_command_handlers(&serial_interface, command_handlers, command_nr);
 
     set_irq_handler(0, encoder_counterclockwise, NULL);
     set_irq_handler(1, encoder_clockwise, NULL);
     set_irq_handler(2, encoder_revolution, NULL);
-    set_irq_handler(3, serial_notify, NULL);
+    set_irq_handler(3, serial_notify, &serial_interface);
 
     for(i=0; i<10000; i++)
       bus_noop();
