@@ -30,6 +30,14 @@ typedef struct {
 Odometer odometer;
 SerialInterface serial_interface;
 
+void odometer_init(Odometer *odometer)
+{
+    odometer->started = 0;
+    odometer->direction = DIRECTION_NONE;
+
+    odometer->coeff = odometer->K = odometer->K1 = odometer->K2 =0; 
+}
+
 void check_angle(void)
 {
     if ((odometer.angle > odometer.K1) 
@@ -117,12 +125,8 @@ int main(void)
         {0, get_revolutions}
     };
 
-    odometer.started = 0;
-    odometer.direction = DIRECTION_NONE;
-
     serial_init(&serial_interface);
-
-    odometer.coeff = odometer.K = odometer.K1 = odometer.K2 =0; 
+    odometer_init(&odometer);
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
     serial_set_command_handlers(&serial_interface, command_handlers, command_nr);
