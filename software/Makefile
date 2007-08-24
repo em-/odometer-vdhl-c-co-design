@@ -1,4 +1,4 @@
-SOFTWARE_SOURCES=swhw_interface.h swhw_interface.c serial_interface.h serial_interface.c
+SOFTWARE_SOURCES=swhw_interface.h swhw_interface.c serial_interface.h serial_interface.c odometer.h odometer.c
 
 # Default target
 all: software
