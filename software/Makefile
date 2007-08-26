@@ -1,8 +1,5 @@
-SOFTWARE_SOURCES=swhw_interface.h	\
-                 swhw_interface.c	\
-		 serial_interface.h	\
+SOFTWARE_SOURCES=swhw_interface.c	\
 		 serial_interface.c	\
-		 odometer.h		\
 		 odometer.c
 
 # Default target
