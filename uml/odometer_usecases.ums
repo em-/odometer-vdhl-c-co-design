@@ -12,10 +12,10 @@ usecase setK = "Imposta K";
 usecase setK1 = "Imposta K1";
 usecase setK2 = "Imposta K2";
 
-usecase readCommand = "Lettura comando";
-usecase readData = "Lettura dati";
-usecase readRS232 = "Lettura RS232";
-usecase writeRS232 = "Scrittura RS232";
+usecase putCommand = "Invio comando";
+usecase putData = "Invio dati";
+usecase putSerial = "Invio via seriale";
+usecase getSerial = "Ricezione via seriale";
 
 actor encoder = Encoder;
 usecase rotate = "Ruota di N gradi";
@@ -25,39 +25,35 @@ usecase decodeRotation = "Decodifica rotazione";
 usecasediagram odometer_usecases {
     comment = "Casi d'uso";
     layout = grid(4, 
-        *,       readAngle,       *, *,
-        *,       readRevolutions, *, writeRS232,
-        rs232,   setCoeff,        *, readCommand,
-        *,       setK,            *, readRS232,
-        *,       setK1,           *, readData,
-        *,       setK2,           *, *,
+        *,     *,          *, readAngle,      
+        *,     getSerial,  *, readRevolutions,
+        rs232, putCommand, *, setCoeff,       
+        *,     putSerial,  *, setK,           
+        *,     putData,    *, setK1,          
+        *,     *,          *, setK2,          
 
         encoder, rotate,          *, *,
         *,       fullRevolution,  *, decodeRotation
         );
     entities {
-        rs232 uses readAngle;
-        rs232 uses readRevolutions;
-        rs232 uses setCoeff;
-        rs232 uses setK;
-        rs232 uses setK1;
-        rs232 uses setK2;
+        rs232 uses putSerial;
+        rs232 uses getSerial;
 
-        readAngle includes readCommand;
-        readAngle includes writeRS232;
-        readRevolutions includes readCommand;
-        readRevolutions includes writeRS232;
-        setCoeff includes readCommand;
-        setCoeff includes readData;
-        setK includes readCommand;
-        setK includes readData;
-        setK1 includes readCommand;
-        setK1 includes readData;
-        setK2 includes readCommand;
-        setK2 includes readData;
+        readAngle extends putCommand;
+        readAngle extends getSerial;
+        readRevolutions extends putCommand;
+        readRevolutions extends getSerial;
+        setCoeff extends putCommand;
+        setCoeff extends putData;
+        setK extends putCommand;
+        setK extends putData;
+        setK1 extends putCommand;
+        setK1 extends putData;
+        setK2 extends putCommand;
+        setK2 extends putData;
 
-        readCommand includes readRS232;
-        readData includes readRS232;
+        putCommand extends putSerial;
+        putData    extends putSerial;
 
         encoder uses rotate;
         encoder uses fullRevolution;
