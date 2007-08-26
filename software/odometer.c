@@ -22,7 +22,7 @@ void odometer_init(Odometer *odometer, SerialInterface *serial_interface)
     odometer->serial_interface = serial_interface;
 }
 
-void odometer_check_angle(Odometer *odometer)
+static void odometer_check_angle(Odometer *odometer)
 {
     if ((odometer->angle > odometer->K1) 
         && (odometer->angle < odometer->K2)
