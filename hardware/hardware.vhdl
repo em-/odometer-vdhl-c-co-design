@@ -144,13 +144,13 @@ u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
 serial_iface: serial_controller
-    generic map (BASE_ADDR => X"0002")
+    generic map (BASE_ADDR => X"0001")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,
              REQUESTS(3));
 
 output_iface: output_interface
-    generic map (BASE_ADDR => X"0004")
+    generic map (BASE_ADDR => X"0003")
     port map(CLK, RST, TICK, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN);
 
 end behavioral;
