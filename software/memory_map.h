@@ -11,5 +11,6 @@
 #define IRQ_ADDR           (void*)0x0000
 #define SERIAL_DATA_ADDR   (void*)0x0002
 #define SERIAL_STATUS_ADDR (void*)0x0003
+#define OUTPUT_ADDR        (void*)0x0004
 
 #endif /* MEMORY_MAP_H */

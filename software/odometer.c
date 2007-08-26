@@ -4,6 +4,7 @@
 #include "swhw_interface.h"
 #include "serial_interface.h"
 #include "odometer.h"
+#include "memory_map.h"
 
 /*
  * File: odometer.c
@@ -28,7 +29,7 @@ static void odometer_check_angle(Odometer *odometer)
         && (odometer->angle < odometer->K2)
         && ((odometer->angle % odometer->K) == 0)) {
         fprintf(stderr, "signal\n");
-        bus_write((void*)0x4, 0);
+        bus_write(OUTPUT_ADDR, 0);
     }
 }
 
