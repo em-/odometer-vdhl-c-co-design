@@ -99,7 +99,7 @@ massimo 1000 giri. Alimentazione 5VDC+/-5\%.
 
 \section{Analisi dei casi d'uso}
 \begin{center}
-    \includegraphics[width=12cm]{uml/odometer_usecases.pdf}
+    \includegraphics[width=14cm]{uml/odometer_usecases.pdf}
     \label{usecases}
 \end{center}
 
@@ -142,6 +142,8 @@ dell'\textbf{Encoder} incrementale.
 \item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
      angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
      e delle segnalazioni ricevute.
+\item[Segnala output:] Se l'angolo corrente soddisfa i criteri impostati con K, 
+     K1 e K2 il segnale di output viene alzato per un colpo di clock.
 \end{description}
 
 
