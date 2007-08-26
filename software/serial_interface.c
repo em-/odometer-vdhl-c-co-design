@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "swhw_interface.h"
 #include "serial_interface.h"
+#include "memory_map.h"
 
 /*
  * File: serial_interface.c
@@ -11,8 +12,6 @@
  * Licenza: LGPL
  */
 
-#define SERIAL_DATA_ADDR   (void*)0x0002
-#define SERIAL_STATUS_ADDR (void*)0x0003
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 

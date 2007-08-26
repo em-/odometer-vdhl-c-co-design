@@ -1,11 +1,11 @@
 #include <string.h>
 #include <stdio.h>
 #include "swhw_interface.h"
+#include "memory_map.h"
 
 #define DATA_SIZE 2
 #define ADDR_SIZE 2
 
-#define IRQ_ADDR 0x0000
 #define DEBUG 0
 
 /*
