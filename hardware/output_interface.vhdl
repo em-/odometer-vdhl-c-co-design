@@ -1,7 +1,8 @@
 -- File: output_interface.vhdl
--- Classe:
+-- Classe: OutputInterface
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: Raise the TICK signal for a clock cycle when written to
 
 library std;
 library ieee;
