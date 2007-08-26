@@ -36,6 +36,12 @@ class EncoderInterface {
     }
 }
 
+class OutputInterface {
+    operations {
+        +tick(): void;
+    }
+}
+
 class SerialController {
     fields {
         #status: byte;
@@ -79,6 +85,7 @@ classdiagram odometer_classes {
         SerialInterface depends SerialController;
         SerialController depends Uart;
         Odometer depends EncoderInterface;
+        Odometer depends OutputInterface;
     }
 }
 
