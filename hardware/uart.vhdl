@@ -1,7 +1,8 @@
 -- File: uart.vhdl
--- Classe:
+-- Classe: Uart
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: simulates a serial uart reading from a file
 
 library std;
 library ieee;

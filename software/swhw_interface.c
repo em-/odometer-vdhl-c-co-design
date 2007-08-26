@@ -10,7 +10,6 @@
 
 /*
  * File: swhw_interface.c
- * Classe:
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
  * Note: Software <-> Hardware Interface communicating through stdin/stdout

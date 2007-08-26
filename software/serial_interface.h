@@ -1,8 +1,9 @@
 /*
  * File: serial_interface.h
- * Classe:
+ * Classe: SerialInterface
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
+ * Note: handle commands from the serial line
  */
 
 #ifndef SERIAL_INTERFACE_H

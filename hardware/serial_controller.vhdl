@@ -1,7 +1,8 @@
 -- File: serial_controller.vhdl
--- Classe:
+-- Classe: SerialController
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: interfaces the system bus to the serial uart
 
 library std;
 library ieee;

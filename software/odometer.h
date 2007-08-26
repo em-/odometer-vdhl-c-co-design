@@ -5,6 +5,7 @@
  * Classe: Odometer
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
+ * Note: implements an absolute encoder from a relative one
  */
 
 #ifndef ODOMETER_H

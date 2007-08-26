@@ -1,5 +1,4 @@
 -- File: interrupt_controller.vhdl
--- Classe:
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
 -- Note: Simple interrupt controller

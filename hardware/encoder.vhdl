@@ -1,7 +1,7 @@
 -- File: encoder.vhdl
--- Classe:
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: simulates a relative encoder wit A, B, and Z signals
 
 library std;
 library ieee;

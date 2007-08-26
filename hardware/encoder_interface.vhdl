@@ -1,7 +1,8 @@
 -- File: encoder_interface.vhdl
--- Classe:
+-- Classe: EncoderInterface
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: decodes the input from the Encoder
 
 library std;
 library ieee;

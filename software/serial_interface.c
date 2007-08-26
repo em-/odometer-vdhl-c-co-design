@@ -6,7 +6,7 @@
 
 /*
  * File: serial_interface.c
- * Classe:
+ * Classe: SerialInterface
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
  */

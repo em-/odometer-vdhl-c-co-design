@@ -7,9 +7,9 @@
 
 /*
  * File: software.c
- * Classe:
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
+ * Note: top-level software entity
  */
 
 Odometer odometer;

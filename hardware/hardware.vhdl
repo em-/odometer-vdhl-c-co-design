@@ -1,7 +1,7 @@
 -- File: hardware.vhdl
--- Classe:
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
+-- Note: top-level hardware component
 
 library std;
 library ieee;
