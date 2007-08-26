@@ -12,7 +12,6 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 
 entity encoder_interface is
-    generic (BASE_ADDR: std_logic_vector(15 downto 0));
     port (CLK, RST: in std_logic;
           A, B, Z:  in std_logic;
           COUNTERCLOCKWISE, CLOCKWISE, REVOLUTION: out std_logic);

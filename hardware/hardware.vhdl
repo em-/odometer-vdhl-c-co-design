@@ -46,7 +46,6 @@ architecture behavioral of hardware is
     end component;
 
     component encoder_interface
-        generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST: in std_logic;
               A, B, Z:  in std_logic;
               COUNTERCLOCKWISE, CLOCKWISE, REVOLUTION: out std_logic);
@@ -139,7 +138,6 @@ enc: encoder
     port map(A, B, Z, FINISH);
 
 enc_iface: encoder_interface
-    generic map (BASE_ADDR => X"0001")
     port map(CLK, RST, A, B, Z, REQUESTS(0), REQUESTS(1), REQUESTS(2));
 
 u: uart
