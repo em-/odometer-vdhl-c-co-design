@@ -1,6 +1,8 @@
-GRAPHICS: odometer_classes.pdf odometer_usecases.pdf
+GRAPHICS=odometer_classes.pdf odometer_usecases.pdf
 
 all: ${GRAPHICS}
+
+doc: ${GRAPHICS}
 
 # Targets to analyze files
 %.svg: %.ums

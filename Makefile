@@ -1,5 +1,5 @@
 DOC_SOURCES=odometro.tex
-DOC_FIGURES=
+DOC_FIGURES=uml/odometer_usecases.svg uml/odometer_classes.svg
 DOC=odometro.pdf
 
 SUBDIRS=hardware software uml
@@ -27,7 +27,7 @@ ${DOC}: ${DOC_SOURCES} ${DOC_FIGURES_PDF} */*.vhdl */*.c
 	rubber -d $<
 
 # Build the documentation
-doc: ${DOC}
+doc: uml ${DOC}
 
 subdirs: $(SUBDIRS)
 
