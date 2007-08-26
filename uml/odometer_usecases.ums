@@ -21,6 +21,7 @@ actor encoder = Encoder;
 usecase rotate = "Ruota di N gradi";
 usecase fullRevolution = "Compie giro completo";
 usecase decodeRotation = "Decodifica rotazione";
+usecase updateCounters = "Aggiorna contatori";
 
 usecasediagram odometer_usecases {
     comment = "Casi d'uso";
@@ -32,8 +33,8 @@ usecasediagram odometer_usecases {
         *,     putData,    *, setK1,          
         *,     *,          *, setK2,          
 
-        encoder, rotate,          *, *,
-        *,       fullRevolution,  *, decodeRotation
+        encoder, rotate,          *, decodeRotation,
+        *,       fullRevolution,  *, updateCounters
         );
     entities {
         rs232 uses putSerial;
@@ -57,7 +58,8 @@ usecasediagram odometer_usecases {
 
         encoder uses rotate;
         encoder uses fullRevolution;
-        rotate includes decodeRotation;
-        fullRevolution includes decodeRotation;
+        decodeRotation extends rotate;
+        decodeRotation extends fullRevolution;
+        updateCounters extends decodeRotation;
     }
 }
