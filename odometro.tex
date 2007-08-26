@@ -103,6 +103,35 @@ massimo 1000 giri. Alimentazione 5VDC+/-5\%.
     \label{usecases}
 \end{center}
 
+Gli attori rappresentano le due sorgenti di input dell'Odometro,
+ovvero l'interfaccia seriale RS232 e l'output dell'Encoder incrementale.
+
+\begin{itemize}
+\item[Invio via seriale] RS232 invia all'Odometro dei dati tramite l'interfaccia
+     seriale di quest'ultimo.
+\item[Invio comando] I dati inviati da RS232 all'interfaccia seriale dell'Odometro
+     rappresentano un comando che deve essere decodificato.
+\item[Invio dati] A seguito di un comando che richiede dati aggiuntivi per essere
+     eseguito, RS232 provvede a fornire i dati necessari all'Odometro.
+\item[Ricezione via seriale] A seguito di un comando di lettura, RS232 attende di
+     ricevere i dati richiesti all'Odometro.
+\item[Lettura angolo] Il comando inviato all'Odometro richiede la lettura del
+     valore corrente dell'angolo e questo viene ricevuto tramite l'interfaccia
+     seriale.
+\item[Lettura rivoluzioni] Il comando inviato all'Odometro richiede la lettura del
+     valore corrente del contatore delle rivoluzioni e questo viene ricevuto
+     tramite l'interfaccia seriale.
+\item[Imposta coefficiente] Il comando inviato all'Odometro richiede l'impostazione
+     del coefficiente angolare corrispondente a un segnale dell'Encoder e il valore
+     viene trasmesso attraverso l'interfaccia seriale.
+\item[Imposta K] Il comando inviato all'Odometro richiede l'impostazione del
+     parametro K e il valore viene trasmesso attraverso l'interfaccia seriale.
+\item[Imposta K1] Il comando inviato all'Odometro richiede l'impostazione del
+     parametro K1 e il valore viene trasmesso attraverso l'interfaccia seriale.
+\item[Imposta K2] Il comando inviato all'Odometro richiede l'impostazione del
+     parametro K2 e il valore viene trasmesso attraverso l'interfaccia seriale.
+\end{itemize}
+
 
 \section{Implementazione}
 
