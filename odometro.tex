@@ -88,7 +88,14 @@
 \end{center}
 
 \section{Specifiche di progetto}
-
+Realizzare un odometro rotativo assoluto, da connettere ad un encoder
+incrementale con ingresso di 0 (A, B, Z: segnali TTL). Deve misurare l'angolo
+(bidirezionale) e il numero di giri, acquisibili via RS232, e fornire un
+impulso su un'uscita TTL ogni K gradi (programmabile), solo quando l'angolo
+sia compreso fra K1 e K2 gradi (entrambi programmabili). Deve essere
+programmabile (via RS232) per impostare il coefficiente angolare dell'encoder
+(gradi per impulso) e le costanti K, K1 e K2. Risoluzione 0.1 grado, angolo
+massimo 1000 giri. Alimentazione 5VDC+/-5\%.
 
 \section{Implementazione}
 
