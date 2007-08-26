@@ -1,12 +1,18 @@
-SOFTWARE_SOURCES=swhw_interface.c	\
+SOFTWARE_SOURCES=software.c		\
+ 		 swhw_interface.c	\
 		 serial_interface.c	\
 		 odometer.c
+
+SOFTWARE_HEADERS=memory_map.h		\
+		 swhw_interface.h	\
+		 serial_interface.h	\
+		 odometer.c		\
 
 # Default target
 all: software
 
-software: software.c ${SOFTWARE_SOURCES}
-	gcc -Wall -pedantic -o software $^
+software: ${SOFTWARE_SOURCES} ${SOFTWARE_HEADERS}
+	gcc -Wall -pedantic -o software ${SOFTWARE_SOURCES}
 
 # Clean target
 clean:
