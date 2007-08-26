@@ -131,6 +131,17 @@ dell'\textbf{Encoder} incrementale.
      parametro K1 e il valore viene trasmesso attraverso l'interfaccia seriale.
 \item[Imposta K2:] Il comando inviato all'Odometro richiede l'impostazione del
      parametro K2 e il valore viene trasmesso attraverso l'interfaccia seriale.
+
+\item[Ruota di K gradi:] \textbf{Encoder} segnala all'Odometro una rotazione di
+     K gradi in direzione oraria o antioraria secondo la codifica dei segnali A e B.
+\item[Compie giro completo:] \textbf{Encoder} segnala all'Odometro il passaggio del
+     marcatore di giro completo Z.
+\item[Decodifica rotazione:] A seguito delle segnalazioni ricevute
+     dall'\textbf{Encoder}, Odometro ne effettua la decodifica per determinarne
+     il senso di rotazione.
+\item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
+     angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
+     e delle segnalazioni ricevute.
 \end{description}
 
 
