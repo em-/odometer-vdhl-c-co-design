@@ -13,7 +13,9 @@ usecase setK1 = "Imposta K1";
 usecase setK2 = "Imposta K2";
 
 usecase readCommand = "Lettura comando";
+usecase readData = "Lettura dati";
 usecase readRS232 = "Lettura RS232";
+usecase writeRS232 = "Scrittura RS232";
 
 actor encoder = Encoder;
 usecase rotate = "Ruota di N gradi";
@@ -24,10 +26,10 @@ usecasediagram odometer_usecases {
     comment = "Casi d'uso";
     layout = grid(4, 
         *,       readAngle,       *, *,
-        *,       readRevolutions, *, *,
-        rs232,   setCoeff,        *, *,
-        *,       setK,  readCommand, readRS232,
-        *,       setK1,           *, *,
+        *,       readRevolutions, *, writeRS232,
+        rs232,   setCoeff,        *, readCommand,
+        *,       setK,            *, readRS232,
+        *,       setK1,           *, readData,
         *,       setK2,           *, *,
 
         encoder, rotate,          *, *,
@@ -42,13 +44,20 @@ usecasediagram odometer_usecases {
         rs232 uses setK2;
 
         readAngle includes readCommand;
+        readAngle includes writeRS232;
         readRevolutions includes readCommand;
+        readRevolutions includes writeRS232;
         setCoeff includes readCommand;
+        setCoeff includes readData;
         setK includes readCommand;
+        setK includes readData;
         setK1 includes readCommand;
+        setK1 includes readData;
         setK2 includes readCommand;
+        setK2 includes readData;
 
         readCommand includes readRS232;
+        readData includes readRS232;
 
         encoder uses rotate;
         encoder uses fullRevolution;
