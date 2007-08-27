@@ -147,6 +147,56 @@ dell'\textbf{Encoder} incrementale.
 \end{description}
 
 
+\section{Analisi delle classi}
+\begin{center}
+    \includegraphics[width=14cm]{uml/odometer_classes.pdf}
+    \label{usecases}
+\end{center}
+
+\subsection{Odometer}
+La classe \textbf{Odometer} è la classe principale del sistema e
+impiega al suo interno gli altri componenti.
+
+Lo stato della classe \textbf{Odometer} è rappresentato
+dai seguenti attributi:
+
+\begin{description}
+\item[int angle:] l'angolo derminato dalla posizione corrente dell'encoder,
+     in decimi di grado
+\item[int revolutions:] il numero di rivoluzioni compiute finora dall'encoder
+\item[int K:] il numero di gradi per i quali il sistema deve emettere un
+     impulso in uscita, in decimi di grado
+\item[int K1:] il limite inferiore dell'intervallo all'interno del quale
+     il sistema emette impulsi, in decimi di grado
+\item[int K2:] il limite superiore dell'intervallo all'interno del quale
+     il sistema emette impulsi, in decimi di grado
+\item[int coeff:] il numero di gradi a cui corrisponde un settore
+     dell'encoder in ingresso
+\end{description}
+
+I metodi che agiscono sull'oggetto \textbf{Odometer} sono i seguenti:
+
+\begin{description}
+\item[void setCoeff(value: int):] imposta il campo \textbf{coeff} al
+     valore specificato
+\item[void setK(value: int):] imposta il campo \textbf{K} al
+     valore specificato
+\item[void setK1(value: int):] imposta il campo \textbf{K1} al
+     valore specificato
+\item[void setK2(value: int):] imposta il campo \textbf{K2} al
+     valore specificato
+\item[void rotationClockWise():] segnala un movimento in senso orario
+     dell'encoder
+\item[void rotationCounterClockWise():] segnala un movimento in senso 
+     antiorario dell'encoder
+\item[void revolution():] segnala una rivoluzione completa dell'encoder
+\item[int getAngle():] richiede il valore del campo \textbf{angle}
+\item[int getRevolutions():] richiede il valore del campo
+    \textbf{revolutions}
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
+
 \section{Implementazione}
 
 
