@@ -57,6 +57,7 @@ class SerialController {
 class SerialInterface {
     operations {
         +serialNotify(): void;
+        +send(data: int): void;
         +reset(): void;
     }
 }
