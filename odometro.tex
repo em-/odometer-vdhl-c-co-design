@@ -196,6 +196,84 @@ I metodi che agiscono sull'oggetto \textbf{Odometer} sono i seguenti:
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
+\subsection{EncoderInterface}
+L'oggetto \textbf{EncoderInterface} si occupa di ricevere i segnali
+dall'encoder incrementale, di interpretarli e quindi di chiamare i
+metodi \texttt{rotationClockWise}, \texttt{rotationCounterClockWise}
+e \texttt{revolution} dell'oggetto \textbf{Odometer}.
+
+\begin{description}
+\item[void A(value: boolean):] notifica il cambiamento del segnale \texttt{A}
+    dell'encoder
+\item[void B(value: boolean):] notifica il cambiamento del segnale \texttt{B}
+    dell'encoder
+\item[void Z(value: boolean):] notifica il cambiamento del segnale \texttt{Z}
+    dell'encoder
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
+\subsection{OutputInterface}
+\textbf{OutputInterface} provvede a fornire l'uscita TTL descritta nelle
+specifiche.
+
+\begin{description}
+\item[void tick():] emette un impulso sull'uscita TTL per un periodo di clock
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
+\subsection{Uart}
+L'oggetto \textbf{Uart} trasmette e riceve dati attraverso l'interfaccia RS232,
+convertendo i segnali in arrivo in un flusso di byte e, viceversa, convertendo
+i dati in uscita nei segnali opportuni.
+
+\begin{description}
+\item[byte byteRx:] il byte ricevuto non ancora letto
+\item[byte byteTx:] il byte da trasmettere
+\item[boolean txBusy:] indica se l'\textbf{Uart} sta trasmettendo
+\item[boolean rxAv:] indica se è presente un byte non ancora letto
+\end{description}
+
+I metodi disponibili per l'oggetto \textbf{Uart} sono i seguenti:
+
+\begin{description}
+\item[void readRxData():] notifica l'\textbf{Uart} che il byte ricevuto è
+    stato letto
+\item[void loadTxData():] notifica l'\textbf{Uart} che è stato caricato il
+    byte da trasmettere
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
+\subsection{SerialController}
+Il \textbf{SerialController} si occupa di gestire l'\textbf{Uart}
+rendendone accessibili le funzionalità al resto del sistema,
+attraverso interfacce standard come interrupt e bus di sistema.
+
+\begin{description}
+\item[void txBusy(value: boolean):] notifica che lo stato di trasmissione
+    dell'\textbf{Uart} è cambiato
+\item[void rxAv(value: boolean):] notifica che la disponibilità di dati
+    in ingresso dall'\textbf{Uart} è cambiata
+\item[byte getStatus():] restituisce lo stato dell'\textbf{Uart},con il
+    bit 0 che indica la disponibilità di dati in ingresso e il bit 1 che
+    indica se l'\textbf{Uart} è occupato nella trasmissione di un dato
+\item[byte getData():] restituisce i dati in ingresso
+\item[void setData(value: byte):] imposta i dati in uscita
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
+\subsection{SerialInterface}
+\textbf{SerialInterface} si occupa di ricevere dati attraverso il
+\textbf{SerialController} e di interpretarli come comandi per
+l'\textbf{Odometer} chiamandone i metodi, nonché di occuparsi
+dell'invio delle risposte verso il \textbf{SerialController}.
+
+\begin{description}
+\item[void serialNotify():] notifica \textbf{SerialInterface} che
+    lo stato del \textbf{SerialController} è cambiato
+\item[void send(value: int):] invia i dati verso il
+    \textbf{SerialController}
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
 
 \section{Implementazione}
 
