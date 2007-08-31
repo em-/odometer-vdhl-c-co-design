@@ -36,6 +36,9 @@
 \newcommand{\component}[1]{\textbf{#1}}
 \newcommand{\identifier}[1]{\texttt{#1}}
 
+\newcommand{\inputVHDL}[1]{\lstinputlisting[language=VHDL]{#1}}
+\newcommand{\inputC}[1]{\lstinputlisting[language=C]{#1}}
+
 % Justify even if it has to leave a lot of blank space
 \setlength{\emergencystretch}{3em}
 
@@ -279,7 +282,7 @@ Indirizzo & Componente & Lettura & Scrittura \\
 \hline
 \end{tabular}
 
-\lstinputlisting[language=C]{software/memory_map.h}
+\inputC{software/memory_map.h}
 
 \subsection{Richieste di interrupt}
 \begin{tabular}{|l|l|l|}
@@ -298,31 +301,31 @@ Linea & Componente & Segnale \\
 
 \subsection{Odometer}
 \subsubsection{software/odometer.h}
-\lstinputlisting[language=C]{software/odometer.h}
+\inputC{software/odometer.h}
 \subsubsection{software/odometer.c}
-\lstinputlisting[language=C]{software/odometer.c}
+\inputC{software/odometer.c}
 
 \subsection{SerialInterface}
 \subsubsection{software/serial\_interface.h}
-\lstinputlisting[language=C]{software/serial_interface.h}
+\inputC{software/serial_interface.h}
 \subsubsection{software/serial\_interface.c}
-\lstinputlisting[language=C]{software/serial_interface.c}
+\inputC{software/serial_interface.c}
 
 \subsection{EncoderInterface}
 \subsubsection{hardware/encoder\_interface.vhdl}
-\lstinputlisting[language=VHDL]{hardware/encoder_interface.vhdl}
+\inputVHDL{hardware/encoder_interface.vhdl}
 
 \subsection{OutputInterface}
 \subsubsection{hardware/output\_interface.vhdl}
-\lstinputlisting[language=VHDL]{hardware/encoder_interface.vhdl}
+\inputVHDL{hardware/encoder_interface.vhdl}
 
 \subsection{Uart}
 \subsubsection{hardware/uart.vhdl}
-\lstinputlisting[language=VHDL]{hardware/uart.vhdl}
+\inputVHDL{hardware/uart.vhdl}
 
 \subsection{SerialController}
 \subsubsection{hardware/serial\_controller.vhdl}
-\lstinputlisting[language=VHDL]{hardware/serial_controller.vhdl}
+\inputVHDL{hardware/serial_controller.vhdl}
 
 \subsection{Interfaccia software/hardware}
 Per la simulazione della parte hardware si è usato GHDL, mentre quella software
@@ -331,22 +334,22 @@ facendo comunicare le due sezioni attraverso i rispettivi standard input e outpu
 implementando anche un controller di interrupt nella parte hardware.
 
 \subsubsection{software/software.c}
-\lstinputlisting[language=C]{software/software.c}
+\inputC{software/software.c}
 
 \subsubsection{hardware/hardware.vhdl}
-\lstinputlisting[language=VHDL]{hardware/hardware.vhdl}
+\inputVHDL{hardware/hardware.vhdl}
 
 \subsubsection{software/swhw\_interface.h}
-\lstinputlisting[language=C]{software/swhw_interface.h}
+\inputC{software/swhw_interface.h}
 
 \subsubsection{software/swhw\_interface.c}
-\lstinputlisting[language=C]{software/swhw_interface.c}
+\inputC{software/swhw_interface.c}
 
 \subsubsection{hardware/hwsw\_interface.vhdl}
-\lstinputlisting[language=VHDL]{hardware/hwsw_interface.vhdl}
+\inputVHDL{hardware/hwsw_interface.vhdl}
 
 \subsubsection{hardware/interrupt\_controller.vhdl}
-\lstinputlisting[language=VHDL]{hardware/interrupt_controller.vhdl}
+\inputVHDL{hardware/interrupt_controller.vhdl}
 
 
 \section{Ulteriori informazioni}
