@@ -1,4 +1,6 @@
-GRAPHICS=odometer_classes.pdf odometer_usecases.pdf
+GRAPHICS=odometer_classes.pdf		\
+         odometer_encoder_usecase.pdf	\
+	 odometer_rs232_usecase.pdf
 
 all: ${GRAPHICS}
 

@@ -73,14 +73,34 @@ programmabile (via RS232) per impostare il coefficiente angolare dell'encoder
 massimo 1000 giri. Alimentazione 5VDC+/-5\%.
 
 \section{Analisi dei casi d'uso}
-\begin{center}
-    \includegraphics[width=14cm]{uml/odometer_usecases.pdf}
-    \label{usecases}
-\end{center}
-
 Gli attori rappresentano le due sorgenti di input dell'odometro,
 ovvero l'interfaccia seriale \component{RS232} e l'output
 dell'\component{Encoder} incrementale.
+
+\begin{center}
+    \includegraphics[width=14cm]{uml/odometer_encoder_usecase.pdf}
+    \label{encoder_usecase}
+\end{center}
+
+\begin{description}
+\item[Ruota di K gradi:] \actor{Encoder} segnala all'odometro una rotazione di
+     K gradi in direzione oraria o antioraria secondo la codifica dei segnali A e B.
+\item[Compie giro completo:] \actor{Encoder} segnala all'odometro il passaggio del
+     marcatore di giro completo Z.
+\item[Decodifica rotazione:] A seguito delle segnalazioni ricevute
+     dall'\actor{Encoder}, odometro ne effettua la decodifica per determinarne
+     il senso di rotazione.
+\item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
+     angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
+     e delle segnalazioni ricevute.
+\item[Segnala output:] Se l'angolo corrente soddisfa i criteri impostati con K, 
+     K1 e K2 il segnale di output viene alzato per un colpo di clock.
+\end{description}
+
+\begin{center}
+    \includegraphics[width=14cm]{uml/odometer_rs232_usecase.pdf}
+    \label{rs232_usecase}
+\end{center}
 
 \begin{description}
 \item[Invio via seriale:] \actor{RS232} invia all'odometro dei dati tramite l'interfaccia
@@ -106,19 +126,6 @@ dell'\component{Encoder} incrementale.
      parametro K1 e il valore viene trasmesso attraverso l'interfaccia seriale.
 \item[Imposta K2:] Il comando inviato all'odometro richiede l'impostazione del
      parametro K2 e il valore viene trasmesso attraverso l'interfaccia seriale.
-
-\item[Ruota di K gradi:] \actor{Encoder} segnala all'odometro una rotazione di
-     K gradi in direzione oraria o antioraria secondo la codifica dei segnali A e B.
-\item[Compie giro completo:] \actor{Encoder} segnala all'odometro il passaggio del
-     marcatore di giro completo Z.
-\item[Decodifica rotazione:] A seguito delle segnalazioni ricevute
-     dall'\actor{Encoder}, odometro ne effettua la decodifica per determinarne
-     il senso di rotazione.
-\item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
-     angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
-     e delle segnalazioni ricevute.
-\item[Segnala output:] Se l'angolo corrente soddisfa i criteri impostati con K, 
-     K1 e K2 il segnale di output viene alzato per un colpo di clock.
 \end{description}
 
 

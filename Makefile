@@ -1,5 +1,7 @@
 DOC_SOURCES=odometro.tex
-DOC_FIGURES=uml/odometer_usecases.svg uml/odometer_classes.svg
+DOC_FIGURES=uml/odometer_rs232_usecase.svg	\
+            uml/odometer_encoder_usecase.svg	\
+	    uml/odometer_classes.svg
 DOC=odometro.pdf
 
 SUBDIRS=hardware software uml

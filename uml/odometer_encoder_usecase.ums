@@ -1,0 +1,28 @@
+/*
+ * File: odometer_encoder_usecase.ums
+ * Autore: Emanuele Aina <em@nerd.ocracy.org>
+ * Licenza: LGPL
+ */
+
+actor encoder = Encoder;
+usecase rotate = "Ruota di N gradi";
+usecase fullRevolution = "Compie giro completo";
+usecase decodeRotation = "Decodifica rotazione";
+usecase updateCounters = "Aggiorna contatori";
+usecase signalOutput = "Segnala output";
+
+usecasediagram odometer_encoder_usecase {
+    comment = "Casi d'uso";
+    layout = grid(5, 
+        encoder, rotate,          *, decodeRotation, *,
+        *,       fullRevolution,  *, updateCounters, signalOutput
+        );
+    entities {
+        encoder uses rotate;
+        encoder uses fullRevolution;
+        decodeRotation extends rotate;
+        decodeRotation extends fullRevolution;
+        updateCounters extends decodeRotation;
+        signalOutput extends updateCounters;
+    }
+}

@@ -1,5 +1,5 @@
 /*
- * File: odometer_usecases.ums
+ * File: odometer_rs232_usecase.ums
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
  */
@@ -17,14 +17,7 @@ usecase putData = "Invio dati";
 usecase putSerial = "Invio via seriale";
 usecase getSerial = "Ricezione via seriale";
 
-actor encoder = Encoder;
-usecase rotate = "Ruota di N gradi";
-usecase fullRevolution = "Compie giro completo";
-usecase decodeRotation = "Decodifica rotazione";
-usecase updateCounters = "Aggiorna contatori";
-usecase signalOutput = "Segnala output";
-
-usecasediagram odometer_usecases {
+usecasediagram odometer_rs232_usecase {
     comment = "Casi d'uso";
     layout = grid(5, 
         *,     *,          *, readAngle,       *,
@@ -32,10 +25,7 @@ usecasediagram odometer_usecases {
         rs232, putCommand, *, setCoeff,        *,
         *,     putSerial,  *, setK,            *,
         *,     putData,    *, setK1,           *,
-        *,     *,          *, setK2,           *,
-
-        encoder, rotate,          *, decodeRotation, *,
-        *,       fullRevolution,  *, updateCounters, signalOutput
+        *,     *,          *, setK2,           *
         );
     entities {
         rs232 uses putSerial;
@@ -56,12 +46,5 @@ usecasediagram odometer_usecases {
 
         putCommand extends putSerial;
         putData    extends putSerial;
-
-        encoder uses rotate;
-        encoder uses fullRevolution;
-        decodeRotation extends rotate;
-        decodeRotation extends fullRevolution;
-        updateCounters extends decodeRotation;
-        signalOutput extends updateCounters;
     }
 }
