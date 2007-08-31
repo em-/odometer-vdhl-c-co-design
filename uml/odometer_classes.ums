@@ -44,10 +44,6 @@ class OutputInterface {
 }
 
 class SerialController {
-    fields {
-        #status: byte;
-        #data: byte;
-    }
     operations {
         +txBusy(value: boolean): void;
         +rxAv(value: boolean): void;
