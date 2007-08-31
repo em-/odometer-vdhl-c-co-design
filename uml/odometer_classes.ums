@@ -70,8 +70,8 @@ class Uart {
         #rxAv:   boolean;
     }
     operations {
-        +readRxData(): byte;
-        +loadTxData(): byte;
+        +readRxData(): void;
+        +loadTxData(): void;
         +reset(): void;
     }
 }
