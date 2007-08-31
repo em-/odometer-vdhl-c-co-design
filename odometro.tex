@@ -277,6 +277,28 @@ dell'invio delle risposte verso il \textbf{SerialController}.
 
 \section{Implementazione}
 
+Le classi \textbf{Odometer} e \textbf{SerialInterface} sono state
+realizzate in software, mentre \textbf{EncoderInterface}, 
+\textbf{OutputInterface}, \textbf{Uart}, \textbf{SerialController}
+sono state realizzate in hardware.
+
+\subsection{Mappa di memoria}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Indirizzo & Componente & Lettura & Scrittura \\
+\hline
+\texttt{0x0000} & IRQ Controller & IRQ attivi & IRQ gestiti \\
+\hline
+\texttt{0x0001} & SerialController & Dati ricevuti & Data da trasmettere \\
+\hline
+\texttt{0x0002} & SerialController & Stato corrente & \\
+\hline
+\texttt{0x0003} & OutputInterface & & Impulso in uscita \\
+\hline
+\end{tabular}
+
+\lstinputlisting{software/memory_map.h}
+
 
 \section{Ulteriori informazioni}
 L'intero progetto è disponibile presso \link{http://techn.ocracy.org/odometer}, da cui
