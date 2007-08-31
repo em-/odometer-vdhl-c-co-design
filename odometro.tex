@@ -8,6 +8,7 @@
 \usepackage{verbatim}
 \usepackage{color}
 \usepackage{listings}
+\usepackage{latexsym}
 
 % Informations
 \title{Odometro incrementale}
@@ -355,6 +356,11 @@ implementando anche un controller di interrupt nella parte hardware.
 L'intero progetto è disponibile presso \link{http://techn.ocracy.org/odometer}, da cui
 è inoltre possibile visionare tutte le revisioni realizzate durante lo sviluppo.
 Il repository contiene inoltre i sorgenti di questo documento e il Makefile
-per GNU~make usato per automatizzare il processo di compilazione e test.
+per GNU~Make usato per automatizzare il processo di compilazione e test.
+
+Per la simulazione è necessario installare, oltre a GNU~Make e GCC, Python
+(usato per lanciare la simulazione stessa) e GHDL, e in seguito eseguire
+\texttt{make run}. Per generare la documentazione sono necessari \LaTeX,
+Rubber, UMLSpeed e Inkscape.
 
 \end{document}
