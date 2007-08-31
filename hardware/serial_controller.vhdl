@@ -62,14 +62,16 @@ architecture behavioral of serial_controller is
      elsif rising_edge(CLK) then
         BUS_DATA_OUT <= (others => 'Z');
 
-	if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = DATA_ADDR) then -- write byte to Tx
+        -- write byte to Tx
+	if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = DATA_ADDR) then
            TxData <= BUS_DATA_IN(7 downto 0);
 	   LoadA <= '1';   -- Load signal
         else
            LoadA <= '0';
         end if;
 
-	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = DATA_ADDR) then -- Read byte from Rx
+        -- Read byte from Rx
+	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = DATA_ADDR) then
 	    ReadA <= '1';   -- Read signal
             BUS_DATA_OUT <= (others => '0');
             BUS_DATA_OUT(7 downto 0) <= RxData;
@@ -77,7 +79,8 @@ architecture behavioral of serial_controller is
             ReadA <= '0';
         end if;
 
-	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = STATUS_ADDR) then -- Read status
+        -- Read status
+	if (BUS_STROBE = '1' and BUS_RnW = '1' and BUS_ADDR = STATUS_ADDR) then
             BUS_DATA_OUT <= (others => '0');
             BUS_DATA_OUT(1 downto 0) <= TxBusy & RxAv;
         end if;

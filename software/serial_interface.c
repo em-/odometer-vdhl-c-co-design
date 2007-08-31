@@ -15,7 +15,8 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-static void serial_received_data(SerialInterface *serial_interface, unsigned char serial_data)
+static void serial_received_data(SerialInterface *serial_interface,
+                                 unsigned char serial_data)
 {
     static int bytes_left = 0;
     static int command, command_data;
@@ -25,7 +26,8 @@ static void serial_received_data(SerialInterface *serial_interface, unsigned cha
         command = serial_data;
         command_data = 0;
         if (command < serial_interface->handlers_size) {
-            bytes_left = serial_interface->handlers[command].serial_data_size;
+            bytes_left = 
+                serial_interface->handlers[command].serial_data_size;
         }
     } else {
         command_data = command_data << 8;
@@ -54,7 +56,9 @@ void serial_init(SerialInterface *serial_interface)
     serial_interface->outstanding_data = -1;
 }
 
-void serial_set_command_handlers(SerialInterface *serial_interface, SerialHandler *array, int size)
+void serial_set_command_handlers(SerialInterface *serial_interface,
+                                 SerialHandler *array,
+                                 int size)
 {
     serial_interface->handlers = array;
     serial_interface->handlers_size = size;

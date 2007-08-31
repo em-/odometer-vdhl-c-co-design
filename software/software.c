@@ -31,7 +31,8 @@ int main(void)
     odometer_init(&odometer, &serial_interface);
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
-    serial_set_command_handlers(&serial_interface, command_handlers, command_nr);
+    serial_set_command_handlers(&serial_interface, command_handlers,
+        command_nr);
 
     set_irq_handler(0, odometer_encoder_counterclockwise, &odometer);
     set_irq_handler(1, odometer_encoder_clockwise, &odometer);

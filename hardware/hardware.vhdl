@@ -128,11 +128,13 @@ begin
 end process;
 
 hwsw: hwsw_interface
-    port map(CLK, RST, BUS_DATA_OUT, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
+    port map(CLK, RST, BUS_DATA_OUT, IRQ,
+             BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
 irq_ctrl: interrupt_controller
     generic map (BASE_ADDR => X"1000")
-    port map(CLK, RST, REQUESTS, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
+    port map(CLK, RST, REQUESTS, IRQ,
+             BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
 enc: encoder
     port map(A, B, Z, FINISH);

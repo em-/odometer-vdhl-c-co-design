@@ -72,7 +72,8 @@ void odometer_get_revolutions(int command_data, void *data) {
 void odometer_encoder_counterclockwise(void *data)
 {
     Odometer *odometer = data;
-    fprintf(stderr, "tick counter-clockwise %d-%d\n", odometer->angle, odometer->coeff);
+    fprintf(stderr, "tick counter-clockwise %d-%d\n",
+        odometer->angle, odometer->coeff);
     if (odometer->started) {
         odometer->angle -= odometer->coeff;
         odometer->direction = DIRECTION_COUNTERCLOCKWISE;
@@ -83,7 +84,8 @@ void odometer_encoder_counterclockwise(void *data)
 void odometer_encoder_clockwise(void *data)
 {
     Odometer *odometer = data;
-    fprintf(stderr, "tick clockwise %d+%d\n", odometer->angle, odometer->coeff);
+    fprintf(stderr, "tick clockwise %d+%d\n",
+        odometer->angle, odometer->coeff);
     if (odometer->started) {
         odometer->angle += odometer->coeff;
         odometer->direction = DIRECTION_CLOCKWISE;
