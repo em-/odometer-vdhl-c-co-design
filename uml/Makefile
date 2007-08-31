@@ -24,4 +24,4 @@ doc: ${GRAPHICS}
 
 # Clean target
 clean:
-	-rm -f *.svg *.eps *.pdf
+	-rm -f *.svg *.eps *.pdf *.html
