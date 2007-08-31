@@ -39,6 +39,7 @@ class EncoderInterface {
 class OutputInterface {
     operations {
         +tick(): void;
+        +reset(): void;
     }
 }
 
@@ -60,6 +61,7 @@ class SerialController {
 class SerialInterface {
     operations {
         +serialNotify(): void;
+        +reset(): void;
     }
 }
 
