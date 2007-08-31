@@ -28,7 +28,7 @@ begin
         TICK <= '0';
      elsif rising_edge(CLK) then
         TICK <= '0';
-	if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = BASE_ADDR) then
+        if (BUS_STROBE = '1' and BUS_RnW = '0' and BUS_ADDR = BASE_ADDR) then
             TICK <= '1';
         end if;
      end if;

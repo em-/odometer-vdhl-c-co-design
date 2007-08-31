@@ -18,7 +18,7 @@ entity encoder_interface is
 end encoder_interface;
 
 architecture behavioral of encoder_interface is
-	type STATE is (S_00, S_10, S_11, S_01);
+        type STATE is (S_00, S_10, S_11, S_01);
         signal current_state: STATE;
         signal Quad: std_logic_vector(1 downto 0);
 begin
