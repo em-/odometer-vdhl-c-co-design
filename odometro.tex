@@ -260,6 +260,23 @@ dell'invio delle risposte verso il \component{SerialController}.
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
+\section{Diagramma di robustezza}
+Il seguente diagramma riporta le interazioni in seguito alla ricezione
+di un comando per via seriale:
+\begin{center}
+    \includegraphics[width=14cm]{uml/odometer_serial_robustness.pdf}
+    \label{serial_robustness}
+\end{center}
+
+Le interazioni necessarie a garantire la gestione dei segnali
+generati dall'encoder sono rappresentate nel seguente diagramma:
+
+\begin{center}
+    \includegraphics[width=14cm]{uml/odometer_encoder_robustness.pdf}
+    \label{encoder_robustness}
+\end{center}
+
+
 \section{Implementazione}
 
 Le classi \component{Odometer} e \component{SerialInterface} sono state
