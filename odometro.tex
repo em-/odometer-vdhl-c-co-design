@@ -299,6 +299,58 @@ Indirizzo & Componente & Lettura & Scrittura \\
 
 \lstinputlisting{software/memory_map.h}
 
+\subsection{Odometer}
+\subsubsection{software/odometer.h}
+\lstinputlisting[language=C]{software/odometer.h}
+\subsubsection{software/odometer.c}
+\lstinputlisting[language=C]{software/odometer.c}
+
+\subsection{SerialInterface}
+\subsubsection{software/serial\_interface.h}
+\lstinputlisting[language=C]{software/serial_interface.h}
+\subsubsection{software/serial\_interface.c}
+\lstinputlisting[language=C]{software/serial_interface.c}
+
+\subsection{EncoderInterface}
+\subsubsection{hardware/encoder\_interface.vhdl}
+\lstinputlisting[language=VHDL]{hardware/encoder_interface.vhdl}
+
+\subsection{OutputInterface}
+\subsubsection{hardware/output\_interface.vhdl}
+\lstinputlisting[language=VHDL]{hardware/encoder_interface.vhdl}
+
+\subsection{Uart}
+\subsubsection{hardware/uart.vhdl}
+\lstinputlisting[language=VHDL]{hardware/uart.vhdl}
+
+\subsection{SerialController}
+\subsubsection{hardware/serial\_controller.vhdl}
+\lstinputlisting[language=VHDL]{hardware/serial_controller.vhdl}
+
+\subsection{Interfaccia software/hardware}
+Per la simulazione della parte hardware si è usato GHDL, mentre quella software
+è stata compilata con GCC. L'interfaccia hardware/software è stata quindi emulata
+facendo comunicare le due sezioni attraverso i rispettivi standard input e output,
+implementando anche un controller di interrupt nella parte hardware.
+
+\subsection{software/software.c}
+\lstinputlisting[language=C]{software/software.c}
+
+\subsection{hardware/hardware.vhdl}
+\lstinputlisting[language=VHDL]{hardware/hardware.vhdl}
+
+\subsubsection{software/swhw\_interface.h}
+\lstinputlisting[language=C]{software/swhw_interface.h}
+
+\subsubsection{software/swhw\_interface.c}
+\lstinputlisting[language=C]{software/swhw_interface.c}
+
+\subsubsection{hardware/hwsw\_interface.vhdl}
+\lstinputlisting[language=VHDL]{hardware/hwsw_interface.vhdl}
+
+\subsubsection{hardware/interrupt\_controller.vhdl}
+\lstinputlisting[language=VHDL]{hardware/interrupt_controller.vhdl}
+
 
 \section{Ulteriori informazioni}
 L'intero progetto è disponibile presso \link{http://techn.ocracy.org/odometer}, da cui
