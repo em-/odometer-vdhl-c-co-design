@@ -281,6 +281,21 @@ Indirizzo & Componente & Lettura & Scrittura \\
 
 \lstinputlisting[language=C]{software/memory_map.h}
 
+\subsection{Richieste di interrupt}
+\begin{tabular}{|l|l|l|}
+\hline
+Linea & Componente & Segnale \\
+\hline
+\texttt{0} & EncoderInterface & Rotazione in senso antiorario \\
+\hline
+\texttt{1} & EncoderInterface & Rotazione in senso orario \\
+\hline
+\texttt{2} & EncoderInterface & Rivoluzione completa \\
+\hline
+\texttt{3} & SerialController & Cambiamento di stato \\
+\hline
+\end{tabular}
+
 \subsection{Odometer}
 \subsubsection{software/odometer.h}
 \lstinputlisting[language=C]{software/odometer.h}
