@@ -64,10 +64,10 @@ class SerialInterface {
 
 class Uart {
     fields {
-        #byteRx: byte;
-        #byteTx: byte;
-        #txBusy: boolean;
-        #rxAv:   boolean;
+        +byteRx: byte;
+        +byteTx: byte;
+        +txBusy: boolean;
+        +rxAv:   boolean;
     }
     operations {
         +readRxData(): void;
