@@ -12,7 +12,6 @@ usecase updateCounters = "Aggiorna contatori";
 usecase signalOutput = "Segnala output";
 
 usecasediagram odometer_encoder_usecase {
-    comment = "Casi d'uso";
     layout = grid(5, 
         encoder, rotate,          *, decodeRotation, *,
         *,       fullRevolution,  *, updateCounters, signalOutput

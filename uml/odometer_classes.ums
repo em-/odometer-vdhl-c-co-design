@@ -77,7 +77,6 @@ class Uart {
 }
 
 classdiagram odometer_classes {
-    comment = "Diagrammi delle classi";
     layout = hierarchy;
     entities {
         Odometer depends SerialInterface;
