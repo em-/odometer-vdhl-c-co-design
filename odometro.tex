@@ -32,7 +32,8 @@
 % Ignore the argument
 \newcommand{\noop}[1]{}
 
-\newcommand{\component}[1]{\texttt{#1}}
+\newcommand{\actor}[1]{\textbf{#1}}
+\newcommand{\component}[1]{\textbf{#1}}
 \newcommand{\identifier}[1]{\texttt{#1}}
 
 % Justify even if it has to leave a lot of blank space
@@ -78,17 +79,17 @@ massimo 1000 giri. Alimentazione 5VDC+/-5\%.
 \end{center}
 
 Gli attori rappresentano le due sorgenti di input dell'Odometro,
-ovvero l'interfaccia seriale \textbf{RS232} e l'output
-dell'\textbf{Encoder} incrementale.
+ovvero l'interfaccia seriale \component{RS232} e l'output
+dell'\component{Encoder} incrementale.
 
 \begin{description}
-\item[Invio via seriale:] \textbf{RS232} invia all'Odometro dei dati tramite l'interfaccia
+\item[Invio via seriale:] \actor{RS232} invia all'Odometro dei dati tramite l'interfaccia
      seriale di quest'ultimo.
-\item[Invio comando:] I dati inviati da \textbf{RS232} all'interfaccia seriale dell'Odometro
+\item[Invio comando:] I dati inviati da \actor{RS232} all'interfaccia seriale dell'Odometro
      rappresentano un comando che deve essere decodificato.
 \item[Invio dati:] A seguito di un comando che richiede dati aggiuntivi per essere
-     eseguito, \textbf{RS232} provvede a fornire i dati necessari all'Odometro.
-\item[Ricezione via seriale:] A seguito di un comando di lettura, \textbf{RS232} attende di
+     eseguito, \actor{RS232} provvede a fornire i dati necessari all'Odometro.
+\item[Ricezione via seriale:] A seguito di un comando di lettura, \actor{RS232} attende di
      ricevere i dati richiesti all'Odometro.
 \item[Lettura angolo:] Il comando inviato all'Odometro richiede la lettura del
      valore corrente dell'angolo e questo viene ricevuto tramite l'interfaccia
@@ -106,12 +107,12 @@ dell'\textbf{Encoder} incrementale.
 \item[Imposta K2:] Il comando inviato all'Odometro richiede l'impostazione del
      parametro K2 e il valore viene trasmesso attraverso l'interfaccia seriale.
 
-\item[Ruota di K gradi:] \textbf{Encoder} segnala all'Odometro una rotazione di
+\item[Ruota di K gradi:] \actor{Encoder} segnala all'Odometro una rotazione di
      K gradi in direzione oraria o antioraria secondo la codifica dei segnali A e B.
-\item[Compie giro completo:] \textbf{Encoder} segnala all'Odometro il passaggio del
+\item[Compie giro completo:] \actor{Encoder} segnala all'Odometro il passaggio del
      marcatore di giro completo Z.
 \item[Decodifica rotazione:] A seguito delle segnalazioni ricevute
-     dall'\textbf{Encoder}, Odometro ne effettua la decodifica per determinarne
+     dall'\actor{Encoder}, Odometro ne effettua la decodifica per determinarne
      il senso di rotazione.
 \item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
      angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
@@ -128,10 +129,10 @@ dell'\textbf{Encoder} incrementale.
 \end{center}
 
 \subsection{Odometer}
-La classe \textbf{Odometer} è la classe principale del sistema e
+La classe \component{Odometer} è la classe principale del sistema e
 impiega al suo interno gli altri componenti.
 
-Lo stato della classe \textbf{Odometer} è rappresentato
+Lo stato della classe \component{Odometer} è rappresentato
 dai seguenti attributi:
 
 \begin{description}
@@ -148,46 +149,46 @@ dai seguenti attributi:
      dell'encoder in ingresso
 \end{description}
 
-I metodi che agiscono sull'oggetto \textbf{Odometer} sono i seguenti:
+I metodi che agiscono sull'oggetto \component{Odometer} sono i seguenti:
 
 \begin{description}
-\item[void setCoeff(value: int):] imposta il campo \textbf{coeff} al
+\item[void setCoeff(value: int):] imposta il campo \identifier{coeff} al
      valore specificato
-\item[void setK(value: int):] imposta il campo \textbf{K} al
+\item[void setK(value: int):] imposta il campo \identifier{K} al
      valore specificato
-\item[void setK1(value: int):] imposta il campo \textbf{K1} al
+\item[void setK1(value: int):] imposta il campo \identifier{K1} al
      valore specificato
-\item[void setK2(value: int):] imposta il campo \textbf{K2} al
+\item[void setK2(value: int):] imposta il campo \identifier{K2} al
      valore specificato
 \item[void rotationClockWise():] segnala un movimento in senso orario
      dell'encoder
 \item[void rotationCounterClockWise():] segnala un movimento in senso 
      antiorario dell'encoder
 \item[void revolution():] segnala una rivoluzione completa dell'encoder
-\item[int getAngle():] richiede il valore del campo \textbf{angle}
+\item[int getAngle():] richiede il valore del campo \identifier{angle}
 \item[int getRevolutions():] richiede il valore del campo
-    \textbf{revolutions}
+    \identifier{revolutions}
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
 \subsection{EncoderInterface}
-L'oggetto \textbf{EncoderInterface} si occupa di ricevere i segnali
+L'oggetto \component{EncoderInterface} si occupa di ricevere i segnali
 dall'encoder incrementale, di interpretarli e quindi di chiamare i
-metodi \texttt{rotationClockWise}, \texttt{rotationCounterClockWise}
-e \texttt{revolution} dell'oggetto \textbf{Odometer}.
+metodi \identifier{rotationClockWise}, \identifier{rotationCounterClockWise}
+e \identifier{revolution} dell'oggetto \component{Odometer}.
 
 \begin{description}
-\item[void A(value: boolean):] notifica il cambiamento del segnale \texttt{A}
+\item[void A(value: boolean):] notifica il cambiamento del segnale \identifier{A}
     dell'encoder
-\item[void B(value: boolean):] notifica il cambiamento del segnale \texttt{B}
+\item[void B(value: boolean):] notifica il cambiamento del segnale \identifier{B}
     dell'encoder
-\item[void Z(value: boolean):] notifica il cambiamento del segnale \texttt{Z}
+\item[void Z(value: boolean):] notifica il cambiamento del segnale \identifier{Z}
     dell'encoder
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
 \subsection{OutputInterface}
-\textbf{OutputInterface} provvede a fornire l'uscita TTL descritta nelle
+\component{OutputInterface} provvede a fornire l'uscita TTL descritta nelle
 specifiche.
 
 \begin{description}
@@ -196,64 +197,64 @@ specifiche.
 \end{description}
 
 \subsection{Uart}
-L'oggetto \textbf{Uart} trasmette e riceve dati attraverso l'interfaccia RS232,
+L'oggetto \component{Uart} trasmette e riceve dati attraverso l'interfaccia RS232,
 convertendo i segnali in arrivo in un flusso di byte e, viceversa, convertendo
 i dati in uscita nei segnali opportuni.
 
 \begin{description}
 \item[byte byteRx:] il byte ricevuto non ancora letto
 \item[byte byteTx:] il byte da trasmettere
-\item[boolean txBusy:] indica se l'\textbf{Uart} sta trasmettendo
+\item[boolean txBusy:] indica se l'\component{Uart} sta trasmettendo
 \item[boolean rxAv:] indica se è presente un byte non ancora letto
 \end{description}
 
-I metodi disponibili per l'oggetto \textbf{Uart} sono i seguenti:
+I metodi disponibili per l'oggetto \component{Uart} sono i seguenti:
 
 \begin{description}
-\item[void readRxData():] notifica l'\textbf{Uart} che il byte ricevuto è
+\item[void readRxData():] notifica l'\component{Uart} che il byte ricevuto è
     stato letto
-\item[void loadTxData():] notifica l'\textbf{Uart} che è stato caricato il
+\item[void loadTxData():] notifica l'\component{Uart} che è stato caricato il
     byte da trasmettere
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
 \subsection{SerialController}
-Il \textbf{SerialController} si occupa di gestire l'\textbf{Uart}
+Il \component{SerialController} si occupa di gestire l'\component{Uart}
 rendendone accessibili le funzionalità al resto del sistema,
 attraverso interfacce standard come interrupt e bus di sistema.
 
 \begin{description}
 \item[void txBusy(value: boolean):] notifica che lo stato di trasmissione
-    dell'\textbf{Uart} è cambiato
+    dell'\component{Uart} è cambiato
 \item[void rxAv(value: boolean):] notifica che la disponibilità di dati
-    in ingresso dall'\textbf{Uart} è cambiata
-\item[byte getStatus():] restituisce lo stato dell'\textbf{Uart},con il
+    in ingresso dall'\component{Uart} è cambiata
+\item[byte getStatus():] restituisce lo stato dell'\component{Uart},con il
     bit 0 che indica la disponibilità di dati in ingresso e il bit 1 che
-    indica se l'\textbf{Uart} è occupato nella trasmissione di un dato
+    indica se l'\component{Uart} è occupato nella trasmissione di un dato
 \item[byte getData():] restituisce i dati in ingresso
 \item[void setData(value: byte):] imposta i dati in uscita
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
 \subsection{SerialInterface}
-\textbf{SerialInterface} si occupa di ricevere dati attraverso il
-\textbf{SerialController} e di interpretarli come comandi per
-l'\textbf{Odometer} chiamandone i metodi, nonché di occuparsi
-dell'invio delle risposte verso il \textbf{SerialController}.
+\component{SerialInterface} si occupa di ricevere dati attraverso il
+\component{SerialController} e di interpretarli come comandi per
+l'\component{Odometer} chiamandone i metodi, nonché di occuparsi
+dell'invio delle risposte verso il \component{SerialController}.
 
 \begin{description}
-\item[void serialNotify():] notifica \textbf{SerialInterface} che
-    lo stato del \textbf{SerialController} è cambiato
+\item[void serialNotify():] notifica \component{SerialInterface} che
+    lo stato del \component{SerialController} è cambiato
 \item[void send(value: int):] invia i dati verso il
-    \textbf{SerialController}
+    \component{SerialController}
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
 \section{Implementazione}
 
-Le classi \textbf{Odometer} e \textbf{SerialInterface} sono state
-realizzate in software, mentre \textbf{EncoderInterface}, 
-\textbf{OutputInterface}, \textbf{Uart}, \textbf{SerialController}
+Le classi \component{Odometer} e \component{SerialInterface} sono state
+realizzate in software, mentre \component{EncoderInterface}, 
+\component{OutputInterface}, \component{Uart}, \component{SerialController}
 sono state realizzate in hardware.
 
 \subsection{Mappa di memoria}
