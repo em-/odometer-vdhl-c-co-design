@@ -1,7 +1,9 @@
 DOC_SOURCES=odometro.tex
-DOC_FIGURES=uml/odometer_rs232_usecase.svg	\
-            uml/odometer_encoder_usecase.svg	\
-	    uml/odometer_classes.svg
+DOC_FIGURES=uml/odometer_rs232_usecase.pdf	\
+            uml/odometer_encoder_usecase.pdf	\
+            uml/odometer_classes.pdf		\
+            uml/odometer_encoder_robustness.pdf	\
+            uml/odometer_serial_robustness.pdf
 DOC=odometro.pdf
 
 SUBDIRS=hardware software uml
@@ -17,15 +19,11 @@ run: hardware software hardware/hardware software/software
 clean: subdirs
 	-rubber -d --clean ${DOC_SOURCES}
 
-# Documentation rules
-DOC_FIGURES_PDF=$(DOC_FIGURES:.svg=.pdf)
-${DOC_FIGURES_PDF}: ${DOC_FIGURES}
-
 %.pdf: %.svg
 	inkscape -z $< -A=$@
 
 # Generate PDF from LaTeX files
-${DOC}: ${DOC_SOURCES} ${DOC_FIGURES_PDF} */*.vhdl */*.c
+${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c
 	rubber -d $<
 
 # Build the documentation
