@@ -18,30 +18,7 @@
 % Margins
 \geometry{bindingoffset=0.5cm}
 
-% Caption
-\newcommand{\mc}[1]{{\small\ #1}}
-\newcommand{\makecaption}[1]{\caption{\mc\ #1}}
-
-% URL
-\newcommand{\url}[2]{#1\footnote{#2}}
-
-% References
-\newcommand{\refemph}[1]{\emph{#1}}
-\newcommand{\imgref}[1]{\refemph{\ref{img:#1}}}
-\newcommand{\imgrefx}[1]{\refemph{figura}~\imgref{#1}}
-
-% Images
-\newcommand{\im}[3]{
-    \begin{figure}[!htb]
-        \begin{center}
-            \includegraphics{img/#1}
-            \makecaption{#2}
-            \label{img:#3}
-        \end{center}
-    \end{figure}
-}
-
-% Collegamenti.
+% Links
 \definecolor{links}{rgb}{0.7,0.2,0}
 \usepackage{ifpdf}
 \ifpdf
@@ -54,9 +31,6 @@
 
 % Ignore the argument
 \newcommand{\noop}[1]{}
-
-% Foreign words
-\newcommand{\foreign}[1]{\emph{#1}}
 
 \newcommand{\component}[1]{\texttt{#1}}
 \newcommand{\identifier}[1]{\texttt{#1}}
