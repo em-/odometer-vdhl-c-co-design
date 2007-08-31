@@ -131,7 +131,7 @@ hwsw: hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
 irq_ctrl: interrupt_controller
-    generic map (BASE_ADDR => X"0000")
+    generic map (BASE_ADDR => X"1000")
     port map(CLK, RST, REQUESTS, IRQ, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
 enc: encoder
@@ -144,13 +144,13 @@ u: uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
 serial_iface: serial_controller
-    generic map (BASE_ADDR => X"0001")
+    generic map (BASE_ADDR => X"1001")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,
              REQUESTS(3));
 
 output_iface: output_interface
-    generic map (BASE_ADDR => X"0003")
+    generic map (BASE_ADDR => X"1003")
     port map(CLK, RST, TICK, BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN);
 
 end behavioral;
