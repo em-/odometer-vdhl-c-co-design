@@ -24,7 +24,7 @@ clean: subdirs
 
 # Generate PDF from LaTeX files
 ${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c
-	rubber -d $<
+	rubber -f -d $<
 
 # Build the documentation
 doc: uml ${DOC}
