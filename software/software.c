@@ -40,6 +40,6 @@ int main(void)
     set_irq_handler(3, serial_notify, &serial_interface);
 
     for(i=0; i<10000; i++)
-      bus_noop();
+      bus_sleep();
     return 0;
 }

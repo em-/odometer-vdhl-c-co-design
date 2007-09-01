@@ -13,6 +13,6 @@ typedef void (*irq_handler)(void *data);
 void set_irq_handler(int line, irq_handler handler, void *data);
 int bus_read(void *address);
 void bus_write(void *address, int data);
-void bus_noop();
+void bus_sleep();
 
 #endif /* SWHW_INTERFACE_H */

@@ -151,7 +151,7 @@ void bus_write(void *address, int data)
     }
 }
 
-void bus_noop()
+void bus_sleep()
 {
     if (bus(0, 0, NULL, 0, NULL) && irq_enabled)
     {
