@@ -18,7 +18,7 @@ doc: ${GRAPHICS}
 %.pdf: %.eps
 	ps2pdf -dEPSFitPage -dEPSCrop $<
 
-%.pdf: %.svg
+%.eps: %.svg
 	inkscape -z $< -A=$@
 
 .SECONDARY: $(addsuffix .svg, $(basename ${GRAPHICS})) $(addsuffix .eps, $(basename ${GRAPHICS}))
