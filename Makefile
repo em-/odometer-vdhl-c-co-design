@@ -3,7 +3,8 @@ DOC_FIGURES=uml/odometer_rs232_usecase.pdf	\
             uml/odometer_encoder_usecase.pdf	\
             uml/odometer_classes.pdf		\
             uml/odometer_encoder_robustness.pdf	\
-            uml/odometer_serial_robustness.pdf
+            uml/odometer_serial_getter_robustness.pdf \
+            uml/odometer_serial_setter_robustness.pdf
 DOC=odometro.pdf
 
 SUBDIRS=hardware software uml

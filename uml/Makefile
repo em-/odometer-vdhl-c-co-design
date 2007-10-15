@@ -1,7 +1,8 @@
 GRAPHICS=odometer_classes.pdf		\
          odometer_encoder_usecase.pdf	\
 	 odometer_rs232_usecase.pdf	\
-	 odometer_serial_robustness.pdf	\
+	 odometer_serial_getter_robustness.pdf	\
+	 odometer_serial_setter_robustness.pdf	\
 	 odometer_encoder_robustness.pdf
 
 all: ${GRAPHICS}

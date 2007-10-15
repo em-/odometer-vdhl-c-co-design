@@ -276,11 +276,20 @@ dell'invio delle risposte verso il \component{SerialController}.
 \end{description}
 
 \section{Diagramma di robustezza}
-Il seguente diagramma riporta le interazioni in seguito alla ricezione
-di un comando per via seriale:
+Il seguente diagramma riporta le interazioni necessarie per ottenere
+l'angolo attuale che indica la posizione dell'encoder (sequenza 1) e
+il numero di rotazioni finora effettuate (sequenza 2):
 \begin{center}
-    \includegraphics[width=13.5cm]{uml/odometer_serial_robustness.pdf}
-    \label{serial_robustness}
+    \includegraphics[width=10cm]{uml/odometer_serial_getter_robustness.pdf}
+    \label{serial_getter_robustness}
+\end{center}
+
+Per impostare il coefficiente corrispondente al numero di gradi per settore
+dell'encoder (sequenza 3) o per impostare i parametri K (sequenza 4), K1
+(sequenza 5) e K2 (sequenza 6) sono necessarie le seguenti operazioni:
+\begin{center}
+    \includegraphics[width=10cm]{uml/odometer_serial_setter_robustness.pdf}
+    \label{serial_getter_robustness}
 \end{center}
 
 Le interazioni necessarie a garantire la gestione dei segnali
