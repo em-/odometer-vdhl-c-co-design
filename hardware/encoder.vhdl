@@ -3,12 +3,8 @@
 -- Licenza: LGPL
 -- Note: simulates a relative encoder wit A, B, and Z signals
 
-library std;
 library ieee;
-
-use std.textio.all;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_textio.all; -- synopsys only
 
 entity encoder is
     generic (tick_angle: natural := 900);

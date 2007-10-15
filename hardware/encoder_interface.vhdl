@@ -4,12 +4,8 @@
 -- Licenza: LGPL
 -- Note: decodes the input from the Encoder
 
-library std;
 library ieee;
-
-use std.textio.all;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_textio.all; -- synopsys only
 
 entity encoder_interface is
     port (CLK, RST: in std_logic;

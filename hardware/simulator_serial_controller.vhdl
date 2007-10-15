@@ -4,12 +4,8 @@
 -- Licenza: LGPL
 -- Note: interfaces the system bus to the serial uart
 
-library std;
 library ieee;
-
-use std.textio.all;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_textio.all; -- synopsys only
 use ieee.numeric_std.all;
 
 entity simulator_serial_controller is

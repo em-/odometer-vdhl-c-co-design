@@ -3,12 +3,8 @@
 -- Licenza: LGPL
 -- Note: top-level hardware component
 
-library std;
 library ieee;
-
-use std.textio.all;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_textio.all; -- synopsys only
 
 entity hardware is
 end hardware;

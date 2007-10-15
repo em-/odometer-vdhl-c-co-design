@@ -4,10 +4,7 @@
 -- Licenza: LGPL
 -- Note: Raise the TICK signal for a clock cycle when written to
 
-library std;
 library ieee;
-
-use std.textio.all;
 use ieee.std_logic_1164.all;
 
 entity output_interface is
