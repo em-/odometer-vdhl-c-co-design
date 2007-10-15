@@ -170,22 +170,29 @@ dai seguenti attributi:
 I metodi che agiscono sull'oggetto \component{Odometer} sono i seguenti:
 
 \begin{description}
-\item[void setCoeff(value: int):] imposta il campo \identifier{coeff} al
-     valore specificato
-\item[void setK(value: int):] imposta il campo \identifier{K} al
-     valore specificato
-\item[void setK1(value: int):] imposta il campo \identifier{K1} al
-     valore specificato
-\item[void setK2(value: int):] imposta il campo \identifier{K2} al
-     valore specificato
-\item[void rotationClockWise():] segnala un movimento in senso orario
-     dell'encoder
-\item[void rotationCounterClockWise():] segnala un movimento in senso 
-     antiorario dell'encoder
-\item[void revolution():] segnala una rivoluzione completa dell'encoder
-\item[int getAngle():] richiede il valore del campo \identifier{angle}
-\item[int getRevolutions():] richiede il valore del campo
-    \identifier{revolutions}
+\item[void setCoeff(value: int):] imposta il numero di gradi a
+     cui corrisponde un settore dell'encoder in ingresso, in decimi
+     di grado
+\item[void setK(value: int):] imposta il numero di gradi per i
+     quali il sistema deve emettere un impulso in uscita, in decimi
+     di grado
+\item[void setK1(value: int):] imposta il limite inferiore
+     dell'intervallo all'interno del quale il sistema emette impulsi,
+     in decimi di grado
+\item[void setK2(value: int):] imposta il limite superiore 
+     dell'intervallo all'interno del quale il sistema emette impulsi,
+     in decimi di grado
+\item[void rotationClockWise():] gestisce l'interrupt che indica la
+     rotazione in senso orario di un settore dell'encoder
+\item[void rotationCounterClockWise():] gestisce l'interrupt che indica
+     la rotazione in senso antiorario di un settore dell'encoder
+\item[void revolution():] gestisce l'interrupt che indica la
+     rivoluzione completa dell'encoder
+\item[int getAngle():] richiede il valore dell'angolo derminato
+     dalla posizione corrente dell'encoder, in decimi di grado
+\item[int getRevolutions():] richiede il valore del numero di rivoluzioni
+    compiute finora dall'encoder, positivo se compiute in senso orario,
+    negativo se in senso antiorario
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
