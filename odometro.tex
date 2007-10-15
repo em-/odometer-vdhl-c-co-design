@@ -144,6 +144,9 @@ impiega al suo interno gli altri componenti, ovvero
 \component{EncoderInterface}, \component{SerialInterface} e
 \component{OutputInterface}.
 
+Essendo la classe principale che contiene la logica di funzionamento
+è stata implementata in software.
+
 Le classi dotate di stereotipo \identifier{<<simulator>>} non sono
 componenti veri e propri del sistema, ma fanno parte del simulatore
 che emula il comportamento dei componenti esterni, quali
@@ -202,6 +205,19 @@ dall'encoder incrementale, di interpretarli e quindi di chiamare i
 metodi \identifier{rotationClockWise}, \identifier{rotationCounterClockWise}
 e \identifier{revolution} dell'oggetto \component{Odometer}.
 
+Dovendo interfacciarsi fisicamente con l'\component{Encoder} è stato
+implementato in hardware, consentendo inoltre un carico di lavoro
+inferiore per il processore. Questo è dovuto al fatto che la
+decodifica dei segnali \identifier{A} e \identifier{B}
+in ingresso avviene in hardware, riducendo di 4 volte il flusso di
+interrupt, i quali richiedono ognuno numerose istruzioni per
+essere eseguiti.
+
+Qualora il costo dell'implementazione hardware fosse eccessivo e
+le velocità di rotazione fossero sufficientemente basse può essere
+possibile implementare l'interfaccia in software collegando gli
+ingessi \identifier{A} e \identifier{B} a differenti linee di IRQ.
+
 \begin{description}
 \item[void A(value: boolean):] comunica all'\component{EncoderInterface} che
     il valore segnale \identifier{A} dell'encoder è cambiato
@@ -215,6 +231,9 @@ e \identifier{revolution} dell'oggetto \component{Odometer}.
 \subsection{OutputInterface}
 \component{OutputInterface} provvede a fornire l'uscita TTL descritta nelle
 specifiche.
+
+Costituendo l'interfaccia fisica in uscita, è necessariamente implementata in
+hardware.
 
 \begin{description}
 \item[void tick():] emette un impulso sull'uscita TTL per un periodo di clock
@@ -266,6 +285,10 @@ attraverso interfacce standard come interrupt e bus di sistema.
 \component{SerialController} e di interpretarli come comandi per
 l'\component{Odometer} chiamandone i metodi, nonché di occuparsi
 dell'invio delle risposte verso il \component{SerialController}.
+
+Occupandosi di gestire le richieste esterne verso l'oggetto
+\component{Odometer} è opportuno che anche questa classe venga
+implementata in software.
 
 \begin{description}
 \item[void serialNotify():] notifica \component{SerialInterface} che
