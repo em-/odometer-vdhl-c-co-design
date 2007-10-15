@@ -138,6 +138,18 @@ dell'\component{Encoder} incrementale.
     \label{usecases}
 \end{center}
 
+Le classi dotate di stereotipo \identifier{<<simulator>>} non sono
+componenti veri e propri del sistema, ma fanno parte del simulatore
+che emula il comportamento dei componenti esterni, quali
+l'\component{Encoder} incrementale e i meccanismi di gestione per la
+comunicazione su RS232 (\component{SerialController} e \component{Uart}).
+Vengono qui riportati solamente per indicare chi si occupa di invocare
+alcuni dei metodi delle classi del sistema.
+
+Nel dispositivo finale questi verranno rimpiazzati da dispositivi appositi
+(\component{Encoder}) o direttamente dal microcontrollore
+(\component{SerialController} e \component{Uart}).
+
 \subsection{Odometer}
 La classe \component{Odometer} è la classe principale del sistema e
 impiega al suo interno gli altri componenti, ovvero 
@@ -146,12 +158,6 @@ impiega al suo interno gli altri componenti, ovvero
 
 Essendo la classe principale che contiene la logica di funzionamento
 è stata implementata in software.
-
-Le classi dotate di stereotipo \identifier{<<simulator>>} non sono
-componenti veri e propri del sistema, ma fanno parte del simulatore
-che emula il comportamento dei componenti esterni, quali
-l'\component{Encoder} incrementale e i meccanismi di gestione per la
-comunicazione su RS232 (\component{SerialController} e \component{Uart}).
 
 Lo stato della classe \component{Odometer} è rappresentato
 dai seguenti attributi:
