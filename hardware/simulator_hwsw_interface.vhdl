@@ -10,7 +10,7 @@ use std.textio.all;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 
-entity hwsw_interface is
+entity simulator_hwsw_interface is
     port(
         CLK, RST: in  std_logic;
         DATA_OUT: in  std_logic_vector(15 downto 0);
@@ -21,9 +21,9 @@ entity hwsw_interface is
         DATA_IN:  out std_logic_vector(15 downto 0);
         FINISH:   out boolean
         );
-end hwsw_interface;
+end simulator_hwsw_interface;
 
-architecture behavioral of hwsw_interface is
+architecture behavioral of simulator_hwsw_interface is
     signal counter: integer := 0;
     constant DEBUG: boolean := false;
 begin

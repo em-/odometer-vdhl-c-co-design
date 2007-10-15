@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-#include "swhw_interface.h"
+#include "simulator_swhw_interface.h"
 #include "memory_map.h"
 
 #define DATA_SIZE 2

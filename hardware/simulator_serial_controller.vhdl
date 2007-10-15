@@ -12,7 +12,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 use ieee.numeric_std.all;
 
-entity serial_controller is
+entity simulator_serial_controller is
     generic (BASE_ADDR: std_logic_vector(15 downto 0));
     port (CLK, RST:     in  std_logic;
           RxData:       in std_logic_vector(7 downto 0);
@@ -27,9 +27,9 @@ entity serial_controller is
           BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
           BUS_DATA_OUT: out std_logic_vector(15 downto 0);
           IRQ_OUT:      out std_logic);
-end serial_controller;
+end simulator_serial_controller;
 
-architecture behavioral of serial_controller is
+architecture behavioral of simulator_serial_controller is
     constant DATA_ADDR:   std_logic_vector(15 downto 0) := BASE_ADDR;
     constant STATUS_ADDR: std_logic_vector(15 downto 0) := 
                                     std_logic_vector(unsigned(BASE_ADDR)+1);

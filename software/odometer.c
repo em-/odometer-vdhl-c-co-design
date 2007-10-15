@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
-#include "swhw_interface.h"
+#include "simulator_swhw_interface.h"
 #include "serial_interface.h"
 #include "odometer.h"
 #include "memory_map.h"

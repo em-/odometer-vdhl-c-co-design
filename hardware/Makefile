@@ -3,14 +3,14 @@ GHDLFLAGS= --ieee=synopsys
 GHDLRUNFLAGS=
 
 # Elaboration target
-COMPONENTS=hwsw_interface.o	\
-	   interrupt_controller.o \
+COMPONENTS=simulator_hwsw_interface.o	\
+	   simulator_interrupt_controller.o \
            hardware.o		\
 	   encoder.o		\
 	   encoder_interface.o	\
 	   output_interface.o   \
-	   serial_controller.o	\
-	   uart.o
+	   simulator_serial_controller.o	\
+	   simulator_uart.o
 
 hardware: $(COMPONENTS)
 	$(GHDL) -e $(GHDLFLAGS) $@

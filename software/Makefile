@@ -1,10 +1,10 @@
 SOFTWARE_SOURCES=software.c		\
- 		 swhw_interface.c	\
+ 		 simulator_swhw_interface.c	\
 		 serial_interface.c	\
 		 odometer.c
 
 SOFTWARE_HEADERS=memory_map.h		\
-		 swhw_interface.h	\
+		 simulator_swhw_interface.h	\
 		 serial_interface.h	\
 		 odometer.c		\
 

@@ -11,7 +11,7 @@ use std.textio.all;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all; -- synopsys only
 
-entity uart is
+entity simulator_uart is
     port (CLK, RST:     in  std_logic;
           RxData:       out std_logic_vector(7 downto 0);
           TxData:       in  std_logic_vector(7 downto 0);
@@ -19,9 +19,9 @@ entity uart is
           TxBusy:       out std_logic;
           ReadA:        in  std_logic;
           LoadA:        in  std_logic);
-end uart;
+end simulator_uart;
 
-architecture behavioral of uart is
+architecture behavioral of simulator_uart is
     signal Data: std_logic_vector(7 downto 0);
     signal new_data, busy: boolean;
   begin

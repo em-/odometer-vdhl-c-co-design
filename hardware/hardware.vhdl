@@ -14,7 +14,7 @@ entity hardware is
 end hardware;
 
 architecture behavioral of hardware is
-    component hwsw_interface
+    component simulator_hwsw_interface
         port(
             CLK, RST: in  std_logic;
             DATA_OUT: in  std_logic_vector(15 downto 0);
@@ -27,7 +27,7 @@ architecture behavioral of hardware is
             );
     end component;
 
-    component interrupt_controller
+    component simulator_interrupt_controller
         generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port(
             CLK, RST:     in  std_logic;
@@ -61,7 +61,7 @@ architecture behavioral of hardware is
               BUS_DATA_IN:  in  std_logic_vector(15 downto 0));
     end component;
 
-    component uart
+    component simulator_uart
         port (CLK, RST:     in  std_logic;
               RxData:       out std_logic_vector(7 downto 0);
               TxData:       in  std_logic_vector(7 downto 0);
@@ -71,7 +71,7 @@ architecture behavioral of hardware is
               LoadA:        in  std_logic);
     end component;
 
-    component serial_controller
+    component simulator_serial_controller
         generic (BASE_ADDR: std_logic_vector(15 downto 0));
         port (CLK, RST:     in  std_logic;
               RxData:       in std_logic_vector(7 downto 0);
@@ -127,11 +127,11 @@ begin
     end if;
 end process;
 
-hwsw: hwsw_interface
+hwsw: simulator_hwsw_interface
     port map(CLK, RST, BUS_DATA_OUT, IRQ,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, FINISH);
 
-irq_ctrl: interrupt_controller
+irq_ctrl: simulator_interrupt_controller
     generic map (BASE_ADDR => X"1000")
     port map(CLK, RST, REQUESTS, IRQ,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
@@ -142,10 +142,10 @@ enc: encoder
 enc_iface: encoder_interface
     port map(CLK, RST, A, B, Z, REQUESTS(0), REQUESTS(1), REQUESTS(2));
 
-u: uart
+u: simulator_uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
-serial_iface: serial_controller
+serial_iface: simulator_serial_controller
     generic map (BASE_ADDR => X"1001")
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT,

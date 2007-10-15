@@ -6,7 +6,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity interrupt_controller is
+entity simulator_interrupt_controller is
     generic (BASE_ADDR: std_logic_vector(15 downto 0));
     port(
         CLK, RST:     in  std_logic;
@@ -17,9 +17,9 @@ entity interrupt_controller is
         BUS_ADDR:     in  std_logic_vector(15 downto 0);
         BUS_DATA_IN:  in  std_logic_vector(15 downto 0);
         BUS_DATA_OUT: out std_logic_vector(15 downto 0));
-end interrupt_controller;
+end simulator_interrupt_controller;
 
-architecture behavioral of interrupt_controller is
+architecture behavioral of simulator_interrupt_controller is
    constant REG_ADDR:  std_logic_vector(15 downto 0) := BASE_ADDR;
    signal outstanding: std_logic_vector(15 downto 0);
    signal clear:       std_logic_vector(15 downto 0);
