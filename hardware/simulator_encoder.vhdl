@@ -6,13 +6,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity encoder is
+entity simulator_encoder is
     generic (tick_angle: natural := 900);
     port (A, B, Z: out std_logic;
           FINISH: in boolean);
-end encoder;
+end simulator_encoder;
 
-architecture behavioral of encoder is
+architecture behavioral of simulator_encoder is
    type STATE is (S_00, S_10, S_11, S_01);
    type MOVEMENT is (NONE, COUNTERCLOCKWISE, CLOCKWISE);
    signal current_state: STATE;

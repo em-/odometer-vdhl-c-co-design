@@ -36,7 +36,7 @@ architecture behavioral of hardware is
             BUS_DATA_OUT: out std_logic_vector(15 downto 0));
     end component;
 
-    component encoder
+    component simulator_encoder
         port (A, B, Z: out std_logic;
               FINISH: in boolean);
     end component;
@@ -132,7 +132,7 @@ irq_ctrl: simulator_interrupt_controller
     port map(CLK, RST, REQUESTS, IRQ,
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
-enc: encoder
+enc: simulator_encoder
     port map(A, B, Z, FINISH);
 
 enc_iface: encoder_interface

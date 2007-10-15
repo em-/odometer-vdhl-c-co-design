@@ -6,7 +6,7 @@ GHDLRUNFLAGS=
 COMPONENTS=simulator_hwsw_interface.o	\
 	   simulator_interrupt_controller.o \
            hardware.o		\
-	   encoder.o		\
+	   simulator_encoder.o		\
 	   encoder_interface.o	\
 	   output_interface.o   \
 	   simulator_serial_controller.o	\
