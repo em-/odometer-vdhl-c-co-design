@@ -203,12 +203,12 @@ metodi \identifier{rotationClockWise}, \identifier{rotationCounterClockWise}
 e \identifier{revolution} dell'oggetto \component{Odometer}.
 
 \begin{description}
-\item[void A(value: boolean):] notifica il cambiamento del segnale \identifier{A}
-    dell'encoder
-\item[void B(value: boolean):] notifica il cambiamento del segnale \identifier{B}
-    dell'encoder
-\item[void Z(value: boolean):] notifica il cambiamento del segnale \identifier{Z}
-    dell'encoder
+\item[void A(value: boolean):] comunica all'\component{EncoderInterface} che
+    il valore segnale \identifier{A} dell'encoder è cambiato
+\item[void B(value: boolean):] comunica all'\component{EncoderInterface} che
+    il valore segnale \identifier{B} dell'encoder è cambiato
+\item[void Z(value: boolean):] comunica all'\component{EncoderInterface} che
+    il valore segnale \identifier{Z} dell'encoder è cambiato
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
