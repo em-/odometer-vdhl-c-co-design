@@ -8,21 +8,14 @@ all: ${GRAPHICS}
 
 doc: ${GRAPHICS}
 
-# Targets to analyze files
-%.svg: %.ums
-	umlspeed -s $<
-
 %.eps: %.dia
 	dia -t eps $<
 
 %.pdf: %.eps
 	ps2pdf -dEPSFitPage -dEPSCrop $<
 
-%.eps: %.svg
-	inkscape -z $< -A=$@
-
-.SECONDARY: $(addsuffix .svg, $(basename ${GRAPHICS})) $(addsuffix .eps, $(basename ${GRAPHICS}))
+.SECONDARY: $(addsuffix .eps, $(basename ${GRAPHICS}))
 
 # Clean target
 clean:
-	-rm -f *.svg *.eps *.pdf *.html
+	-rm -f *.eps *.pdf
