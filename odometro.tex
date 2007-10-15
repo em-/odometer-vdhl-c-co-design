@@ -140,7 +140,15 @@ dell'\component{Encoder} incrementale.
 
 \subsection{Odometer}
 La classe \component{Odometer} è la classe principale del sistema e
-impiega al suo interno gli altri componenti.
+impiega al suo interno gli altri componenti, ovvero 
+\component{EncoderInterface}, \component{SerialInterface} e
+\component{OutputInterface}.
+
+Le classi dotate di stereotipo \identifier{<<simulator>>} non sono
+componenti veri e propri del sistema, ma fanno parte del simulatore
+che emula il comportamento dei componenti esterni, quali
+l'\component{Encoder} incrementale e i meccanismi di gestione per la
+comunicazione su RS232 (\component{SerialController} e \component{Uart}).
 
 Lo stato della classe \component{Odometer} è rappresentato
 dai seguenti attributi:
