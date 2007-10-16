@@ -33,8 +33,8 @@ void odometer_set_K1(int command_data);
 void odometer_set_K2(int command_data);
 void odometer_get_angle(int command_data);
 void odometer_get_revolutions(int command_data);
-void odometer_rotation_counterclockwise(void *data);
-void odometer_rotation_clockwise(void *data);
-void odometer_revolution(void *data);
+void odometer_rotation_counterclockwise();
+void odometer_rotation_clockwise();
+void odometer_revolution();
 
 #endif /* ODOMETER_H */
