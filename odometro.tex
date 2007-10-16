@@ -259,10 +259,15 @@ Occupandosi di gestire le richieste esterne verso l'oggetto
 implementata in software.
 
 \begin{description}
-\item[void serialNotify():] notifica \component{SerialInterface} che
-    lo stato del \component{SerialController} è cambiato
+\item[void serialNotify():] gestisce l'interrupt che notifica
+    \component{SerialInterface} della variazione dello stato del
+    \component{SerialController}, richiedendone lo stato corrente
+    per poter procedere all'invio dei dati nel caso l'interfaccia
+    in uscita sia disponibile e di leggere gli eventuali dati
+    diponibili in ricezione, interpretandoli come comandi per
+    l'\component{Odometer}
 \item[void send(value: int):] invia i dati verso il
-    \component{SerialController}
+    \component{SerialController} come risposta da trasmettere via RS232
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
