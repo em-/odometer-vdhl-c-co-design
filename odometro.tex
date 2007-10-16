@@ -434,8 +434,8 @@ Indirizzi usati dal simulatore:
 \hline
 Indirizzo & Componente & Lettura & Scrittura \\
 \hline
-\texttt{0x1000} & InterruptController & getActive() \textit{IRQ attivi}
-                                      & setHandled() \textit{IRQ gestiti} \\
+\texttt{0x1000} & InterruptController & getRequests() \textit{IRQ attivi}
+                                      & setServed() \textit{IRQ gestiti} \\
 \hline
 \texttt{0x1001} & SerialController & getData() \textit{Dati ricevuti}
                                    & setData() \textit{Dati da trasmettere} \\
