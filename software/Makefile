@@ -13,7 +13,7 @@ SOFTWARE_HEADERS=memory_map.h		\
 all: software
 
 software: ${SOFTWARE_SOURCES} ${SOFTWARE_HEADERS}
-	gcc -std=c99 -Wall -pedantic -o software ${SOFTWARE_SOURCES}
+	gcc -std=gnu99 -Wall -pedantic -o software ${SOFTWARE_SOURCES}
 
 # Clean target
 clean:
