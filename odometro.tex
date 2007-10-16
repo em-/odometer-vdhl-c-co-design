@@ -85,19 +85,31 @@ dell'\component{Encoder} incrementale.
     \label{encoder_usecase}
 \end{center}
 
+\subsection{Ruota di N gradi}
 \begin{description}
-\item[Ruota di K gradi:] \actor{Encoder} segnala all'odometro una rotazione di
-     K gradi in direzione oraria o antioraria secondo la codifica dei segnali A e B.
-\item[Compie giro completo:] \actor{Encoder} segnala all'odometro il passaggio del
-     marcatore di giro completo Z.
-\item[Decodifica rotazione:] A seguito delle segnalazioni ricevute
-     dall'\actor{Encoder}, odometro ne effettua la decodifica per determinarne
-     il senso di rotazione.
-\item[Aggiorna contatori:] Dopo la decodifica della direzione, i contatori di
-     angolo e rivoluzioni vengono aggiornati tenendo conto dello stato corrente
-     e delle segnalazioni ricevute.
-\item[Segnala output:] Se l'angolo corrente soddisfa i criteri impostati con K, 
-     K1 e K2 il segnale di output viene alzato per un colpo di clock.
+\item[\actor{Encoder}] ruota in direzione oraria o antioraria di N gradi
+    inviando una determinata sequenza di segnali \identifier{A} e
+    \identifier{B} che ne identifica
+    univocamente la direzione
+\item[\actor{Odometro}] provvede a decodificare i segnali \identifier{A}
+    e \identifier{B}, calcolando direzione e angolo della rotazione e
+    aggiornando quindi il proprio stato interno.
+    Nel caso l'angolo calcolato sia compreso tra i parametri
+    \identifier{K1} e \identifier{K2} e sia divisibile per il parametro
+    \identifier{K} allora provvede ad alzare per un colpo di clock
+    il segnale di output
+\end{description}
+
+\subsection{Compie giro completo}
+\begin{description}
+\item[\actor{Encoder}] ruota in direzione oraria o antioraria e
+    passando sopra il marcatore apposito alza il segnale \identifier{Z}
+    segnalando l'avvenuta rotazione completa
+\item[\actor{Odometro}] decodifica i segnali \identifier{A} e
+    \identifier{B} per ottenere la direzione in base alla quale
+    incrementare (se in senso orario) o decrementare (se in senso
+    antiorario) il numero di rotazioni compiute.
+    In seguito azzera il contatore che determina l'angolo corrente.
 \end{description}
 
 \begin{center}
@@ -105,30 +117,35 @@ dell'\component{Encoder} incrementale.
     \label{rs232_usecase}
 \end{center}
 
+\subsection{Invio via seriale}
 \begin{description}
-\item[Invio via seriale:] \actor{RS232} invia all'odometro dei dati tramite l'interfaccia
-     seriale di quest'ultimo.
-\item[Invio comando:] I dati inviati da \actor{RS232} all'interfaccia seriale dell'odometro
-     rappresentano un comando che deve essere decodificato.
-\item[Invio dati:] A seguito di un comando che richiede dati aggiuntivi per essere
-     eseguito, \actor{RS232} provvede a fornire i dati necessari all'odometro.
-\item[Ricezione via seriale:] A seguito di un comando di lettura, \actor{RS232} attende di
-     ricevere i dati richiesti all'odometro.
-\item[Lettura angolo:] Il comando inviato all'odometro richiede la lettura del
-     valore corrente dell'angolo e questo viene ricevuto tramite l'interfaccia
-     seriale.
-\item[Lettura rivoluzioni:] Il comando inviato all'odometro richiede la lettura del
-     valore corrente del contatore delle rivoluzioni e questo viene ricevuto
-     tramite l'interfaccia seriale.
-\item[Imposta coefficiente:] Il comando inviato all'odometro richiede l'impostazione
-     del coefficiente angolare corrispondente a un segnale dell'Encoder e il valore
-     viene trasmesso attraverso l'interfaccia seriale.
-\item[Imposta K:] Il comando inviato all'odometro richiede l'impostazione del
-     parametro K e il valore viene trasmesso attraverso l'interfaccia seriale.
-\item[Imposta K1:] Il comando inviato all'odometro richiede l'impostazione del
-     parametro K1 e il valore viene trasmesso attraverso l'interfaccia seriale.
-\item[Imposta K2:] Il comando inviato all'odometro richiede l'impostazione del
-     parametro K2 e il valore viene trasmesso attraverso l'interfaccia seriale.
+\item[\actor{RS232}] invia sulla linea seriale un byte che identifica il
+    comando desiderato
+\item[\actor{Odometro}] legge dal controller della linea seriale il dato
+    ricevuto e lo imposta come comando corrente. Se necessario rimane in
+    attesa di eventuali dati aggiuntivi altrimenti provvede ad eseguire
+    il comando, quale la richiesta di lettura dell'angolo corrente o
+    la richiesta di lettura delle rivoluzioni effettuate
+\item[\actor{RS232}] se il comando lo richiede invia sulla linea seriale
+    il byte più significativo del parametro
+\item[\actor{Odometro}] legge il byte più significativo e lo conserva, 
+    rimanendo in attesa del byte meno significativo
+\item[\actor{RS232}] invia il byte meno significativo
+\item[\actor{Odometro}] legge il byte meno significativo ed esegue
+    il comando richiesto con il parametro ricevuto, impostando
+    il coefficiente dell'encoder o i parametri K, K1 e K2
+\end{description}
+
+\subsection{Ricezione via seriale}
+\begin{description}
+\item[\actor{RS232}] dopo aver inviato un comando che richiede una
+    risposta, come la richiesta di lettura dell'angolo corrente o del
+    numero di rivoluzioni, si pone in attesa del byte più significativo
+\item[\actor{Odometro}] provvede a inviare il byte più significativo
+    della risposta
+\item[\actor{RS232}] riceve il primo byte e attende il secondo
+\item[\actor{Odometro}] invia il byte meno significativo non appena il
+    controller della linea seriale ha terminato la trasmissione
 \end{description}
 
 
