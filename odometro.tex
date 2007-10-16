@@ -514,34 +514,34 @@ di \component{Odometer} dopo aver effettuato la decodifica dei comandi.
 \subsubsection{hardware/output\_interface.vhdl}
 \inputVHDL{hardware/output_interface.vhdl}
 
-\subsection{Interfaccia software/hardware}
+\section{Interfaccia software/hardware}
 Per la simulazione della parte hardware si è usato GHDL, mentre quella software
 è stata compilata con GCC. L'interfaccia hardware/software è stata quindi emulata
 facendo comunicare le due sezioni attraverso i rispettivi standard input e output,
 implementando anche un controller di interrupt nella parte hardware.
 
-\subsubsection{software/software.c}
+\subsection{software/software.c}
 \inputC{software/software.c}
 
-\subsubsection{hardware/hardware.vhdl}
+\subsection{hardware/hardware.vhdl}
 \inputVHDL{hardware/hardware.vhdl}
 
-\subsubsection{software/simulator\_swhw\_interface.h}
+\subsection{software/simulator\_swhw\_interface.h}
 \inputC{software/simulator_swhw_interface.h}
 
-\subsubsection{software/simulator\_swhw\_interface.c}
+\subsection{software/simulator\_swhw\_interface.c}
 \inputC{software/simulator_swhw_interface.c}
 
-\subsubsection{hardware/simulator\_hwsw\_interface.vhdl}
+\subsection{hardware/simulator\_hwsw\_interface.vhdl}
 \inputVHDL{hardware/simulator_hwsw_interface.vhdl}
 
-\subsubsection{hardware/simulator\_interrupt\_controller.vhdl}
+\subsection{hardware/simulator\_interrupt\_controller.vhdl}
 \inputVHDL{hardware/simulator_interrupt_controller.vhdl}
 
-\subsubsection{hardware/simulator\_uart.vhdl}
+\subsection{hardware/simulator\_uart.vhdl}
 \inputVHDL{hardware/simulator_uart.vhdl}
 
-\subsubsection{hardware/simulator\_serial\_controller.vhdl}
+\subsection{hardware/simulator\_serial\_controller.vhdl}
 \inputVHDL{hardware/simulator_serial_controller.vhdl}
 
 
