@@ -12,8 +12,6 @@
  * Note: top-level software entity
  */
 
-SerialInterface serial_interface;
-
 int main(void)
 {
     int i, command_nr;
@@ -26,17 +24,16 @@ int main(void)
         {0, odometer_get_revolutions, NULL}
     };
 
-    serial_init(&serial_interface);
-    odometer_init(&serial_interface);
+    serial_init();
+    odometer_init();
 
     command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
-    serial_set_command_handlers(&serial_interface, command_handlers,
-        command_nr);
+    serial_set_command_handlers(command_handlers, command_nr);
 
     set_irq_handler(0, odometer_encoder_counterclockwise, NULL);
     set_irq_handler(1, odometer_encoder_clockwise, NULL);
     set_irq_handler(2, odometer_encoder_revolution, NULL);
-    set_irq_handler(3, serial_notify, &serial_interface);
+    set_irq_handler(3, serial_notify, NULL);
 
     for(i=0; i<10000; i++)
       bus_sleep();

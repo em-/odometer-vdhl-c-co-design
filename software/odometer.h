@@ -1,4 +1,3 @@
-#include "serial_interface.h"
 
 /*
  * File: odometer.h
@@ -23,13 +22,11 @@ typedef struct {
     int angle;
     int revolutions;
 
-    SerialInterface *serial_interface;
-    
     int started;
     enum Direction direction;
 } Odometer;
 
-void odometer_init(SerialInterface *serial_interface);
+void odometer_init();
 void odometer_set_coeff(int command_data, void *data);
 void odometer_set_K(int command_data, void *data);
 void odometer_set_K1(int command_data, void *data);

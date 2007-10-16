@@ -21,11 +21,10 @@ typedef struct {
     int outstanding_data;
 } SerialInterface;
 
-void serial_init(SerialInterface *serial_interface);
-void serial_set_command_handlers(SerialInterface *serial_interface,
-                                 SerialHandler *array,
+void serial_init();
+void serial_set_command_handlers(SerialHandler *array,
                                  int size);
-void serial_send(SerialInterface *serial_interface, int serial_data);
+void serial_send(int serial_data);
 void serial_notify(void *data);
 
 #endif /* SERIAL_INTERFACE_H */
