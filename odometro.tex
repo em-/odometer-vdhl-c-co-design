@@ -514,17 +514,20 @@ di \component{Odometer} dopo aver effettuato la decodifica dei comandi.
 \subsubsection{hardware/output\_interface.vhdl}
 \inputVHDL{hardware/output_interface.vhdl}
 
+
+\section{Entità top-level}
+\subsection{Software}
+\inputC{software/software.c}
+
+\subsection{Hardware}
+\inputVHDL{hardware/hardware.vhdl}
+
+
 \section{Interfaccia software/hardware}
 Per la simulazione della parte hardware si è usato GHDL, mentre quella software
 è stata compilata con GCC. L'interfaccia hardware/software è stata quindi emulata
 facendo comunicare le due sezioni attraverso i rispettivi standard input e output,
 implementando anche un controller di interrupt nella parte hardware.
-
-\subsection{software/software.c}
-\inputC{software/software.c}
-
-\subsection{hardware/hardware.vhdl}
-\inputVHDL{hardware/hardware.vhdl}
 
 \subsection{software/simulator\_swhw\_interface.h}
 \inputC{software/simulator_swhw_interface.h}
