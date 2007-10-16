@@ -309,6 +309,23 @@ I metodi sono i seguenti:
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
+\section{Simulatore}
+
+\subsection{InterruptController}
+L'\component{InterruptController} implementa un semplice controller di
+interrupt hardware che si occupa di eseguire il multiplexing delle
+linee di richiesta su un singolo segnale di IRQ destinato al
+microcontrollore.
+
+\begin{description}
+\item[void request(int line):] effettua una richiesta di interrupt sulla
+    linea identificata da \identifier{line}
+\item[int getRequests():] ottiene la bitmask che indica le richieste pendenti
+    di interrupt
+\item[void setServed(int lines):] reimposta a 0 le richieste indicate come servite
+    dalla bitmask \identifier{lines}
+\end{description}
+
 \subsection{Uart}
 L'oggetto \component{Uart} trasmette e riceve dati attraverso l'interfaccia RS232,
 convertendo i segnali in arrivo in un flusso di byte e, viceversa, convertendo
