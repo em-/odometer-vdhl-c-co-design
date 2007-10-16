@@ -344,9 +344,14 @@ sono le seguenti:
 \section{Implementazione}
 
 Le classi \component{Odometer} e \component{SerialInterface} sono state
-realizzate in software, mentre \component{EncoderInterface}, 
-\component{OutputInterface}, \component{Uart}, \component{SerialController}
-sono state realizzate in hardware.
+realizzate in software, mentre \component{EncoderInterface} e
+\component{OutputInterface} sono state realizzate in hardware.
+
+Nel simulatore i componenti \component{Uart},
+\component{SerialController}, \component{InterruptController} e
+l'interfaccia hardware/software sono state realizzate in hardware
+(VHDL), mentre in software è stata realizzata solo l'interfaccia
+software/hardware.
 
 \subsection{Mappa di memoria}
 \begin{tabular}{|l|l|l|l|}
