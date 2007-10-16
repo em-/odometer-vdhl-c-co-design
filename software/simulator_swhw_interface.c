@@ -16,7 +16,6 @@
  */
 
 static irq_handler handlers[DATA_SIZE*8] = {NULL, };
-static void *handlers_data[DATA_SIZE*8] = {NULL, };
 static int irq_enabled = 1;
 
 static int bus(int strobe, int RnW, void *addr, int data, int *dest);
@@ -56,10 +55,9 @@ static long from_binary(char src[], int size)
     return ret;
 }
 
-void set_irq_handler(int line, irq_handler handler, void *data)
+void set_irq_handler(int line, irq_handler handler)
 {
   handlers[line] = handler;
-  handlers_data[line] = data;
 }
 
 static void serve_irq()
@@ -80,7 +78,7 @@ static void serve_irq()
 
     irq_enabled = 0;
     if (handlers[line] != NULL)
-      handlers[line](handlers_data[line]);
+      handlers[line]();
     irq_enabled = 1;
    
     /* Clear the handled IRQ */

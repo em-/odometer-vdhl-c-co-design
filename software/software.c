@@ -19,10 +19,10 @@ int main(void)
     serial_init();
     odometer_init();
 
-    set_irq_handler(0, odometer_encoder_counterclockwise, NULL);
-    set_irq_handler(1, odometer_encoder_clockwise, NULL);
-    set_irq_handler(2, odometer_encoder_revolution, NULL);
-    set_irq_handler(3, serial_notify, NULL);
+    set_irq_handler(0, odometer_encoder_counterclockwise);
+    set_irq_handler(1, odometer_encoder_clockwise);
+    set_irq_handler(2, odometer_encoder_revolution);
+    set_irq_handler(3, serial_notify);
 
     for(i=0; i<10000; i++)
       bus_sleep();
