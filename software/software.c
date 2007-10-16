@@ -12,10 +12,10 @@
  * Note: top-level software entity
  */
 
-int i;
-
 int main(void)
 {
+    int i;
+
     serial_init();
     odometer_init();
 
