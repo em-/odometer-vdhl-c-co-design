@@ -29,7 +29,7 @@ typedef struct {
     enum Direction direction;
 } Odometer;
 
-void odometer_init(Odometer *odometer, SerialInterface *serial_interface);
+void odometer_init(SerialInterface *serial_interface);
 void odometer_set_coeff(int command_data, void *data);
 void odometer_set_K(int command_data, void *data);
 void odometer_set_K1(int command_data, void *data);
