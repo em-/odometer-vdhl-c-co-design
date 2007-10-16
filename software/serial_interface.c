@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "simulator_swhw_interface.h"
 #include "serial_interface.h"
+#include "odometer.h"
 #include "memory_map.h"
 
 /*
@@ -16,6 +17,15 @@
 #define SERIAL_STATUS_TXBUSY 0x2
 
 SerialInterface serial_interface;
+
+SerialHandler command_handlers[] = {
+    {2, odometer_set_coeff},
+    {2, odometer_set_K},
+    {2, odometer_set_K1},
+    {2, odometer_set_K2},
+    {0, odometer_get_angle},
+    {0, odometer_get_revolutions}
+};
 
 static void serial_received_data(unsigned char serial_data)
 {
@@ -50,16 +60,10 @@ static void serial_line_free()
 
 void serial_init()
 {
-    serial_interface.handlers_size = 0;
-    serial_interface.handlers = NULL;
+    serial_interface.handlers = command_handlers;
+    serial_interface.handlers_size = 
+                  sizeof(command_handlers)/sizeof(SerialHandler);
     serial_interface.outstanding_data = -1;
-}
-
-void serial_set_command_handlers(SerialHandler *array,
-                                 int size)
-{
-    serial_interface.handlers = array;
-    serial_interface.handlers_size = size;
 }
 
 void serial_send(int serial_data)

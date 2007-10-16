@@ -12,23 +12,12 @@
  * Note: top-level software entity
  */
 
+int i;
+
 int main(void)
 {
-    int i, command_nr;
-    SerialHandler command_handlers[] = {
-        {2, odometer_set_coeff},
-        {2, odometer_set_K},
-        {2, odometer_set_K1},
-        {2, odometer_set_K2},
-        {0, odometer_get_angle},
-        {0, odometer_get_revolutions}
-    };
-
     serial_init();
     odometer_init();
-
-    command_nr = sizeof(command_handlers)/sizeof(SerialHandler);
-    serial_set_command_handlers(command_handlers, command_nr);
 
     set_irq_handler(0, odometer_encoder_counterclockwise, NULL);
     set_irq_handler(1, odometer_encoder_clockwise, NULL);
