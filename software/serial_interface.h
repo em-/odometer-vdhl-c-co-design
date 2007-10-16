@@ -10,13 +10,6 @@
 #define SERIAL_INTERFACE_H
 
 typedef struct {
-    int serial_data_size;
-    void (*handler)(int serial_data);
-} SerialHandler;
-
-typedef struct {
-    int handlers_size;
-    SerialHandler *handlers;
     int outstanding_data;
 } SerialInterface;
 

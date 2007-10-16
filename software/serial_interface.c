@@ -18,15 +18,6 @@
 
 SerialInterface serial_interface;
 
-SerialHandler command_handlers[] = {
-    {2, odometer_set_coeff},
-    {2, odometer_set_K},
-    {2, odometer_set_K1},
-    {2, odometer_set_K2},
-    {0, odometer_get_angle},
-    {0, odometer_get_revolutions}
-};
-
 static void serial_received_data(unsigned char serial_data)
 {
     static int bytes_left = 0;
@@ -35,9 +26,19 @@ static void serial_received_data(unsigned char serial_data)
     if (bytes_left == 0) {
         command = serial_data;
         command_data = 0;
-        if (command < serial_interface.handlers_size) {
-            bytes_left = 
-                serial_interface.handlers[command].serial_data_size;
+        switch(command) {
+            case 0: /* odometer_set_coeff */
+            case 1: /* odometer_set_K */
+            case 2: /* odometer_set_K1 */
+            case 3: /* odometer_set_K2 */
+                bytes_left = 2;
+                break;
+            case 4: /* odometer_get_angle */
+            case 5: /* odometer_get_revolutions */
+                bytes_left = 0;
+                break;
+            default:
+                bytes_left = 0; 
         }
     } else {
         command_data = command_data << 8;
@@ -45,8 +46,27 @@ static void serial_received_data(unsigned char serial_data)
         bytes_left--;
     }
 
-    if (bytes_left == 0 && command < serial_interface.handlers_size) {
-        serial_interface.handlers[command].handler(command_data);
+    if (bytes_left == 0) {
+        switch(command) {
+            case 0:
+                odometer_set_coeff(command_data);
+                break;
+            case 1:
+                odometer_set_K(command_data);
+                break;
+            case 2:
+                odometer_set_K1(command_data);
+                break;
+            case 3:
+                odometer_set_K2(command_data);
+                break;
+            case 4:
+                odometer_get_angle(command_data);
+                break;
+            case 5:
+                odometer_get_revolutions(command_data);
+                break;
+        }
     }
 }
 
@@ -60,9 +80,6 @@ static void serial_line_free()
 
 void serial_init()
 {
-    serial_interface.handlers = command_handlers;
-    serial_interface.handlers_size = 
-                  sizeof(command_handlers)/sizeof(SerialHandler);
     serial_interface.outstanding_data = -1;
 }
 
