@@ -17,6 +17,15 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
+enum {
+  COMMAND_SET_COEFF = 0,
+  COMMAND_SET_K,
+  COMMAND_SET_K1,
+  COMMAND_SET_K2,
+  COMMAND_GET_ANGLE,
+  COMMAND_GET_REVOLUTIONS
+} Commands;
+
 SerialInterface serial_interface;
 
 static void serial_received_data(unsigned char serial_data)
@@ -26,14 +35,14 @@ static void serial_received_data(unsigned char serial_data)
         serial_interface.current_command = serial_data;
         serial_interface.current_command_data = 0;
         switch(serial_interface.current_command) {
-            case 0: /* odometer_set_coeff */
-            case 1: /* odometer_set_K */
-            case 2: /* odometer_set_K1 */
-            case 3: /* odometer_set_K2 */
+            case COMMAND_SET_COEFF:
+            case COMMAND_SET_K:
+            case COMMAND_SET_K1:
+            case COMMAND_SET_K2:
                 serial_interface.bytes_left = 2;
                 break;
-            case 4: /* odometer_get_angle */
-            case 5: /* odometer_get_revolutions */
+            case COMMAND_GET_ANGLE:
+            case COMMAND_GET_REVOLUTIONS:
                 serial_interface.bytes_left = 0;
                 break;
             default:
@@ -48,22 +57,22 @@ static void serial_received_data(unsigned char serial_data)
 
     if (serial_interface.bytes_left == 0) {
         switch(serial_interface.current_command) {
-            case 0:
+            case COMMAND_SET_COEFF:
                 odometer_set_coeff(serial_interface.current_command_data);
                 break;
-            case 1:
+            case COMMAND_SET_K:
                 odometer_set_K(serial_interface.current_command_data);
                 break;
-            case 2:
+            case COMMAND_SET_K1:
                 odometer_set_K1(serial_interface.current_command_data);
                 break;
-            case 3:
+            case COMMAND_SET_K2:
                 odometer_set_K2(serial_interface.current_command_data);
                 break;
-            case 4:
+            case COMMAND_GET_ANGLE:
                 odometer_get_angle();
                 break;
-            case 5:
+            case COMMAND_GET_REVOLUTIONS:
                 odometer_get_revolutions();
                 break;
         }
