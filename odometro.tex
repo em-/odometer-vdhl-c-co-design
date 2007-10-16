@@ -261,6 +261,24 @@ Occupandosi di gestire le richieste esterne verso l'oggetto
 \component{Odometer} è opportuno che anche questa classe venga
 implementata in software.
 
+Lo stato della classe \component{SerialInterface} è rappresentato
+dai seguenti attributi:
+
+\begin{description}
+\item[int outstanding\_data:] il secondo byte da inviare, in quanto
+    il metodo \identifier{send()} effettua l'invio di due byte ma
+    l'interfaccia seriale consente l'invio di un byte alla volta.
+    Se non vi sono dati da inviare assume un valore negativo.
+\item[int bytes\_left:] i byte ancora da leggere nel caso ci
+    si trovi durante la lettura di un comando con parametri
+    come, per esempio, \identifier{setCoeff()}.
+\item[int current\_command:] il comando attualmente in lettura
+\item[int current\_command\_data:] i dati temporanei che andranno
+    a costituire i parametri per il comando corrente
+\end{description}
+
+I metodi sono i seguenti:
+
 \begin{description}
 \item[void serialNotify():] gestisce l'interrupt che notifica
     \component{SerialInterface} della variazione dello stato del
