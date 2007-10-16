@@ -9,7 +9,7 @@ use ieee.std_logic_1164.all;
 entity hardware is
 end hardware;
 
-architecture behavioral of hardware is
+architecture mixed of hardware is
     component encoder_interface
         port (CLK, RST: in std_logic;
               A, B, Z:  in std_logic;
@@ -151,4 +151,4 @@ serial_iface: simulator_serial_controller
 u: simulator_uart
     port map(CLK, RST, RxData, TxData, RxAv, TxBusy, ReadA, LoadA);
 
-end behavioral;
+end mixed;
