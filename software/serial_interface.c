@@ -17,15 +17,6 @@
 #define SERIAL_STATUS_RXAV   0x1
 #define SERIAL_STATUS_TXBUSY 0x2
 
-enum {
-  COMMAND_SET_COEFF = 0,
-  COMMAND_SET_K,
-  COMMAND_SET_K1,
-  COMMAND_SET_K2,
-  COMMAND_GET_ANGLE,
-  COMMAND_GET_REVOLUTIONS
-} Commands;
-
 SerialInterface serial_interface;
 
 static void serial_received_data(unsigned char serial_data)

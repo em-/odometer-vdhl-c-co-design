@@ -9,10 +9,19 @@
 #ifndef SERIAL_INTERFACE_H
 #define SERIAL_INTERFACE_H
 
+typedef enum {
+  COMMAND_SET_COEFF = 0,
+  COMMAND_SET_K,
+  COMMAND_SET_K1,
+  COMMAND_SET_K2,
+  COMMAND_GET_ANGLE,
+  COMMAND_GET_REVOLUTIONS
+} Command;
+
 typedef struct {
     int outstanding_data;
     int bytes_left;
-    int current_command;
+    Command current_command;
     int current_command_data;
 } SerialInterface;
 
