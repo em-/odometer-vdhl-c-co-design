@@ -248,6 +248,24 @@ hardware.
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
+\subsection{SerialInterface}
+\component{SerialInterface} si occupa di ricevere dati attraverso il
+\component{SerialController} e di interpretarli come comandi per
+l'\component{Odometer} chiamandone i metodi, nonché di occuparsi
+dell'invio delle risposte verso il \component{SerialController}.
+
+Occupandosi di gestire le richieste esterne verso l'oggetto
+\component{Odometer} è opportuno che anche questa classe venga
+implementata in software.
+
+\begin{description}
+\item[void serialNotify():] notifica \component{SerialInterface} che
+    lo stato del \component{SerialController} è cambiato
+\item[void send(value: int):] invia i dati verso il
+    \component{SerialController}
+\item[void reset():] reimposta lo stato dell'oggetto
+\end{description}
+
 \subsection{Uart}
 L'oggetto \component{Uart} trasmette e riceve dati attraverso l'interfaccia RS232,
 convertendo i segnali in arrivo in un flusso di byte e, viceversa, convertendo
@@ -285,24 +303,6 @@ attraverso interfacce standard come interrupt e bus di sistema.
     indica se l'\component{Uart} è occupato nella trasmissione di un dato
 \item[byte getData():] restituisce i dati in ingresso
 \item[void setData(value: byte):] imposta i dati in uscita
-\item[void reset():] reimposta lo stato dell'oggetto
-\end{description}
-
-\subsection{SerialInterface}
-\component{SerialInterface} si occupa di ricevere dati attraverso il
-\component{SerialController} e di interpretarli come comandi per
-l'\component{Odometer} chiamandone i metodi, nonché di occuparsi
-dell'invio delle risposte verso il \component{SerialController}.
-
-Occupandosi di gestire le richieste esterne verso l'oggetto
-\component{Odometer} è opportuno che anche questa classe venga
-implementata in software.
-
-\begin{description}
-\item[void serialNotify():] notifica \component{SerialInterface} che
-    lo stato del \component{SerialController} è cambiato
-\item[void send(value: int):] invia i dati verso il
-    \component{SerialController}
 \item[void reset():] reimposta lo stato dell'oggetto
 \end{description}
 
