@@ -29,7 +29,7 @@ static void odometer_check_angle()
     if ((odometer.angle > odometer.K1) 
         && (odometer.angle < odometer.K2)
         && ((odometer.angle % odometer.K) == 0)) {
-        DEBUG("signal\n");
+        DEBUG("request tick\n");
         bus_write(OUTPUT_ADDR, 0);
     }
 }
@@ -66,7 +66,7 @@ void odometer_get_revolutions() {
 
 void odometer_rotation_counterclockwise()
 {
-    DEBUG("tick counter-clockwise %d-%d\n",
+    DEBUG("rotated counter-clockwise %d-%d\n",
         odometer.angle, odometer.coeff);
     if (odometer.started) {
         odometer.angle -= odometer.coeff;
@@ -77,7 +77,7 @@ void odometer_rotation_counterclockwise()
 
 void odometer_rotation_clockwise()
 {
-    DEBUG("tick clockwise %d+%d\n",
+    DEBUG("rotated clockwise %d+%d\n",
         odometer.angle, odometer.coeff);
     if (odometer.started) {
         odometer.angle += odometer.coeff;
