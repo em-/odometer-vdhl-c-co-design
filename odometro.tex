@@ -354,36 +354,86 @@ l'interfaccia hardware/software sono state realizzate in hardware
 software/hardware.
 
 \subsection{Mappa di memoria}
+
+Indirizzi usati dai componenti dell'odometro:
+\vspace{0.5em}
+
 \begin{tabular}{|l|l|l|l|}
 \hline
 Indirizzo & Componente & Lettura & Scrittura \\
 \hline
-\texttt{0x1000} & IRQ Controller & IRQ attivi & IRQ gestiti \\
-\hline
-\texttt{0x1001} & SerialController & Dati ricevuti & Dati da trasmettere \\
-\hline
-\texttt{0x1002} & SerialController & Stato corrente & \\
-\hline
-\texttt{0x1003} & OutputInterface & & Impulso in uscita \\
+\texttt{0x1003} & OutputInterface & & tick() \textit{Impulso in uscita} \\
 \hline
 \end{tabular}
+\vspace{1em}
+
+È sufficiente effettuare una scrittura di un valore arbitrario
+all'indirizzo assegnato affinché \component{OutputInterface}
+alzi il segnale in uscita per un colpo di clock.
+
+\vspace{1em}
+Indirizzi usati dal simulatore:
+\vspace{0.5em}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Indirizzo & Componente & Lettura & Scrittura \\
+\hline
+\texttt{0x1000} & InterruptController & getActive() \textit{IRQ attivi}
+                                      & setHandled() \textit{IRQ gestiti} \\
+\hline
+\texttt{0x1001} & SerialController & getData() \textit{Dati ricevuti}
+                                   & setData() \textit{Dati da trasmettere} \\
+\hline
+\texttt{0x1002} & SerialController & getStatus() \textit{Stato corrente} & \\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+I dati gestiti da \component{InterruptController} sono bitmask i cui bit
+posti a 1 rappresentano in lettura le linee di IRQ attualmente attive e
+in scrittura le richieste di IRQ soddisfatte dal software. L'assegnazione
+delle linee di IRQ è riportato nella apposita sezione seguente.
+
+Lo stato del \component{SerialController} è invece determinato dai due bit
+bassi dell'indirizzo assegnato: il primo (RxAv) indica la presenza di dati
+ricevuti dall'interfaccia RS232, mentre il secondo (TxBusy) riporta
+l'impossibilità a trasmettere in quanto l'interfaccia è ancora occupata a
+trasmettere i dati inviti in precedenza.
+
+\vspace{1em}
 
 \inputC{software/memory_map.h}
 
 \subsection{Richieste di interrupt}
 \begin{tabular}{|l|l|l|}
 \hline
-Linea & Componente & Segnale \\
+Linea & Componente & Metodo invocato \\
 \hline
-\texttt{0} & EncoderInterface & Rotazione in senso antiorario \\
+\texttt{0} & EncoderInterface & \component{Odometer}::rotationCounterClockWise()
+                                \textit{Rotazione antioraria} \\
 \hline
-\texttt{1} & EncoderInterface & Rotazione in senso orario \\
+\texttt{1} & EncoderInterface & \component{Odometer}::rotationClockWise()
+                                \textit{Rotazione in senso orario} \\
 \hline
-\texttt{2} & EncoderInterface & Rivoluzione completa \\
+\texttt{2} & EncoderInterface & \component{Odometer}::revolution()
+                                \textit{Rivoluzione completa} \\
 \hline
-\texttt{3} & SerialController & Cambiamento di stato \\
+\texttt{3} & SerialController & \component{SerialInterface}::serialNotify()
+                                \textit{Cambiamento di stato} \\
 \hline
 \end{tabular}
+
+\vspace{1em}
+
+Le richieste di interrupt generate dall'\component{EncoderInterface}
+a seguito della decodifica della rotazione vengono gestite direttamente
+da \component{Odometer} mentre l'interrupt assegnato al
+\component{SerialController}, generato quando la linea in uscita è libera
+o sono presenti dati in ricezione, viene gestito dalla
+\component{SerialInterface} che invocherà a sua volta gli opportuni metodi
+di \component{Odometer} dopo aver effettuato la decodifica dei comandi.
 
 \subsection{Odometer}
 \subsubsection{software/odometer.h}
