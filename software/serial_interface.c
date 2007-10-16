@@ -61,10 +61,10 @@ static void serial_received_data(unsigned char serial_data)
                 odometer_set_K2(serial_interface.current_command_data);
                 break;
             case 4:
-                odometer_get_angle(serial_interface.current_command_data);
+                odometer_get_angle();
                 break;
             case 5:
-                odometer_get_revolutions(serial_interface.current_command_data);
+                odometer_get_revolutions();
                 break;
         }
     }

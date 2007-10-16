@@ -54,12 +54,12 @@ void odometer_set_K2(int command_data) {
     DEBUG("setting K2: %d\n", odometer.K2);
 }
 
-void odometer_get_angle(int command_data) {
+void odometer_get_angle() {
     serial_send(odometer.angle);
     DEBUG("getting angle: %d\n", odometer.angle);
 }
 
-void odometer_get_revolutions(int command_data) {
+void odometer_get_revolutions() {
     serial_send(odometer.revolutions);
     DEBUG("getting revolutions: %d\n", odometer.revolutions);
 }
