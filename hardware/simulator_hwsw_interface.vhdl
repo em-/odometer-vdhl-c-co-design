@@ -56,7 +56,6 @@ begin
         end if;
 
         read(l_in, t_STROBE);
-        read(l_in, space);
         read(l_in, t_RnW);
         read(l_in, space);
 
