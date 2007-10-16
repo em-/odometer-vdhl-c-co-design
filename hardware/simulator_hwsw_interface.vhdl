@@ -76,11 +76,7 @@ begin
         write(l_out, IRQ);
         writeline(output, l_out);
 
-        while counter /= 0 loop
-            wait on counter;
-        end loop;
-
-        wait on counter;
+        wait on counter until counter = 1;
     end loop;
     wait;
 end process;
