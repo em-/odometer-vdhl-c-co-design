@@ -11,6 +11,9 @@
 
 typedef struct {
     int outstanding_data;
+    int bytes_left;
+    int current_command;
+    int current_command_data;
 } SerialInterface;
 
 void serial_init();

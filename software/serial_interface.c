@@ -21,51 +21,50 @@ SerialInterface serial_interface;
 
 static void serial_received_data(unsigned char serial_data)
 {
-    static int bytes_left = 0;
-    static int command, command_data;
-
-    if (bytes_left == 0) {
-        command = serial_data;
-        command_data = 0;
-        switch(command) {
+    int data;
+    if (serial_interface.bytes_left == 0) {
+        serial_interface.current_command = serial_data;
+        serial_interface.current_command_data = 0;
+        switch(serial_interface.current_command) {
             case 0: /* odometer_set_coeff */
             case 1: /* odometer_set_K */
             case 2: /* odometer_set_K1 */
             case 3: /* odometer_set_K2 */
-                bytes_left = 2;
+                serial_interface.bytes_left = 2;
                 break;
             case 4: /* odometer_get_angle */
             case 5: /* odometer_get_revolutions */
-                bytes_left = 0;
+                serial_interface.bytes_left = 0;
                 break;
             default:
-                bytes_left = 0; 
+                serial_interface.bytes_left = 0; 
         }
     } else {
-        command_data = command_data << 8;
-        command_data = command_data | serial_data;
-        bytes_left--;
+        data = serial_interface.current_command_data << 8;
+        data = data | serial_data;
+        serial_interface.current_command_data = data;
+        serial_interface.bytes_left--;
     }
 
-    if (bytes_left == 0) {
-        switch(command) {
+    if (serial_interface.bytes_left == 0) {
+        switch(serial_interface.current_command) {
             case 0:
-                odometer_set_coeff(command_data);
+                odometer_set_coeff(serial_interface.current_command_data);
                 break;
             case 1:
-                odometer_set_K(command_data);
+                odometer_set_K(serial_interface.current_command_data);
                 break;
             case 2:
-                odometer_set_K1(command_data);
+                odometer_set_K1(serial_interface.current_command_data);
                 break;
             case 3:
-                odometer_set_K2(command_data);
+                odometer_set_K2(serial_interface.current_command_data);
                 break;
             case 4:
-                odometer_get_angle(command_data);
+                odometer_get_angle(serial_interface.current_command_data);
                 break;
             case 5:
-                odometer_get_revolutions(command_data);
+                odometer_get_revolutions(serial_interface.current_command_data);
                 break;
         }
     }
