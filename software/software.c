@@ -16,12 +16,12 @@ int main(void)
 {
     int i, command_nr;
     SerialHandler command_handlers[] = {
-        {2, odometer_set_coeff, NULL},
-        {2, odometer_set_K, NULL},
-        {2, odometer_set_K1, NULL},
-        {2, odometer_set_K2, NULL},
-        {0, odometer_get_angle, NULL},
-        {0, odometer_get_revolutions, NULL}
+        {2, odometer_set_coeff},
+        {2, odometer_set_K},
+        {2, odometer_set_K1},
+        {2, odometer_set_K2},
+        {0, odometer_get_angle},
+        {0, odometer_get_revolutions}
     };
 
     serial_init();

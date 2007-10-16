@@ -33,32 +33,32 @@ static void odometer_check_angle()
     }
 }
 
-void odometer_set_coeff(int command_data, void *data) {
+void odometer_set_coeff(int command_data) {
     odometer.coeff = command_data;
     fprintf(stderr, "setting coeff: %d\n", odometer.coeff);
 }
 
-void odometer_set_K(int command_data, void *data) {
+void odometer_set_K(int command_data) {
     odometer.K = command_data;
     fprintf(stderr, "setting K: %d\n", odometer.K);
 }
 
-void odometer_set_K1(int command_data, void *data) {
+void odometer_set_K1(int command_data) {
     odometer.K1 = command_data;
     fprintf(stderr, "setting K1: %d\n", odometer.K1);
 }
 
-void odometer_set_K2(int command_data, void *data) {
+void odometer_set_K2(int command_data) {
     odometer.K2 = command_data;
     fprintf(stderr, "setting K2: %d\n", odometer.K2);
 }
 
-void odometer_get_angle(int command_data, void *data) {
+void odometer_get_angle(int command_data) {
     serial_send(odometer.angle);
     fprintf(stderr, "getting angle: %d\n", odometer.angle);
 }
 
-void odometer_get_revolutions(int command_data, void *data) {
+void odometer_get_revolutions(int command_data) {
     serial_send(odometer.revolutions);
     fprintf(stderr, "getting revolutions: %d\n", odometer.revolutions);
 }

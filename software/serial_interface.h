@@ -11,8 +11,7 @@
 
 typedef struct {
     int serial_data_size;
-    void (*handler)(int serial_data, void *data);
-    void *data;
+    void (*handler)(int serial_data);
 } SerialHandler;
 
 typedef struct {

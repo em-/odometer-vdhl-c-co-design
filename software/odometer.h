@@ -27,12 +27,12 @@ typedef struct {
 } Odometer;
 
 void odometer_init();
-void odometer_set_coeff(int command_data, void *data);
-void odometer_set_K(int command_data, void *data);
-void odometer_set_K1(int command_data, void *data);
-void odometer_set_K2(int command_data, void *data);
-void odometer_get_angle(int command_data, void *data);
-void odometer_get_revolutions(int command_data, void *data);
+void odometer_set_coeff(int command_data);
+void odometer_set_K(int command_data);
+void odometer_set_K1(int command_data);
+void odometer_set_K2(int command_data);
+void odometer_get_angle(int command_data);
+void odometer_get_revolutions(int command_data);
 void odometer_encoder_counterclockwise(void *data);
 void odometer_encoder_clockwise(void *data);
 void odometer_encoder_revolution(void *data);
