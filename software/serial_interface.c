@@ -5,6 +5,7 @@
 #include "serial_interface.h"
 #include "odometer.h"
 #include "memory_map.h"
+#include "util.h"
 
 /*
  * File: serial_interface.c
@@ -96,7 +97,7 @@ void serial_notify(void *data)
     int status, serial_data;
 
     status = bus_read(SERIAL_STATUS_ADDR);
-    fprintf(stderr, "serial status %d\n", status);
+    DEBUG("serial status %d\n", status);
 
     if (!(status & SERIAL_STATUS_TXBUSY))
     {
