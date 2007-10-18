@@ -1,4 +1,4 @@
--- File: hwsw_interface.vhdl
+-- File: simulator_hwsw_interface.vhdl
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
 -- Note: Software <-> Hardware Interface communicating through stdin/stdout

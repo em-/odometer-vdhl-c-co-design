@@ -10,7 +10,7 @@
 #define VERBOSE 0
 
 /*
- * File: swhw_interface.c
+ * File: simulator_swhw_interface.c
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
  * Note: Software <-> Hardware Interface communicating through stdin/stdout

@@ -1,4 +1,4 @@
--- File: encoder.vhdl
+-- File: simulator_encoder.vhdl
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
 -- Note: simulates a relative encoder wit A, B, and Z signals

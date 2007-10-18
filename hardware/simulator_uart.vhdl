@@ -1,4 +1,4 @@
--- File: uart.vhdl
+-- File: simulator_uart.vhdl
 -- Classe: Uart
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL

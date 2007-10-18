@@ -1,5 +1,5 @@
 /*
- * File: swhw_interface.h
+ * File: simulator_swhw_interface.h
  * Autore: Emanuele Aina <em@nerd.ocracy.org>
  * Licenza: LGPL
  * Note: Software <-> Hardware Interface communicating through stdin/stdout

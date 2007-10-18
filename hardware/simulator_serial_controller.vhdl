@@ -1,4 +1,4 @@
--- File: serial_controller.vhdl
+-- File: simulator_serial_controller.vhdl
 -- Classe: SerialController
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL

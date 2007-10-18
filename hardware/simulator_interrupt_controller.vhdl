@@ -1,4 +1,4 @@
--- File: interrupt_controller.vhdl
+-- File: simulator_interrupt_controller.vhdl
 -- Autore: Emanuele Aina <em@nerd.ocracy.org>
 -- Licenza: LGPL
 -- Note: Simple interrupt controller
