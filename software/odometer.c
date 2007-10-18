@@ -28,7 +28,7 @@ void odometer_init()
  * an output tick accordingly */
 static void odometer_check_angle()
 {
-    if ((odometer.angle > odometer.K1) 
+    if ((odometer.angle >= odometer.K1) 
         && (odometer.angle < odometer.K2)
         && ((odometer.angle % odometer.K) == 0)) {
         DEBUG("request tick\n");
