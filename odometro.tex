@@ -562,6 +562,21 @@ effettuare la scrittura e la lettura dei valori del bus.
 \inputVHDL{hardware/simulator_uart.vhdl}
 
 
+\section{Co-simulazione}
+Eseguendo il comando \texttt{make run} viene lanciata la compilazione
+e la co-simulazione del sistema. Il file \identifier{hardware/serial.input}
+contiene i dati in ingresso all'interfaccia seriale, i quali emulano
+l'impostazione dei parametri (coefficiente, K, K1 e K2) e la successiva
+richiesta dell'angolo corrente. Il formato è semplicemente costituido dal
+millisecondo di arrivo dei dati seguito dati stessi.
+
+\subsection{Output della co-simulazione}
+\lstinputlisting{reference}
+
+\subsection{Dati in ingresso all'interfaccia seriale}
+\lstinputlisting{hardware/serial.input}
+
+
 \section{Ulteriori informazioni}
 L'intero progetto è disponibile presso \link{http://techn.ocracy.org/odometer}, da cui
 è inoltre possibile visionare tutte le revisioni realizzate durante lo sviluppo.
