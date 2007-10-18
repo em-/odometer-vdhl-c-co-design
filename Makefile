@@ -36,8 +36,11 @@ clean: subdirs
 ${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c
 	rubber -f -d $<
 
+uml/%:
+	make -C uml `basename $@`
+
 # Build the documentation
-doc: uml ${DOC}
+doc: ${DOC}
 
 subdirs: $(SUBDIRS)
 
