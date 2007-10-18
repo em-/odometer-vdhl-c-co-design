@@ -32,9 +32,6 @@ software/software:
 clean: subdirs
 	-rubber -d --clean
 
-%.pdf: %.svg
-	inkscape -z $< -A=$@
-
 # Generate PDF from LaTeX files
 ${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c
 	rubber -f -d $<
