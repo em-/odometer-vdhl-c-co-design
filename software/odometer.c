@@ -73,6 +73,10 @@ void odometer_rotation_counterclockwise()
     odometer.direction = DIRECTION_COUNTERCLOCKWISE;
     if (odometer.started) {
         odometer.angle -= odometer.coeff;
+        /* Make sure the angle is positive */
+        if (odometer.angle < 0) {
+            odometer.angle += 3600;
+        }
         DEBUG("%d\n", odometer.angle);
         odometer_check_angle(odometer);
     }
