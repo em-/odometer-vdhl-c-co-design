@@ -24,6 +24,8 @@ void odometer_init()
     odometer.coeff = odometer.K = odometer.K1 = odometer.K2 =0; 
 }
 
+/* Check if the angle satisfies the params and request
+ * an output tick accordingly */
 static void odometer_check_angle()
 {
     if ((odometer.angle > odometer.K1) 
