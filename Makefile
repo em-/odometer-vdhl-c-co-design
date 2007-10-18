@@ -33,7 +33,7 @@ clean: subdirs
 	-rubber -d --clean
 
 # Generate PDF from LaTeX files
-${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c
+${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c hardware/serial.input
 	rubber -f -d $<
 
 uml/%:
