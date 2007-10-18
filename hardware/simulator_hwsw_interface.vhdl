@@ -28,6 +28,7 @@ architecture behavioral of simulator_hwsw_interface is
     constant DEBUG: boolean := false;
 begin
 
+-- For each clock tick increment the mod 10 counter
 count: process(CLK)
 begin
     if rising_edge(CLK) then
@@ -35,6 +36,7 @@ begin
     end if;
 end process;
 
+-- Implements the stdin/stdout communication pipe with the sw/hw interface
 pipe_interface: process
     variable t_STROBE:  std_logic;
     variable t_RnW:     std_logic;
@@ -45,16 +47,20 @@ pipe_interface: process
 begin
     FINISH <= false;
     while true loop
+        -- Set FINISH if the pipe has been closed
         if endfile(input) then
             FINISH <= true;
             wait;
         end if;
+
+        -- Block until a line has been read from stdin
         readline(input, l_in);
 
         if DEBUG then
             report "slave read";
         end if;
 
+        -- Decode the bus signals
         read(l_in, t_STROBE);
         read(l_in, t_RnW);
         read(l_in, space);
@@ -67,14 +73,17 @@ begin
         ADDR    <= t_ADDR;
         DATA_IN <= t_DATA_IN;
 
+        -- Keep the STROBE signal high for a single clock cycle only
         wait on counter;
         STROBE <= '0';
 
+        -- Write on stdout the hardware response
         write(l_out, DATA_OUT);
         write(l_out, space);
         write(l_out, IRQ);
         writeline(output, l_out);
 
+        -- Sleep for the next 10 clock cycles
         wait on counter until counter = 1;
     end loop;
     wait;
