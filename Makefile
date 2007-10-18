@@ -22,10 +22,10 @@ run: hardware/hardware software/software
 reference: hardware/hardware software/software
 	./launch.py 2>$(REFERENCE)
 
-hardware/hardware:
+hardware/hardware: hardware/*.vhdl
 	$(MAKE) -C hardware hardware
 
-software/software:
+software/software: software/*.c software/*.h
 	$(MAKE) -C software software
 
 # Clean target
