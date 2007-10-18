@@ -38,6 +38,7 @@
 
 \newcommand{\inputVHDL}[1]{\lstinputlisting[language=VHDL]{#1}}
 \newcommand{\inputC}[1]{\lstinputlisting[language=C]{#1}}
+\newcommand{\inputPython}[1]{\lstinputlisting[language=python]{#1}}
 
 % Justify even if it has to leave a lot of blank space
 \setlength{\emergencystretch}{3em}
@@ -528,6 +529,14 @@ Per la simulazione della parte hardware si è usato GHDL, mentre quella software
 è stata compilata con GCC. L'interfaccia hardware/software è stata quindi emulata
 facendo comunicare le due sezioni attraverso i rispettivi standard input e output,
 implementando anche un controller di interrupt nella parte hardware.
+
+Lo script \identifier{launch.py} si occupa di lanciare i due eseguibili
+generati in modo che lo standard output di ognuno sia collegato allo
+standard input dell'altro, mentre gli altri componenti si occupano di
+effettuare la scrittura e la lettura dei valori del bus.
+
+\subsection{launch.py}
+\inputPython{launch.py}
 
 \subsection{software/simulator\_swhw\_interface.h}
 \inputC{software/simulator_swhw_interface.h}
