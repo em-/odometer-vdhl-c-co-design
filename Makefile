@@ -9,7 +9,7 @@ DOC=odometro.pdf
 
 REFERENCE=reference
 
-SUBDIRS=hardware software uml
+SUBDIRS=hardware software
 
 # Default target
 all: hardware/hardware software/software
@@ -30,14 +30,19 @@ software/software:
 
 # Clean target
 clean: subdirs
-	-rubber -d --clean
+	-rubber -d --clean ${DOC_SOURCES}
+	-rm -f ${DOC_FIGURES}
+	-rm -f $(addsuffix .eps, $(basename ${DOC_FIGURES}))
 
 # Generate PDF from LaTeX files
 ${DOC}: ${DOC_SOURCES} ${DOC_FIGURES} */*.vhdl */*.c hardware/serial.input
 	rubber -f -d $<
 
-uml/%:
-	make -C uml `basename $@`
+%.eps: %.dia
+	dia -e $@ -t eps $< 
+
+%.pdf: %.eps
+	ps2pdf -dEPSFitPage -dEPSCrop $< $@
 
 # Build the documentation
 doc: ${DOC}
