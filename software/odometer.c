@@ -70,9 +70,9 @@ void odometer_rotation_counterclockwise()
 {
     DEBUG("rotated counter-clockwise %d-%d = ",
         odometer.angle, odometer.coeff);
+    odometer.direction = DIRECTION_COUNTERCLOCKWISE;
     if (odometer.started) {
         odometer.angle -= odometer.coeff;
-        odometer.direction = DIRECTION_COUNTERCLOCKWISE;
         DEBUG("%d\n", odometer.angle);
         odometer_check_angle(odometer);
     }
@@ -86,9 +86,9 @@ void odometer_rotation_clockwise()
 {
     DEBUG("rotated clockwise %d+%d = ",
         odometer.angle, odometer.coeff);
+    odometer.direction = DIRECTION_CLOCKWISE;
     if (odometer.started) {
         odometer.angle += odometer.coeff;
-        odometer.direction = DIRECTION_CLOCKWISE;
         DEBUG("%d\n", odometer.angle);
         odometer_check_angle(odometer);
     }
@@ -100,17 +100,22 @@ void odometer_rotation_clockwise()
 
 void odometer_revolution()
 {
-    if (odometer.coeff != 0)
-        odometer.started = 1;
     DEBUG("full revolution %d", odometer.revolutions);
     if (odometer.direction == DIRECTION_COUNTERCLOCKWISE) {
         DEBUG("-1");
         odometer.revolutions--;
     } else if (odometer.direction == DIRECTION_CLOCKWISE) {
-        DEBUG("+1");
-        odometer.revolutions++;
+        if (odometer.started) {
+            DEBUG("+1");
+            odometer.revolutions++;
+        }
     }
     DEBUG(" = %d", odometer.revolutions);
+
     odometer.angle = 0;
     DEBUG(" (resetting angle to %d)\n", odometer.angle);
+
+    if (odometer.coeff != 0) {
+        odometer.started = 1;
+    }
 }
