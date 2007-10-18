@@ -5,7 +5,7 @@ rotated counter-clockwise 0-0 = 0 (not yet started)
 serial status 1: <line free> <data available>
 rotated counter-clockwise 0-0 = 0 (not yet started)
 rotated counter-clockwise 0-0 = 0 (not yet started)
-full revolution 0-1 = -1 (resetting angle to 0)
+full revolution 0 = 0 (resetting angle to 0)
 serial status 1: <line free> <data available>
 setting coeff: 900
 rotated counter-clockwise 0-900 = 0 (not yet started)
@@ -14,7 +14,7 @@ serial status 1: <line free> <data available>
 rotated counter-clockwise 0-900 = 0 (not yet started)
 serial status 1: <line free> <data available>
 rotated counter-clockwise 0-900 = 0 (not yet started)
-full revolution -1-1 = -2 (resetting angle to 0)
+full revolution 0 (starting counter-clockwise) = -1 (resetting angle to 0)
 rotated counter-clockwise 0-900 = 2700
 serial status 1: <line free> <data available>
 setting K: 1800
@@ -22,7 +22,7 @@ rotated counter-clockwise 2700-900 = 1800
 rotated counter-clockwise 1800-900 = 900
 serial status 1: <line free> <data available>
 rotated counter-clockwise 900-900 = 0
-full revolution -2-1 = -3 (resetting angle to 0)
+full revolution -1-1 = -2 (resetting angle to 0)
 serial status 1: <line free> <data available>
 rotated counter-clockwise 0-900 = 2700
 rotated counter-clockwise 2700-900 = 1800
@@ -31,13 +31,13 @@ setting K1: 900
 rotated counter-clockwise 1800-900 = 900
 serial status 1: <line free> <data available>
 rotated counter-clockwise 900-900 = 0
-full revolution -3-1 = -4 (resetting angle to 0)
+full revolution -2-1 = -3 (resetting angle to 0)
 serial status 1: <line free> <data available>
 rotated counter-clockwise 0-900 = 2700
 serial status 1: <line free> <data available>
 setting K2: 2700
 rotated clockwise 2700+900 = 3600
-full revolution -4+1 = -3 (resetting angle to 0)
+full revolution -3+1 = -2 (resetting angle to 0)
 rotated clockwise 0+900 = 900
 serial status 1: <line free> <data available>
 getting angle: 900
@@ -46,7 +46,7 @@ request tick
 rotated clockwise 1800+900 = 2700
 serial status 0: <line free>
 rotated clockwise 2700+900 = 3600
-full revolution -3+1 = -2 (resetting angle to 0)
+full revolution -2+1 = -1 (resetting angle to 0)
 rotated clockwise 0+900 = 900
 serial status 0: <line free>
 rotated clockwise 900+900 = 1800

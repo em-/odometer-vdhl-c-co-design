@@ -105,24 +105,36 @@ void odometer_rotation_clockwise()
 void odometer_revolution()
 {
     DEBUG("full revolution %d", odometer.revolutions);
-    if (odometer.direction == DIRECTION_COUNTERCLOCKWISE)
+
+    if (odometer.started)
     {
-        DEBUG("-1");
-        odometer.revolutions--;
+        if (odometer.direction == DIRECTION_COUNTERCLOCKWISE)
+        {
+            DEBUG("-1");
+            odometer.revolutions--;
+        }
+        else if (odometer.direction == DIRECTION_CLOCKWISE)
+        {
+            DEBUG("+1");
+            odometer.revolutions++;
+        }
     }
-    else if (odometer.direction == DIRECTION_CLOCKWISE
-             && odometer.started)
+
+    if (odometer.coeff != 0 && !odometer.started)
     {
-        DEBUG("+1");
-        odometer.revolutions++;
+        odometer.started = 1;
+
+        /* This makes sure that the current position can always
+         * be correctly described as revolutions + angle */
+        if (odometer.direction == DIRECTION_COUNTERCLOCKWISE)
+        {
+            DEBUG(" (starting counter-clockwise)");
+            odometer.revolutions = -1;
+        }
     }
+
     DEBUG(" = %d", odometer.revolutions);
 
     odometer.angle = 0;
     DEBUG(" (resetting angle to %d)\n", odometer.angle);
-
-    if (odometer.coeff != 0)
-    {
-        odometer.started = 1;
-    }
 }
