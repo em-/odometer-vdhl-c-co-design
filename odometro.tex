@@ -463,7 +463,7 @@ Lo stato del \component{SerialController} è invece determinato dai due bit
 bassi dell'indirizzo assegnato: il primo (RxAv) indica la presenza di dati
 ricevuti dall'interfaccia RS232, mentre il secondo (TxBusy) riporta
 l'impossibilità a trasmettere in quanto l'interfaccia è ancora occupata a
-trasmettere i dati inviti in precedenza.
+trasmettere i dati inviati in precedenza.
 
 \vspace{1em}
 
@@ -570,7 +570,7 @@ Eseguendo il comando \texttt{make run} viene lanciata la compilazione
 e la co-simulazione del sistema. Il file \identifier{hardware/serial.input}
 contiene i dati in ingresso all'interfaccia seriale, i quali emulano
 l'impostazione dei parametri (coefficiente, K, K1 e K2) e la successiva
-richiesta dell'angolo corrente. Il formato è semplicemente costituido dal
+richiesta dell'angolo corrente. Il formato è semplicemente costituito dal
 millisecondo di arrivo dei dati seguito dati stessi.
 
 \subsection{Output della co-simulazione}
