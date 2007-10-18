@@ -24,7 +24,7 @@ begin
 process
 begin
     direction <= COUNTERCLOCKWISE;
-    delay <= 100 ns;
+    delay <= 1000 ns;
     wait for 69120 ns;
     direction <= CLOCKWISE;
     wait;
