@@ -12,15 +12,21 @@ REFERENCE=reference
 SUBDIRS=hardware software uml
 
 # Default target
-all: hardware software hardware/hardware software/software
+all: hardware/hardware software/software
 	./launch.py 2>&1 >/dev/null | diff -u $(REFERENCE) -
 
 # Run target
-run: hardware software hardware/hardware software/software
+run: hardware/hardware software/software
 	./launch.py
 
 reference: hardware/hardware software/software
 	./launch.py 2>$(REFERENCE)
+
+hardware/hardware:
+	$(MAKE) -C hardware hardware
+
+software/software:
+	$(MAKE) -C software software
 
 # Clean target
 clean: subdirs
