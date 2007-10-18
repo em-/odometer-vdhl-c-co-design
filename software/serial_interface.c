@@ -96,16 +96,21 @@ void serial_notify(void *data)
     int status, serial_data;
 
     status = bus_read(SERIAL_STATUS_ADDR);
-    DEBUG("serial status %d\n", status);
+    DEBUG("serial status %d:", status);
 
     if (!(status & SERIAL_STATUS_TXBUSY))
     {
+      DEBUG(" <line free>");
       serial_line_free(serial_interface);
     }
 
     if (status & SERIAL_STATUS_RXAV)
     {
+      DEBUG(" <data available>\n");
+      serial_line_free(serial_interface);
       serial_data = bus_read(SERIAL_DATA_ADDR);
       serial_received_data(serial_data);
     }
+    else
+      DEBUG("\n");
 }
