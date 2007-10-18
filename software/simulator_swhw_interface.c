@@ -80,7 +80,8 @@ static void serve_irq()
         masq = masq << 1;
     }
 
-    DEBUG("software: serving irq %d\n", line);
+    if (VERBOSE)
+        DEBUG("software: serving irq %d\n", line);
 
     /* Do not allow recursive IRQs */
     irq_enabled = 0;
