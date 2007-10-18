@@ -7,7 +7,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity simulator_encoder is
-    generic (tick_angle: natural := 900);
+    generic (tick_angle: natural);
     port (A, B, Z: out std_logic;
           FINISH: in boolean);
 end simulator_encoder;

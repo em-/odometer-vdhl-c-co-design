@@ -53,6 +53,7 @@ architecture mixed of hardware is
     end component;
 
     component simulator_encoder
+        generic (tick_angle: natural);
         port (A, B, Z: out std_logic;
               FINISH: in boolean);
     end component;
@@ -140,6 +141,7 @@ irq_ctrl: simulator_interrupt_controller
              BUS_STROBE, BUS_RnW, BUS_ADDR, BUS_DATA_IN, BUS_DATA_OUT);
 
 enc: simulator_encoder
+    generic map(900)
     port map(A, B, Z, FINISH);
 
 serial_iface: simulator_serial_controller
