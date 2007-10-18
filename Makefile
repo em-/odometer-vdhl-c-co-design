@@ -30,7 +30,7 @@ software/software:
 
 # Clean target
 clean: subdirs
-	-rubber -d --clean ${DOC_SOURCES}
+	-rubber -d --clean
 
 %.pdf: %.svg
 	inkscape -z $< -A=$@
