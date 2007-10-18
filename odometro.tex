@@ -336,6 +336,9 @@ L'oggetto \component{Uart} trasmette e riceve dati attraverso l'interfaccia RS23
 convertendo i segnali in arrivo in un flusso di byte e, viceversa, convertendo
 i dati in uscita nei segnali opportuni.
 
+L'implementazione nel simulatore legge i dati in arrivo dall'interfaccia RS232
+dal file \identifier{hardware/serial.input}, riportato in seguito.
+
 \begin{description}
 \item[byte byteRx:] il byte ricevuto non ancora letto
 \item[byte byteTx:] il byte da trasmettere
