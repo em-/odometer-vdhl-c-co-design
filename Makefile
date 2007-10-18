@@ -7,14 +7,20 @@ DOC_FIGURES=uml/odometer_rs232_usecase.pdf	\
             uml/odometer_serial_setter_robustness.pdf
 DOC=odometro.pdf
 
+REFERENCE=reference
+
 SUBDIRS=hardware software uml
 
 # Default target
-all: run
+all: hardware software hardware/hardware software/software
+	./launch.py 2>&1 >/dev/null | diff -u $(REFERENCE) -
 
 # Run target
 run: hardware software hardware/hardware software/software
 	./launch.py
+
+reference: hardware/hardware software/software
+	./launch.py 2>$(REFERENCE)
 
 # Clean target
 clean: subdirs
